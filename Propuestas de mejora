@@ -1,0 +1,9 @@
+////////////////////////// Ismael y Laura //////////////////////////
+
+- Hacer test unitarios, como en DP (JUnit está implementado en el proyecto, ver votes/pom.xml).
+
+- Cambiar nombres de variables "x" a nombre "result".
+
+////////////////////////// Jorge ///////////////////////////////////
+
+- Proponer para todos es la unificación del interfaz, ya que cada subsistema está hecho de alguna manera.
