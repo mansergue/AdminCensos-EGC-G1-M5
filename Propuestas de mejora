@@ -1,8 +1,31 @@
 ////////////////////////// Ismael y Laura //////////////////////////
 
 - Hacer test unitarios, como en DP (JUnit está implementado en el proyecto, ver votes/pom.xml).
+	--> Las anotaciones @ que hay en cada clase de testeo, hay 2, @RunWith y @Context.
+		Las otras 2 que suele haber (@Transactional y @TransactionConfiguration no
+		están.., ¿por qué?
+		- A tener en cuenta que no hay nada en el PopulateDatabase.xml, por tanto,
+			¿es porque no trabajamos con BB.DD?
+			¡DUDA A RESOLVER!
+	--> Aclarar que hay uno hecho, pero está dentro del paquete "utilities" en src/main/java,
+		debemos crear un folder src/test/java, y ahí crear el paquete correspondiente
+		y meter los test necesarios aparte ahí.
+	--> Además, en DP nos dieron una clase auxiliar llamada AbstractTest, con un par de métodos
+		para comprobar la autentificación. En este proyecto no está incluida pero realmente
+		creo que no hace falta puesto que como comento más abajo nosotros no llevamos
+		nada de autentificación.
 
 - Cambiar nombres de variables "x" a nombre "result".
+
+- Comentar funcionamiento de ambas clases del paquete "converters".
+
+- Como podemos ver, en esta parte a nosotros no nos toca autenticarnos, sin embargo, existe el paquete "security"
+	con métodos de UserAccount y derivados. Hay que preguntar a grupo de Autentificación si los necesitan ahí
+	para ello a la hora de integrar, o si podemos eliminarlos porque ellos en su proyecto tengan sus métodos 
+	propios, ya que realmente a nosotros no nos hacen falta.
+
+- En cada clase recordar cómo se organizaba en DP, tal que // Constructors -----------------, // Tests -----------
+	y demás, creo que no está de esta manera en todas las clases, por tanto, otra propuesta de mejora.
 
 ////////////////////////// Jorge ///////////////////////////////////
 
