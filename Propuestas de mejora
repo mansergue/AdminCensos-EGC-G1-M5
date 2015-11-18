@@ -27,6 +27,36 @@
 - En cada clase recordar cómo se organizaba en DP, tal que // Constructors -----------------, // Tests -----------
 	y demás, creo que no está de esta manera en todas las clases, por tanto, otra propuesta de mejora.
 
+- Poner en inglés "Crear votación".
+
+- Comprobar si la anotación @DateTimeFormat funciona correctamente, puesto que a veces
+	Eclipse ignora esta notación y se queda con la estándar en inglés (nos
+	ha pasado en DP y lo tuvimos que dejar como venía por defecto).
+
+- En el constructor de la clase CensusService, ese "super()" es redundante, podemos quitarlo.
+	--> Método create, podemos crear new Date(parámetro) y no tener que parsear como 
+		lo hacen al principio.
+	--> Métod findCensusByUser, la Collection debe instanciarse como un HashSet, no
+		como un ArrayList, porque NO puede haber censos repetidos.
+	--> Método removeUserToCensus, el nombre no concuerda con la explicación del
+		método.
+	--> Método save, lo veo demasiado simple, habrá que persistir en la BBDD y no
+		guardar directamente.
+	--> Más abajo, método removeUserToCensu, mal escrito y repetido...
+	
+- Clase CENSUS:
+	--> getUsername, tiene que tener la notación @Unique y no la tiene. Tiene que
+		estar porque un usuario repetido.., ¿dónde se ha visto?
+
+- Clase CensusController:
+	--> Métodos comentados sin explicación del POR QUÉ.
+
+- Paquete "utilities", clase CreateCensues:
+	--> Como ya dije, en esta clase hacen un Test, no sé por qué está aquí
+		y no en su respectivo paquete de test.
+
 ////////////////////////// Jorge ///////////////////////////////////
 
 - Proponer para todos es la unificación del interfaz, ya que cada subsistema está hecho de alguna manera.
+
+- Posibilidad de usar Spring Tool Suite para el desarrollo dentro de una máquina virtual (la de DP).
