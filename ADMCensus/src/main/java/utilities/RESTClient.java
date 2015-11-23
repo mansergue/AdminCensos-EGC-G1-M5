@@ -17,7 +17,7 @@ public class RESTClient {
 	 */
 	public static Collection<String> getListUsernamesByJsonAutentication(){
 		RestTemplate restTemplate = new RestTemplate();
-		String result = restTemplate.getForObject("http://localhost/auth/api/index.php?method=getUsers", String.class);
+		String result = restTemplate.getForObject("http://auth-egc.azurewebsites.net/api/getUsers", String.class);
 		String[] lista = result.split(",");
 		
 		Collection<String> usernames = new ArrayList<String>();
