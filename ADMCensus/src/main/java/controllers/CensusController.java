@@ -127,10 +127,12 @@ public class CensusController extends AbstractController {
 
 	// Metodo para la vista de censos por creador---------------------------------------------------------------	
 	 @RequestMapping(value ="/getAllCensusByCreador", method = RequestMethod.GET)    
-	 public ModelAndView getAllCensusByCreador(@CookieValue("user") String username) {  
+//	 public ModelAndView getAllCensusByCreador(@CookieValue("user") String username) {  
+	 public ModelAndView getAllCensusByCreador(String username) {
 		 ModelAndView result = new ModelAndView("census/misCensos");;
 		 Collection<Census> cs;
-		 cs = censusService.findCensusByCreator(username);
+//		 cs = censusService.findCensusByCreator(username);
+		 cs = censusService.findCensusByCreator("admin1");
 		 result.addObject("censues", cs);
 		 result.addObject("misVotaciones",false);
 		 result.addObject("requestURI","census/getAllCensusByCreador.do");
@@ -155,7 +157,8 @@ public class CensusController extends AbstractController {
 	 
 	// Add Users ----------------------------------------------------------------
 	@RequestMapping(value = "/addUser", method = RequestMethod.GET)
-	public ModelAndView addUser(@RequestParam int censusId, @CookieValue("user") String username, @RequestParam String username_add) {
+//	public ModelAndView addUser(@RequestParam int censusId, @CookieValue("user") String username, @RequestParam String username_add) {
+		public ModelAndView addUser(@RequestParam int censusId, String username, @RequestParam String username_add) {
 		ModelAndView result = new ModelAndView("census/misVotaciones");;
 		try{
 			
@@ -206,7 +209,8 @@ public class CensusController extends AbstractController {
 	// Editar un censo para añadir o quitar usuarios ---------------------------------------------------------------	
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam int censusId, @CookieValue("user") String username) {
+//	public ModelAndView edit(@RequestParam int censusId, @CookieValue("user") String username) {
+	public ModelAndView edit(@RequestParam int censusId, String username) {
 		ModelAndView result = new ModelAndView("census/manage");
 		Collection<String> usernames = RESTClient.getListUsernamesByJsonAutentication();//Llamada a todos los usuarios del sistema
 		Census census= censusService.findOne(censusId);
