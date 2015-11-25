@@ -22,7 +22,7 @@
 	</definition>
 	
 	<definition name="census/list" extends="master.page">	
-		<put-attribute name="title" value="Lista de  Censo" />
+		<put-attribute name="title" value="Lista de censos" />
 		<put-attribute name="body" value="/views/census/list.jsp" />
 	</definition>
 	
@@ -32,7 +32,7 @@
 	</definition>
 	
 	<definition name="census/manage" extends="master.page">	
-		<put-attribute name="title" value="Manejar el censo" />
+		<put-attribute name="title" value="Edición del censo" />
 		<put-attribute name="body" value="/views/census/manage.jsp" />
 	</definition>
 	
