@@ -156,9 +156,8 @@ public class CensusController extends AbstractController {
 			result = new ModelAndView("redirect:/census/edit.do?censusId="+censusId);
 			
 		}catch(Exception oops){
-			result = new ModelAndView("redirect:/census/edit.do?censusId="+censusId);
-			result.addObject("message", "No se pudo añadir el usuario");
 			JOptionPane.showMessageDialog(null, "No se pudo añadir el usuario");
+			result = new ModelAndView("redirect:/census/edit.do?censusId="+censusId);
 			oops.getStackTrace();
 		}
 		
@@ -177,9 +176,8 @@ public class CensusController extends AbstractController {
 			result = new ModelAndView("redirect:/census/edit.do?censusId="+censusId);
 			
 		}catch(Exception oops){
-			result = new ModelAndView("redirect:/census/edit.do?censusId="+censusId);
-			result.addObject("message", "No se pudo eliminar el usuario porque ya ha votado");
 			JOptionPane.showMessageDialog(null, "No se pudo eliminar el usuario porque ya ha votado");
+			result = new ModelAndView("redirect:/census/edit.do?censusId="+censusId);
 			oops.getStackTrace();
 		}
 		
@@ -225,10 +223,8 @@ public class CensusController extends AbstractController {
 			result = new ModelAndView("redirect:/census/list.do");
 			
 		}catch(Exception oops){
+		    JOptionPane.showMessageDialog(null, "No se pudo eliminar el censo");
 			result = new ModelAndView("redirect:/census/details.do?censusId="+censusId);
-			result.addObject("message", "No se pudo eliminar el censo");
-			JOptionPane.showMessageDialog(null, "No se pudo eliminar el censo");
-
 			oops.getStackTrace();
 		}
 		
