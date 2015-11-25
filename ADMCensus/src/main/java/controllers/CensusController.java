@@ -1,14 +1,3 @@
-
-/* CustomerController.java
- *
- * Copyright (C) 2013 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- * 
- */
-
 package controllers;
 
 
@@ -16,6 +5,7 @@ import java.text.ParseException;
 import java.util.Collection;
 import java.util.HashMap;
 
+import javax.swing.JOptionPane;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -168,6 +158,7 @@ public class CensusController extends AbstractController {
 		}catch(Exception oops){
 			result = new ModelAndView("redirect:/census/edit.do?censusId="+censusId);
 			result.addObject("message", "No se pudo añadir el usuario");
+			JOptionPane.showMessageDialog(null, "No se pudo añadir el usuario");
 			oops.getStackTrace();
 		}
 		
@@ -188,6 +179,7 @@ public class CensusController extends AbstractController {
 		}catch(Exception oops){
 			result = new ModelAndView("redirect:/census/edit.do?censusId="+censusId);
 			result.addObject("message", "No se pudo eliminar el usuario porque ya ha votado");
+			JOptionPane.showMessageDialog(null, "No se pudo eliminar el usuario porque ya ha votado");
 			oops.getStackTrace();
 		}
 		
@@ -234,7 +226,9 @@ public class CensusController extends AbstractController {
 			
 		}catch(Exception oops){
 			result = new ModelAndView("redirect:/census/details.do?censusId="+censusId);
-			result.addObject("message", "No se pudo borrar el censo");
+			result.addObject("message", "No se pudo eliminar el censo");
+			JOptionPane.showMessageDialog(null, "No se pudo eliminar el censo");
+
 			oops.getStackTrace();
 		}
 		
