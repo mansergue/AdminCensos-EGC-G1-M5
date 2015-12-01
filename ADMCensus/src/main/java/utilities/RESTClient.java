@@ -21,27 +21,13 @@ public class RESTClient {
 		String[] lista = result.split(",");
 		
 		Collection<String> usernames = new ArrayList<String>();
-		for(int i=0; i<lista.length; i++){
-			String aux = lista[i];
-			String aux2 = "";
-			if(i==0){
-				aux = aux.replace("[{\"username\":\"", "");
-				aux = aux.replace("\"", "");
-				aux = aux.replace("﻿", "");
-				aux2 = aux;
-				
-			}else{
-				if(aux.contains("username")){
-					aux = aux.replace("{\"username\":\"", "");
-					aux = aux.replace("\"", "");
-					aux2 = aux;
-				}
+		for(String field: lista){
+			if(field.contains("username")){
+				String[] aux_list = field.split(":");
+				String username = aux_list[1];
+				username = username.replaceAll("\"", "");
+				usernames.add(username);
 			}
-			if(!aux2.equals("")){
-				aux2 = aux2.replace(" ", "");
-				usernames.add(aux2);
-			}
-			
 		}
 		
 		return usernames;
