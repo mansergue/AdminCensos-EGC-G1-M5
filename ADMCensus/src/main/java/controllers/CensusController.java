@@ -46,9 +46,12 @@ public class CensusController extends AbstractController {
 	//Recibe parametros de votacion y crea un censo por votacion
 	
 	@RequestMapping(value = "/create", method = RequestMethod.GET, produces="application/json")
+//	public  @ResponseBody Census create(@RequestParam int idVotacion,@RequestParam String fecha_inicio,@RequestParam String fecha_fin, String tituloVotacion,
+//			@CookieValue("user") String username) throws ParseException{ 
 	public  @ResponseBody Census create(@RequestParam int idVotacion,@RequestParam String fecha_inicio,@RequestParam String fecha_fin, String tituloVotacion,
-			@CookieValue("user") String username) throws ParseException{ 
+			String username) throws ParseException{ 
 		Census result = null;
+		username = "test1";
 		
 		Census  c = censusService.create(idVotacion, username, fecha_inicio, fecha_fin, tituloVotacion);
 		try{
@@ -61,21 +64,28 @@ public class CensusController extends AbstractController {
 	
 	//Devuelve JSon a a votaciones para saber si pueden borrar una vaotacion
 	//En caso afirmativo, el censo se borrara automaticamente al dar una respuesta positiva
+//	@RequestMapping(value = "/canDelete", method = RequestMethod.GET, produces="application/json")
+//	public @ResponseBody String canDelete(@RequestParam int idVotacion, @CookieValue("user") String username){
 	@RequestMapping(value = "/canDelete", method = RequestMethod.GET, produces="application/json")
-	public @ResponseBody String canDelete(@RequestParam int idVotacion, @CookieValue("user") String username){
+	public @ResponseBody String canDelete(@RequestParam int idVotacion, String username){
+		username = "test1";
 		return censusService.canDelete(idVotacion, username);
 	}	
 	
 	//Devuelve JSon a cabina para saber si un usuario puede votar
 	@RequestMapping(value = "/canVote", method = RequestMethod.GET, produces="application/json")
-	public @ResponseBody String canVote(@RequestParam int idVotacion, @CookieValue("user") String username){
+//	public @ResponseBody String canVote(@RequestParam int idVotacion, @CookieValue("user") String username){
+	public @ResponseBody String canVote(@RequestParam int idVotacion, String username){
+		username = "test1";
 		return censusService.canVote(idVotacion, username);
 	}
 		
 	
 	// Actualiza el estado de un usuario en una votacion por cabina
 	@RequestMapping(value = "/updateUser", method = RequestMethod.GET)
-	public @ResponseBody String updateUser(@RequestParam int idVotacion , @CookieValue("user") String username) {
+//	public @ResponseBody String updateUser(@RequestParam int idVotacion , @CookieValue("user") String username) {
+	public @ResponseBody String updateUser(@RequestParam int idVotacion , String username) {
+		username = "test1";
 		try{
 			if(censusService.updateUser(idVotacion, username)){
 				return new String("{\"result\":\"yes\"}");
@@ -101,7 +111,9 @@ public class CensusController extends AbstractController {
 	
 	// Metodo para la vista de votaciones por usuario---------------------------------------------------------------	
 	 @RequestMapping(value ="/votesByUser", method = RequestMethod.GET)    
-	 public ModelAndView getVotesByUser(@CookieValue("user") String username) {  
+//	 public ModelAndView getVotesByUser(@CookieValue("user") String username) {
+	 public ModelAndView getVotesByUser(String username) {
+		username = "test2";
 		ModelAndView result = new ModelAndView("census/votesByUser");
 		Collection<Census> cs;
 		cs = censusService.findCensusByUser(username);
@@ -148,7 +160,7 @@ public class CensusController extends AbstractController {
 	// Add Users ----------------------------------------------------------------
 	@RequestMapping(value = "/addUser", method = RequestMethod.GET)
 //	public ModelAndView addUser(@RequestParam int censusId, @CookieValue("user") String username, @RequestParam String username_add) {
-		public ModelAndView addUser(@RequestParam int censusId, String username, @RequestParam String username_add) {
+	public ModelAndView addUser(@RequestParam int censusId, String username, @RequestParam String username_add) {
 		ModelAndView result = new ModelAndView("census/misVotaciones");;
 		try{
 			
@@ -168,7 +180,9 @@ public class CensusController extends AbstractController {
 
 	// Remove Users ----------------------------------------------------------------
 	@RequestMapping(value = "/removeUser", method = RequestMethod.GET)
-	public ModelAndView removeUser(@RequestParam int censusId, @CookieValue("user") String username, @RequestParam String username_remove) {
+//	public ModelAndView removeUser(@RequestParam int censusId, @CookieValue("user") String username, @RequestParam String username_remove) {
+	public ModelAndView removeUser(@RequestParam int censusId, String username, @RequestParam String username_remove) {
+		username = "test1";
 		ModelAndView result = null;
 		try{
 			
