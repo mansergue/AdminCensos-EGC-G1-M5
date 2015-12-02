@@ -10,9 +10,13 @@ import domain.Census;
 
 @Repository
 public interface CensusRepository extends JpaRepository<Census, Integer> {
+	
+	// Comentar método, qué hace
 
 	@Query("select c from Census c where c.idVotacion = ?1")
 	public Census findCensusByVote(int idVotacion);
+	
+	// Ídem
 
 	@Query("select c from Census c where c.username = ?1")
 	public Collection<Census> findCensusByCreator(String username);
