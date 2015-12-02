@@ -34,17 +34,30 @@ public class CensusServiceTest {
 	
 	// Tests ------------------------------------
 
-//	@Test
-//	public void createCensus() throws ParseException {
-//		
-//		Census c_1;
-//		Census c_2;
-//		
-//		c_1.setIdVotacion(1);
-//		c_1.setUsername("Izquierda");
-//		//c_1.set
-//		
-//		//c_1 = censusService.create();
+	@Test
+	public void createCensus() throws ParseException {
+		
+		// Inicializamos un censo, inicializando los valores de los atributos ---------------------------
+		
+		Census c_1 = censusService.create(1,"DavidElecciones75", "201220150800", "201220152000", "Votación de prueba");
+		
+		// Inicializamos HashMap donde especificaremos quién ha votado y quién no, introducimos usuarios 
+		// y estos los introducimos en el censo creado --------------------------------------------------
+		
+		HashMap<String, Boolean> vpo = c_1.getVoto_por_usuario();
+		
+		vpo.put("Pepe88", true);
+		vpo.put("Ramiro90", false);
+		vpo.put("Demetrio76", true);
+		
+		c_1.setVoto_por_usuario(vpo);
+		
+		// Mostramos por pantalla el Censo creado --------------------------------------------------------
+		
+		System.out.println(c_1);
+		
+		// MÉTODO REALIZADO POR EL CURSO ANTERIOR --------------------------------------------------------
+		
 //		Census c = censusService.create(1, "juan22", "1416502444473", "1916502444473", "votacion prueba");
 //		
 //		
@@ -78,4 +91,4 @@ public class CensusServiceTest {
 //
 //		censusService.save(c3);
 	}
-//}
+}
