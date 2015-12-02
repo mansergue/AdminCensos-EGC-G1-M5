@@ -25,24 +25,25 @@ public class PopulateDatabase {
 	public static void main(String[] args) {
 		ApplicationContext populationContext;
 		DatabaseUtil databaseUtil;
-		
+
 		databaseUtil = null;
-		
+
 		try {
 			System.out.printf("PopulateDatabase 1.3%n");
 			System.out.printf("--------------------%n%n");
-			
+
 			System.out.printf("Initialising persistence context `%s'...%n", DatabaseConfig.PersistenceUnit);
 			databaseUtil = new DatabaseUtil();
-			
-			System.out.printf("Creating database `%s' (%s)...%n", databaseUtil.getDatabaseName(), databaseUtil.getDatabaseDialectName());
+
+			System.out.printf("Creating database `%s' (%s)...%n", databaseUtil.getDatabaseName(),
+					databaseUtil.getDatabaseDialectName());
 			databaseUtil.recreateDatabase();
-			
+
 			System.out.printf("Reading configuration file `%s'...%n", "PopulateDatabase.xml");
 			populationContext = new ClassPathXmlApplicationContext("classpath:PopulateDatabase.xml");
-						
+
 			System.out.printf("Persisting %d entities...%n%n", populationContext.getBeanDefinitionCount());
-			databaseUtil.openTransaction();			
+			databaseUtil.openTransaction();
 			for (Entry<String, Object> entry : populationContext.getBeansWithAnnotation(Entity.class).entrySet()) {
 				String beanName;
 				DomainEntity entity;
@@ -57,11 +58,11 @@ public class PopulateDatabase {
 		} catch (Throwable oops) {
 			System.out.flush();
 			System.err.printf("%n%s%n", oops.getLocalizedMessage());
-			oops.printStackTrace(System.err);			
+			oops.printStackTrace(System.err);
 		} finally {
 			if (databaseUtil != null)
 				databaseUtil.close();
 		}
-	}	
+	}
 
 }

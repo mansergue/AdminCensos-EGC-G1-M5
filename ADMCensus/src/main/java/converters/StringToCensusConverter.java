@@ -11,11 +11,11 @@ import repositories.CensusRepository;
 
 @Component
 @Transactional
-public class StringToCensusConverter implements Converter<String,Census>{
-	
+public class StringToCensusConverter implements Converter<String, Census> {
+
 	@Autowired
 	CensusRepository censusRepository;
-	
+
 	@Override
 	public Census convert(String text) {
 		Census result;

@@ -8,8 +8,8 @@ import domain.Census;
 
 @Component
 @Transactional
-public class CensusToStringConverter implements Converter<Census, String>{
-	
+public class CensusToStringConverter implements Converter<Census, String> {
+
 	@Override
 	public String convert(Census census) {
 		String result;

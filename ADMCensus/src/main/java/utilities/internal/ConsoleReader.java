@@ -29,7 +29,7 @@ public class ConsoleReader {
 		StringBuilder buffer;
 		String line;
 		String prompt;
-			
+
 		prompt = "> ";
 		buffer = new StringBuilder();
 		do {
@@ -40,22 +40,22 @@ public class ConsoleReader {
 			buffer.append(' ');
 			prompt = "\t> ";
 		} while (line != null && !line.endsWith(";"));
-		
+
 		if (line != null && line.endsWith(";") && buffer.length() >= 2)
 			buffer.deleteCharAt(buffer.length() - 2);
-		
+
 		result = StringUtils.trim(buffer.toString());
-		
+
 		return result;
 	}
 
 	public String readLine() throws Throwable {
 		String result;
-		
+
 		System.out.printf("> ");
 		result = reader.readLine();
 		result = StringUtils.trim(result);
-		
+
 		return result;
 	}
 

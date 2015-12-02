@@ -24,23 +24,23 @@ import org.springframework.util.Assert;
 @Service
 @Transactional
 public class LoginService implements UserDetailsService {
-	
+
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
 	UserAccountRepository userRepository;
-	
+
 	// Business methods -------------------------------------------------------
 
-	public UserDetails loadUserByUsername(String username)
-			throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Assert.notNull(username);
 
 		UserDetails result;
 
 		result = userRepository.findByUsername(username);
-		Assert.notNull(result);		
-		// WARNING: The following sentences prevent lazy initialisation problems!
+		Assert.notNull(result);
+		// WARNING: The following sentences prevent lazy initialisation
+		// problems!
 		Assert.notNull(result.getAuthorities());
 		result.getAuthorities().size();
 

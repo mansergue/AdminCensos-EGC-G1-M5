@@ -76,7 +76,8 @@ public class UserAccount extends DomainEntity implements UserDetails {
 	@ElementCollection
 	@Override
 	public Collection<Authority> getAuthorities() {
-		// WARNING: Should return an unmodifiable copy, but it's not possible with hibernate!
+		// WARNING: Should return an unmodifiable copy, but it's not possible
+		// with hibernate!
 		return authorities;
 	}
 
@@ -94,7 +95,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
 	public void removeAuthority(Authority authority) {
 		Assert.notNull(authority);
 		Assert.isTrue(authorities.contains(authority));
-		
+
 		authorities.remove(authority);
 	}
 

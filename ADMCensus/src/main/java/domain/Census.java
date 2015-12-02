@@ -18,27 +18,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
-
 @Entity
-@XmlRootElement(name="census")
+@XmlRootElement(name = "census")
 @Access(AccessType.PROPERTY)
-public class Census extends DomainEntity{
-	
-	private String username;//Username del usuario que crea la votacion
-	private int idVotacion;//Id que identifica de forma únia a la votacion
-	private String tituloVotacion;//Titulo de la votacion
-	private HashMap<String, Boolean> voto_por_usuario = new HashMap<String, Boolean>();//Mapa encargado de asignar un true o false (ha votado o no) a un token unico de un usuario
-	private Date fechaInicioVotacion;//Fecha en la que se inicia la votacion
-	private Date fechaFinVotacion;//Fecha en la que finaliza la votacion
-	
-	
-	public Census(){
-		
+public class Census extends DomainEntity {
+
+	private String username;// Username del usuario que crea la votacion
+	private int idVotacion;// Id que identifica de forma únia a la votacion
+	private String tituloVotacion;// Titulo de la votacion
+	private HashMap<String, Boolean> voto_por_usuario = new HashMap<String, Boolean>();
+	//Mapa encargado de asignar un true o false (ha votado o no) a un token unico de un usuario
+	private Date fechaInicioVotacion;// Fecha en la que se inicia la votacion
+	private Date fechaFinVotacion;// Fecha en la que finaliza la votacion
+
+	public Census() {
+
 	}
 
-    @MapKeyColumn(name="token")
-    @Column(name="valor")
-    @CollectionTable(name="value", joinColumns=@JoinColumn(name="token"))
+	@MapKeyColumn(name = "token")
+	@Column(name = "valor")
+	@CollectionTable(name = "value", joinColumns = @JoinColumn(name = "token") )
 	public HashMap<String, Boolean> getVoto_por_usuario() {
 		return voto_por_usuario;
 	}
@@ -96,13 +95,4 @@ public class Census extends DomainEntity{
 		this.fechaFinVotacion = fechaFinVotacion;
 	}
 
-	
-
-	
-	
-	
-	
-
 }
-
-
