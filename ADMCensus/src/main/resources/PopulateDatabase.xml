@@ -47,7 +47,7 @@
 		</property>
 		
 		<property name="fechaInicioVotacion" value="10/01/2015 00:00" />
-		<property name="fechaFinVotacion" value="12/02/2015 00:00" />
+		<property name="fechaFinVotacion" value="02/28/2016 00:00" />
 	</bean>
 	
 	<bean id="census3" class="domain.Census">
