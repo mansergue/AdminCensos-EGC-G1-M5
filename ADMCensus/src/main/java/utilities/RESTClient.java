@@ -10,10 +10,10 @@ public class RESTClient {
 
 	/***
 	 * 
-	 * Metodo que le un Json de autenticacion y devuelve una lista con los
-	 * nombres de usuario para que el admin del censo pueda añadir usuarios.
+	 * Metodo que lee un Json de autenticación y devuelve una lista con los
+	 * username de todos los usuarios registrados en el sistema para que el
+	 * admin del censo pueda añadir usuarios.
 	 * 
-	 * @return
 	 */
 	public static Collection<String> getListUsernamesByJsonAutentication() {
 		RestTemplate restTemplate = new RestTemplate();
