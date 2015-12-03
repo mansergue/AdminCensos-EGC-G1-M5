@@ -10,7 +10,7 @@ public class RESTClient {
 
 	/***
 	 * 
-	 * Metodo que lee un Json de autenticación y devuelve una lista con los
+	 * Método que lee un Json de autenticación y devuelve una lista con los
 	 * username de todos los usuarios registrados en el sistema para que el
 	 * admin del censo pueda añadir usuarios.
 	 * 

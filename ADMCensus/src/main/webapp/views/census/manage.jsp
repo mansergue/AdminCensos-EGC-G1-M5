@@ -29,9 +29,6 @@
 		<spring:message code="census.votacio.name" />:
 		<jstl:out value="${census.tituloVotacion}"/><br />
 		
-		<spring:message code="census.votacio.name" />:
-		<jstl:out value="${census.tituloVotacion}"/><br />
-		
 		<spring:message code="census.fecha.inicio" />:
 		<fmt:formatDate value="${census.fechaInicioVotacion}" pattern="dd/MM/yyyy"/><br/>		
 		
