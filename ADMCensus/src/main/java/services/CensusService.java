@@ -244,16 +244,16 @@ public class CensusService {
 	 * @param username_add
 	 *            Nombre de usuario que se va a añadir al censo
 	 */
-	public void removeUserToCensus(int censusId, String username, String username_remove) {
-		Census c = findOne(censusId);
-		Assert.isTrue(votacionActiva(c.getFechaInicioVotacion(), c.getFechaFinVotacion()));
-		HashMap<String, Boolean> vpo = c.getVoto_por_usuario();
-		Assert.isTrue(c.getUsername().equals(username));
-		Assert.isTrue(vpo.containsKey(username_remove) && !vpo.get(username_remove));
-		vpo.remove(username_remove);
-		c.setVoto_por_usuario(vpo);
-		save(c);
-	}
+//	public void removeUserToCensus(int censusId, String username, String username_remove) {
+//		Census c = findOne(censusId);
+//		Assert.isTrue(votacionActiva(c.getFechaInicioVotacion(), c.getFechaFinVotacion()));
+//		HashMap<String, Boolean> vpo = c.getVoto_por_usuario();
+//		Assert.isTrue(c.getUsername().equals(username));
+//		Assert.isTrue(vpo.containsKey(username_remove) && !vpo.get(username_remove));
+//		vpo.remove(username_remove);
+//		c.setVoto_por_usuario(vpo);
+//		save(c);
+//	}
 
 	/**
 	 * 
@@ -362,16 +362,16 @@ public class CensusService {
 	 * @param username_add
 	 *            Nombre de usuario que se va a añadir al censo
 	 */
-	public void addUserToCensu(int censusId, String username, String username_add) {
-		Census c = findOne(censusId);
-		Assert.isTrue(c.getUsername().equals(username));
-		HashMap<String, Boolean> vpo = c.getVoto_por_usuario();
-		Assert.isTrue(!vpo.get(username_add));
-		vpo.put(username_add, false);
-
-		c.setVoto_por_usuario(vpo);
-		save(c);
-	}
+//	public void addUserToCensu(int censusId, String username, String username_add) {
+//		Census c = findOne(censusId);
+//		Assert.isTrue(c.getUsername().equals(username));
+//		HashMap<String, Boolean> vpo = c.getVoto_por_usuario();
+//		Assert.isTrue(!vpo.get(username_add));
+//		vpo.put(username_add, false);
+//
+//		c.setVoto_por_usuario(vpo);
+//		save(c);
+//	}
 
 	/**
 	 * 
