@@ -1,6 +1,7 @@
 package services;
 
 import java.text.ParseException;
+import java.util.Collection;
 import java.util.HashMap;
 
 import org.junit.Test;
@@ -83,4 +84,34 @@ public class CensusServiceTest {
 //
 //		censusService.save(c3);
 	}
+	
+	@Test
+	public void findOneCensus() throws ParseException{
+		
+		// Inicializamos una variable de tipo Census y buscamos uno con un id en concreto -----
+		
+		Census result;
+		
+		result = censusService.findOne(2);
+		
+		System.out.println(result);
+	}
+	
+	@Test
+	public void findAllCensuses() throws ParseException{
+		
+		// Inicializamos una variable como colección de Censuses agrupando por los censos
+		// creados por un usuario en concretro y buscamos que nos devuelva una colección de 
+		// Censuses ---------------------------------------------------------------------------
+		
+		Collection<Census> result;
+		
+		result = censusService.findCensusByCreator("DavidElecciones75");
+		
+		for(Census census: result){
+		
+			System.out.println(census);
+		}
+	}
+	
 }

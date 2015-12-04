@@ -74,6 +74,15 @@ public class CensusService {
 
 		return c;
 	}
+	
+	public Collection<Census> findAll(int censusID){
+		Collection<Census> result;
+		
+		result = censusRepository.findAll();
+		Assert.notNull(result);
+		
+		return result;		
+	}
 
 	/**
 	 *
