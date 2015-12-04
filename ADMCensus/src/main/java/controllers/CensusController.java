@@ -145,6 +145,7 @@ public class CensusController extends AbstractController {
 	// public ModelAndView getAllCensusByCreador(@CookieValue("user") String
 	// username) {
 	public ModelAndView getAllCensusByCreador(String username) {
+		username = "admin1";
 		ModelAndView result = new ModelAndView("census/misCensos");
 		Collection<Census> cs;
 		cs = censusService.findCensusByCreator(username);
@@ -175,7 +176,7 @@ public class CensusController extends AbstractController {
 	// {
 	public ModelAndView addUser(@RequestParam int censusId, String username, @RequestParam String username_add) {
 		ModelAndView result = new ModelAndView("census/misVotaciones");
-		;
+		username = "admin1";
 		try {
 
 			censusService.addUserToCensus(censusId, username, username_add);
@@ -230,14 +231,10 @@ public class CensusController extends AbstractController {
 	// public ModelAndView edit(@RequestParam int censusId, @CookieValue("user")
 	// String username) {
 	public ModelAndView edit(@RequestParam int censusId, String username) {
+		username = "admin1";
 		ModelAndView result = new ModelAndView("census/manage");
-		Collection<String> usernames = RESTClient.getListUsernamesByJsonAutentication();// Llamada
-																						// a
-																						// todos
-																						// los
-																						// usuarios
-																						// del
-																						// sistema
+		//Llamada a todos los usuarios del sistema
+		Collection<String> usernames = RESTClient.getListUsernamesByJsonAutentication();
 		Census census = censusService.findOne(censusId);
 		Collection<String> user_list = census.getVoto_por_usuario().keySet();
 		result.addObject("usernames", usernames);
