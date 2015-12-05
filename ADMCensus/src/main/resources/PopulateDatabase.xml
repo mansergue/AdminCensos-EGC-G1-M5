@@ -20,6 +20,7 @@
 		<property name="username" value="admin1" />
 		<property name="idVotacion" value="23" />
 		<property name="tituloVotacion" value="Elecciones" />
+		<property name="tipoCenso" value="cerrado" />
 		<property name="voto_por_usuario">
 			<map>
 				<entry key="test1" value="true"/>
@@ -35,6 +36,7 @@
 		<property name="username" value="admin1" />
 		<property name="idVotacion" value="24" />
 		<property name="tituloVotacion" value="Elecciones Generales" />
+		<property name="tipoCenso" value="cerrado" />
 		<property name="voto_por_usuario">
 			<map>
 				<entry key="test1" value="true"/>
@@ -54,6 +56,7 @@
 		<property name="username" value="admin2" />
 		<property name="idVotacion" value="25" />
 		<property name="tituloVotacion" value="Elecciones Delegado" />
+		<property name="tipoCenso" value="cerrado" />
 		<property name="voto_por_usuario">
 			<map>
 			</map>
@@ -61,6 +64,42 @@
 		
 		<property name="fechaInicioVotacion" value="10/01/2015 00:00" />
 		<property name="fechaFinVotacion" value="12/02/2015 00:00" />
+	</bean>
+	
+	<bean id="census4" class="domain.Census">
+		<property name="username" value="admin1" />
+		<property name="idVotacion" value="26" />
+		<property name="tituloVotacion" value="Encuesta poblacion" />
+		<property name="tipoCenso" value="abierto" />
+		<property name="voto_por_usuario">
+			<map>
+				<entry key="test1" value="true"/>
+				<entry key="test2" value="false"/>
+				<entry key="test3" value="true"/>
+				<entry key="test4" value="false"/>
+				<entry key="test5" value="false"/>
+				<entry key="test6" value="false"/>
+			</map>
+		</property>
+		
+		<property name="fechaInicioVotacion" value="10/01/2015 00:00" />
+		<property name="fechaFinVotacion" value="12/02/2016 00:00" />
+	</bean>
+	
+	<bean id="census5" class="domain.Census">
+		<property name="username" value="admin1" />
+		<property name="idVotacion" value="27" />
+		<property name="tituloVotacion" value="Ganador de La Liga" />
+		<property name="tipoCenso" value="abierto" />
+		<property name="voto_por_usuario">
+			<map>
+				<entry key="test1" value="true"/>
+				<entry key="test2" value="false"/>
+			</map>
+		</property>
+		
+		<property name="fechaInicioVotacion" value="10/07/2015 00:00" />
+		<property name="fechaFinVotacion" value="12/04/2016 00:00" />
 	</bean>
 	
 
