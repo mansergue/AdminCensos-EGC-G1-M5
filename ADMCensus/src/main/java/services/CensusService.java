@@ -47,14 +47,17 @@ public class CensusService {
 	 *            Fecha de fin para la votacion
 	 * @param tituloVotacion
 	 *            Cadena de texto con el titulo de la votacion
+	 * @param tipoVotacion
+	 *            Cadena de texto con el tipo de la votacion (abierta o cerrada)
 	 * @return census
 	 * @throws ParseException
 	 * 
 	 */
-	public Census create(int idVotacion, String username, String fecha_inicio, String fecha_fin, String tituloVotacion)
-			throws ParseException {
+	public Census create(int idVotacion, String username, String fecha_inicio, String fecha_fin, String tituloVotacion,
+			String tipoVotacion) throws ParseException {
 		Assert.isTrue(!username.equals(""));
-		Census c = new Census();
+		Assert.isTrue(tipoVotacion.equals("abierta") || tipoVotacion.equals("cerrada"));
+		Census result = new Census();
 		long start_date = Long.parseLong(fecha_inicio);
 		long finish_date = Long.parseLong(fecha_fin);
 
@@ -63,25 +66,30 @@ public class CensusService {
 
 		Assert.isTrue(fecha_comienzo.before(fecha_final));
 
-		c.setFechaFinVotacion(fecha_final);
-		c.setFechaInicioVotacion(fecha_comienzo);
+		result.setFechaFinVotacion(fecha_final);
+		result.setFechaInicioVotacion(fecha_comienzo);
 
-		c.setIdVotacion(idVotacion);
-		c.setTituloVotacion(tituloVotacion);
-		c.setUsername(username);
+		result.setIdVotacion(idVotacion);
+		result.setTituloVotacion(tituloVotacion);
+		if (tipoVotacion.equals("abierta")) {
+			result.setTipoCenso("abierto");
+		} else {
+			result.setTipoCenso("cerrado");
+		}
+		result.setUsername(username);
 		HashMap<String, Boolean> vpo = new HashMap<String, Boolean>();
-		c.setVoto_por_usuario(vpo);
+		result.setVoto_por_usuario(vpo);
 
-		return c;
+		return result;
 	}
-	
-	public Collection<Census> findAll(int censusID){
+
+	public Collection<Census> findAll(int censusID) {
 		Collection<Census> result;
-		
+
 		result = censusRepository.findAll();
 		Assert.notNull(result);
-		
-		return result;		
+
+		return result;
 	}
 
 	/**
@@ -154,24 +162,29 @@ public class CensusService {
 	 */
 	public String canVote(int idVotacion, String username) {
 		Assert.isTrue(!username.equals(""));
-		String res = "";
+		String result = "";
+		Boolean canVote = false;
 
-		Census c = findCensusByVote(idVotacion);
+		Census census = findCensusByVote(idVotacion);
 
-		if (c != null && c.getVoto_por_usuario().containsKey(username)) {
-			if (!c.getVoto_por_usuario().get(username)) {
-				res = "{\"result\":\"yes\"}";
-
+		if (census != null) {
+			if (census.getTipoCenso().equals("abierto")) {
+				canVote = true;
+			} else if (census.getVoto_por_usuario().containsKey(username)
+					&& !census.getVoto_por_usuario().get(username)) {
+				canVote = true;
 			} else {
-
-				res = "{\"result\":\"no\"}";
+				canVote = false;
 			}
-
-		} else {
-			res = "{\"result\":\"no\"}";
 		}
 
-		return res;
+		if (canVote) {
+			result = "{\"result\":\"yes\"}";
+		} else {
+			result = "{\"result\":\"no\"}";
+		}
+
+		return result;
 	}
 
 	/**

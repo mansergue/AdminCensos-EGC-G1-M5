@@ -57,11 +57,11 @@ public class CensusController extends AbstractController {
 	// fecha_fin, String tituloVotacion,
 	// @CookieValue("user") String username) throws ParseException{
 	public @ResponseBody Census create(@RequestParam int idVotacion, @RequestParam String fecha_inicio,
-			@RequestParam String fecha_fin, String tituloVotacion, String username) throws ParseException {
+			@RequestParam String fecha_fin, String tituloVotacion, String tipoVotacion, String username) throws ParseException {
 		Census result = null;
 		username = "test1";
 
-		Census c = censusService.create(idVotacion, username, fecha_inicio, fecha_fin, tituloVotacion);
+		Census c = censusService.create(idVotacion, username, fecha_inicio, fecha_fin, tituloVotacion, tipoVotacion);
 		try {
 			result = censusService.save(c);
 		} catch (Exception oops) {
