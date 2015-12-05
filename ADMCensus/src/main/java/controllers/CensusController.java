@@ -57,7 +57,8 @@ public class CensusController extends AbstractController {
 	// fecha_fin, String tituloVotacion,
 	// @CookieValue("user") String username) throws ParseException{
 	public @ResponseBody Census create(@RequestParam int idVotacion, @RequestParam String fecha_inicio,
-			@RequestParam String fecha_fin, String tituloVotacion, String tipoVotacion, String username) throws ParseException {
+			@RequestParam String fecha_fin, String tituloVotacion, String tipoVotacion, String username)
+					throws ParseException {
 		Census result = null;
 		username = "test1";
 
@@ -131,7 +132,7 @@ public class CensusController extends AbstractController {
 		username = "test2";
 		ModelAndView result = new ModelAndView("census/votesByUser");
 		Collection<Census> cs;
-		cs = censusService.findCensusByUser(username);
+		cs = censusService.findPossibleCensusesByUser(username);
 		result.addObject("misVotaciones", true);
 		result.addObject("censues", cs);
 		result.addObject("requestURI", "census/votesByUser.do");
@@ -170,6 +171,10 @@ public class CensusController extends AbstractController {
 
 	// Add Users
 	// ----------------------------------------------------------------
+	// TODO: esto hay que analizar las posibilidades, ya que surge la
+	// posibilidad de "autoregistrarse" en un censo abierto y la de añadir
+	// usuarios a un censo cerrado
+
 	@RequestMapping(value = "/addUser", method = RequestMethod.GET)
 	// public ModelAndView addUser(@RequestParam int censusId,
 	// @CookieValue("user") String username, @RequestParam String username_add)
@@ -179,7 +184,27 @@ public class CensusController extends AbstractController {
 		username = "admin1";
 		try {
 
-			censusService.addUserToCensus(censusId, username, username_add);
+			censusService.addUserToClosedCensus(censusId, username, username_add);
+			result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
+
+		} catch (Exception oops) {
+			result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
+			result.addObject("message", "No se pudo añadir el usuario");
+			oops.getStackTrace();
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/registerUser", method = RequestMethod.GET)
+	// public ModelAndView addUser(@RequestParam int censusId,
+	// @CookieValue("user") String username, @RequestParam String username_add)
+	// {
+	public ModelAndView addUser(@RequestParam int censusId, @RequestParam String username_add) {
+		ModelAndView result = new ModelAndView("census/misVotaciones");
+		try {
+
+			censusService.addUserToOpenedCensus(censusId, username_add);
 			result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
 
 		} catch (Exception oops) {
@@ -193,6 +218,9 @@ public class CensusController extends AbstractController {
 
 	// Remove Users
 	// ----------------------------------------------------------------
+	// TODO: hay que analizarlo tambien. De momento esta puesto para que solo el
+	// administrador de la votacion pueda eliminar usuarios del censo si el
+	// censo es CERRADO
 	@RequestMapping(value = "/removeUser", method = RequestMethod.GET)
 	// public ModelAndView removeUser(@RequestParam int censusId,
 	// @CookieValue("user") String username, @RequestParam String
@@ -202,7 +230,7 @@ public class CensusController extends AbstractController {
 		ModelAndView result = null;
 		try {
 
-			censusService.removeUserToCensu(censusId, username, username_remove);
+			censusService.removeUserOfClosedCensus(censusId, username, username_remove);
 			result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
 
 		} catch (Exception oops) {
@@ -233,7 +261,7 @@ public class CensusController extends AbstractController {
 	public ModelAndView edit(@RequestParam int censusId, String username) {
 		username = "admin1";
 		ModelAndView result = new ModelAndView("census/manage");
-		//Llamada a todos los usuarios del sistema
+		// Llamada a todos los usuarios del sistema
 		Collection<String> usernames = RESTClient.getListUsernamesByJsonAutentication();
 		Census census = censusService.findOne(censusId);
 		Collection<String> user_list = census.getVoto_por_usuario().keySet();
