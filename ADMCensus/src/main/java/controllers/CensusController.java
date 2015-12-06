@@ -14,6 +14,7 @@ package controllers;
 import java.text.ParseException;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -111,7 +112,7 @@ public class CensusController extends AbstractController {
 
 	}
 
-	// Devuelve un censo con sus usuarios para deliveraciones al preguntar por
+	// Devuelve un censo con sus usuarios para deliberaciones al preguntar por
 	// una votacion
 	@RequestMapping(value = "/findCensusByVote", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Census findCensusByVote(@RequestParam int idVotacion) {
@@ -172,14 +173,14 @@ public class CensusController extends AbstractController {
 	// ----------------------------------------------------------------
 	@RequestMapping(value = "/addUser", method = RequestMethod.GET)
 	// public ModelAndView addUser(@RequestParam int censusId,
-	// @CookieValue("user") String username, @RequestParam String username_add)
+	// @CookieValue("user") String username, @RequestParam String username_add, @RequestParam String dirEmail)
 	// {
-	public ModelAndView addUser(@RequestParam int censusId, String username, @RequestParam String username_add) {
+	public ModelAndView addUser(@RequestParam int censusId, String username, @RequestParam String username_add, @RequestParam String dirEmail) {
 		ModelAndView result = new ModelAndView("census/misVotaciones");
 		username = "admin1";
 		try {
 
-			censusService.addUserToCensus(censusId, username, username_add);
+			censusService.addUserToCensus(censusId, username, username_add, dirEmail);
 			result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
 
 		} catch (Exception oops) {
@@ -196,13 +197,13 @@ public class CensusController extends AbstractController {
 	@RequestMapping(value = "/removeUser", method = RequestMethod.GET)
 	// public ModelAndView removeUser(@RequestParam int censusId,
 	// @CookieValue("user") String username, @RequestParam String
-	// username_remove) {
-	public ModelAndView removeUser(@RequestParam int censusId, String username, @RequestParam String username_remove) {
+	// username_remove, @RequestParam String dirEmail) {
+	public ModelAndView removeUser(@RequestParam int censusId, String username, @RequestParam String username_remove, @RequestParam String dirEmail) {
 		username = "test1";
 		ModelAndView result = null;
 		try {
 
-			censusService.removeUserToCensu(censusId, username, username_remove);
+			censusService.removeUserToCensu(censusId, username, username_remove, dirEmail);
 			result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
 
 		} catch (Exception oops) {
@@ -234,10 +235,10 @@ public class CensusController extends AbstractController {
 		username = "admin1";
 		ModelAndView result = new ModelAndView("census/manage");
 		//Llamada a todos los usuarios del sistema
-		Collection<String> usernames = RESTClient.getListUsernamesByJsonAutentication();
+		Map<String,String> usernamesAndEmails = RESTClient.getMapUSernameAndEmailByJsonAutentication();
 		Census census = censusService.findOne(censusId);
 		Collection<String> user_list = census.getVoto_por_usuario().keySet();
-		result.addObject("usernames", usernames);
+		result.addObject("usernamesAndEmails", usernamesAndEmails);//Añado mapa???????
 		result.addObject("census", census);
 		result.addObject("user", user_list);
 		result.addObject("requestURI", "census/edit.do");

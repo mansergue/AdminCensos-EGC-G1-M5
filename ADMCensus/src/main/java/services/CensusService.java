@@ -12,11 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.CensusRepository;
+import utilities.Gmail;
 import domain.Census;
 
 @Service
 @Transactional
 public class CensusService {
+	
+	private static String cuerpoEmail = ""; //Atributo necesario para mandar email con la modificacion del censo
 
 	// Managed repository -----------------------------------------------------
 
@@ -220,9 +223,12 @@ public class CensusService {
 	 *            Creador (propietario) del censo
 	 * @param username_add
 	 *            Nombre de usuario que se va a añadir al censo
+	 * @param dirEmail
+	 * 			  Correo del usuario al que se le va a notificar su incorporacion al censo
 	 */
-	public void addUserToCensus(int censusId, String username, String username_add) {
+	public void addUserToCensus(int censusId, String username, String username_add, String dirEmail) {
 		Census c = findOne(censusId);
+		Date currentMoment = new Date();// Fecha para controlar cuando se produce un cambio en el censo
 		Assert.isTrue(votacionActiva(c.getFechaInicioVotacion(), c.getFechaFinVotacion()));
 		Assert.isTrue(c.getUsername().equals(username));
 		HashMap<String, Boolean> vpo = c.getVoto_por_usuario();
@@ -230,6 +236,13 @@ public class CensusService {
 		vpo.put(username_add, false);
 		c.setVoto_por_usuario(vpo);
 		save(c);
+		//Envio de correo
+		cuerpoEmail = currentMoment.toString()+"-> Se ha incorporado al censo cuya votación es "+ c.getTituloVotacion();
+		try {//Se procede al envio del correo con el resultado de la inclusion en el censo
+			Gmail.send(cuerpoEmail, dirEmail);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -384,9 +397,12 @@ public class CensusService {
 	 *            Creador (propietario) del censo
 	 * @param username_add
 	 *            Nombre de usuario que se va a añadir al censo
+	 * @param dirEmail
+	 * 			  Correo del usuario al que se le va a notificar su exclusión del censo
 	 */
-	public void removeUserToCensu(int censusId, String username, String username_remove) {
+	public void removeUserToCensu(int censusId, String username, String username_remove, String dirEmail) {
 		Census c = findOne(censusId);
+		Date currentMoment = new Date();// Fecha para controlar cuando se produce un cambio en el censo
 		Assert.isTrue(c.getUsername().equals(username));
 		HashMap<String, Boolean> vpo = c.getVoto_por_usuario();
 		Assert.isTrue(vpo.containsKey(username_remove));// contiene usuario
@@ -394,6 +410,13 @@ public class CensusService {
 		vpo.remove(username_remove);
 		c.setVoto_por_usuario(vpo);
 		save(c);
+		//Envio de correo
+		cuerpoEmail = currentMoment.toString()+"-> Se ha eliminado del censo cuya votación es "+ c.getTituloVotacion();
+		try {//Se procede al envio del correo con el resultado de la exclusion del censo
+			Gmail.send(cuerpoEmail, dirEmail);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
