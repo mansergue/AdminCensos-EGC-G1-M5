@@ -7,7 +7,6 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-
 <div id="form-wrapper" class="myform">
 	<div class="divCenter">
 	
@@ -29,14 +28,6 @@
 </form:form>
 
 <acme:cancel url="welcome/index.do" code="census.back"/>
-
-<!-- Search -->
-<form:form action="census/edit.do?censusId=${census.id}" method="get">
-	<spring:message code="census.user" />:
-	<input type="text" name="user" />
-	<input type="submit" value="<spring:message code="census.search" />" />
-</form:form>
-	
 	
 	</div>
 </div>

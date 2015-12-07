@@ -1,13 +1,3 @@
-<%--
- * action-2.jsp
- *
- * Copyright (C) 2013 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- --%>
-
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <%@taglib prefix="jstl"	uri="http://java.sun.com/jsp/jstl/core"%>
@@ -18,6 +8,13 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<!-- Search -->
+<form:form action="census/edit.do?censusId=${census.id}" method="get">
+	<spring:message code="census.user" />:
+	<input type="text" name="user" />
+	<input type="submit" value="<spring:message code="census.search" />" />
+</form:form>
 
 
 		<spring:message code="census.token_propietario" />:
