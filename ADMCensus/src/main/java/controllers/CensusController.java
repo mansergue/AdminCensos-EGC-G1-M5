@@ -324,7 +324,6 @@ public class CensusController extends AbstractController {
 	 * ; res +=
 	 * "{\"username\":\"name8\",\"password\": \"pass8\", \"email\":\"email8\"}]"
 	 * ;
-	 * 
 	 * return res; }
 	 */
 
