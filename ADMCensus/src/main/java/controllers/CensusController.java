@@ -99,8 +99,8 @@ public class CensusController extends AbstractController {
 		} catch (Exception oops) {
 			return new String("{\"result\":\"no\"}");
 		}
-
 	}
+	
 
 	// Devuelve un censo con sus usuarios para deliberaciones 
 	@RequestMapping(value = "/findCensusByVote", method = RequestMethod.GET, produces = "application/json")
@@ -125,7 +125,6 @@ public class CensusController extends AbstractController {
 		result.addObject("misVotaciones", true);
 		result.addObject("censuses", cs);
 		result.addObject("requestURI", "census/votesByUser.do");
-
 		return result;
 	}
 
@@ -141,20 +140,21 @@ public class CensusController extends AbstractController {
 		result.addObject("censuses", cs);
 		result.addObject("misVotaciones", false);
 		result.addObject("requestURI", "census/getAllCensusByCreador.do");
-
 		return result;
 	}
 	
 	
 
 
-	 // Lista de censos del sistema
-	 /*
+	 /*// Lista de censos del sistema
 	 * @RequestMapping("/list") public ModelAndView
 	 * list(@CookieValue("language") String cookie){ String requestURI =
-	 * "census/list.do"; ModelAndView result = new ModelAndView("census/list");
-	 * result.addObject("misVotaciones",false); result.addObject("censues",
-	 * censusService.findAll()); result.addObject("requestURI", requestURI);
+	 * "census/list.do"; 
+	 * ModelAndView result = new ModelAndView("census/list");
+	 * result.addObject("misVotaciones",false); 
+	 * result.addObject("censuses",
+	 * censusService.findAll()); 
+	 * result.addObject("requestURI", requestURI);
 	 * return result; }
 	 */
 
@@ -175,7 +175,7 @@ public class CensusController extends AbstractController {
 		} catch (Exception oops) {
 			result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
 			result.addObject("message", "error");
-			JOptionPane.showMessageDialog(null, "error");
+			JOptionPane.showMessageDialog(null, "Error");
 			oops.getStackTrace();
 		}
 
@@ -200,10 +200,9 @@ public class CensusController extends AbstractController {
 		} catch (Exception oops) {
 			result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
 			result.addObject("message", "error");
-			JOptionPane.showMessageDialog(null, "error");
+			JOptionPane.showMessageDialog(null, "Error");
 			oops.getStackTrace();
 		}
-
 		return result;
 	}
 	
@@ -215,7 +214,6 @@ public class CensusController extends AbstractController {
 		ModelAndView result;
 		Census census = censusService.findOne(censusId);
 		result = createEditModelAndView(census);
-
 		return result;
 	}
 	
@@ -241,16 +239,16 @@ public class CensusController extends AbstractController {
 
 	
 	
-	 // Delete
-    /* 
+	 /*// Delete
 	 * @RequestMapping(value = "/delete", method = RequestMethod.GET) public
 	 * ModelAndView delete(@RequestParam int censusId, String token) {
-	 * ModelAndView result = null; try{ censusService.delete(censusId, token);
+	 * ModelAndView result = null; 
+	 * try{ censusService.delete(censusId, token);
 	 * result = new ModelAndView("redirect:/census/list.do");
-	 * 
-	 * }catch(Exception oops){ result = new
-	 * ModelAndView("redirect:/census/details.do?censusId="+censusId);
-	 * result.addObject("message", "No se pudo borrar el censo");
+	 * }catch(Exception oops){ 
+	 * result = new ModelAndView("redirect:/census/details.do?censusId="+censusId);
+	 * result.addObject("message", "error");
+	 * JOptionPane.showMessageDialog(null, "Error");
 	 * oops.getStackTrace(); }
 	 * return result; }
 	 */
