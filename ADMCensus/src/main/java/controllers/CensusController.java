@@ -1,26 +1,16 @@
 
-/* CustomerController.java
- *
- * Copyright (C) 2013 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- * 
- */
-
 package controllers;
 
 import java.text.ParseException;
 import java.util.Collection;
 import java.util.HashMap;
 
+import javax.swing.JOptionPane;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,28 +24,28 @@ import domain.Census;
 @Controller
 @RequestMapping("/census")
 public class CensusController extends AbstractController {
+	
+	//SERVICIOS ---------------------------------------------------------------
 
 	@Autowired
 	private CensusService censusService;
 
-	// Constructors -----------------------------------------------------------
+	//CONSTRUCTORES -----------------------------------------------------------
 
 	public CensusController() {
 		super();
 	}
 
-	/****
-	 * Metodos externos
-	 ******/
-	// Create census
-	// ---------------------------------------------------------------
-	// Recibe parametros de votacion y crea un censo por votacion
 
+	//MÉTODOS EXTERNOS --------------------------------------------------------
+	
+	
+	// Create census: Recibe una votacion y crea un censo
 	@RequestMapping(value = "/create", method = RequestMethod.GET, produces = "application/json")
-	// public @ResponseBody Census create(@RequestParam int
-	// idVotacion,@RequestParam String fecha_inicio,@RequestParam String
-	// fecha_fin, String tituloVotacion,
-	// @CookieValue("user") String username) throws ParseException{
+	// public @ResponseBody Census create(@RequestParam int idVotacion,
+	//@RequestParam String fecha_inicio,@RequestParam String fecha_fin, 
+	//String tituloVotacion, @CookieValue("user") String username) 
+	//throws ParseException{
 	public @ResponseBody Census create(@RequestParam int idVotacion, @RequestParam String fecha_inicio,
 			@RequestParam String fecha_fin, String tituloVotacion, String username) throws ParseException {
 		Census result = null;
@@ -69,10 +59,11 @@ public class CensusController extends AbstractController {
 		}
 		return result;
 	}
+	
+	
 
-	// Devuelve JSon a a votaciones para saber si pueden borrar una vaotacion
-	// En caso afirmativo, el censo se borrara automaticamente al dar una
-	// respuesta positiva
+	// Devuelve JSon a votaciones para saber si pueden borrar una votacion
+	// En caso afirmativo, el censo se borrara automaticamente
 	// @RequestMapping(value = "/canDelete", method = RequestMethod.GET,
 	// produces="application/json")
 	// public @ResponseBody String canDelete(@RequestParam int idVotacion,
@@ -111,19 +102,18 @@ public class CensusController extends AbstractController {
 
 	}
 
-	// Devuelve un censo con sus usuarios para deliveraciones al preguntar por
-	// una votacion
+	// Devuelve un censo con sus usuarios para deliberaciones 
 	@RequestMapping(value = "/findCensusByVote", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Census findCensusByVote(@RequestParam int idVotacion) {
 		return censusService.findCensusByVote(idVotacion);
 	}
 
-	/*****
-	 * Métodos internos
-	 ******/
 
-	// Metodo para la vista de votaciones por
-	// usuario---------------------------------------------------------------
+
+//MÉTODOS INTERNOS---------------------------------------------------------------------
+	
+	
+	// Vista de votaciones por usuario
 	@RequestMapping(value = "/votesByUser", method = RequestMethod.GET)
 	// public ModelAndView getVotesByUser(@CookieValue("user") String username)
 	// {
@@ -133,14 +123,13 @@ public class CensusController extends AbstractController {
 		Collection<Census> cs;
 		cs = censusService.findCensusByUser(username);
 		result.addObject("misVotaciones", true);
-		result.addObject("censues", cs);
+		result.addObject("censuses", cs);
 		result.addObject("requestURI", "census/votesByUser.do");
 
 		return result;
 	}
 
-	// Metodo para la vista de censos por
-	// creador---------------------------------------------------------------
+	// Vista de censos por creador
 	@RequestMapping(value = "/getAllCensusByCreador", method = RequestMethod.GET)
 	// public ModelAndView getAllCensusByCreador(@CookieValue("user") String
 	// username) {
@@ -149,17 +138,18 @@ public class CensusController extends AbstractController {
 		ModelAndView result = new ModelAndView("census/misCensos");
 		Collection<Census> cs;
 		cs = censusService.findCensusByCreator(username);
-		result.addObject("censues", cs);
+		result.addObject("censuses", cs);
 		result.addObject("misVotaciones", false);
 		result.addObject("requestURI", "census/getAllCensusByCreador.do");
 
 		return result;
 	}
+	
+	
 
-	/*
-	 * // Lista los censos del sistema
-	 * ---------------------------------------------------------------
-	 * 
+
+	 // Lista de censos del sistema
+	 /*
 	 * @RequestMapping("/list") public ModelAndView
 	 * list(@CookieValue("language") String cookie){ String requestURI =
 	 * "census/list.do"; ModelAndView result = new ModelAndView("census/list");
@@ -168,8 +158,9 @@ public class CensusController extends AbstractController {
 	 * return result; }
 	 */
 
+	
+	
 	// Add Users
-	// ----------------------------------------------------------------
 	@RequestMapping(value = "/addUser", method = RequestMethod.GET)
 	// public ModelAndView addUser(@RequestParam int censusId,
 	// @CookieValue("user") String username, @RequestParam String username_add)
@@ -178,21 +169,22 @@ public class CensusController extends AbstractController {
 		ModelAndView result = new ModelAndView("census/misVotaciones");
 		username = "admin1";
 		try {
-
 			censusService.addUserToCensus(censusId, username, username_add);
 			result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
 
 		} catch (Exception oops) {
 			result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
-			result.addObject("message", "No se pudo añadir el usuario");
+			result.addObject("message", "error");
+			JOptionPane.showMessageDialog(null, "error");
 			oops.getStackTrace();
 		}
 
 		return result;
 	}
 
+	
+	
 	// Remove Users
-	// ----------------------------------------------------------------
 	@RequestMapping(value = "/removeUser", method = RequestMethod.GET)
 	// public ModelAndView removeUser(@RequestParam int censusId,
 	// @CookieValue("user") String username, @RequestParam String
@@ -207,14 +199,17 @@ public class CensusController extends AbstractController {
 
 		} catch (Exception oops) {
 			result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
-			result.addObject("message", "No se pudo eliminar el usuario porque ya ha votado");
+			result.addObject("message", "error");
+			JOptionPane.showMessageDialog(null, "error");
 			oops.getStackTrace();
 		}
 
 		return result;
 	}
+	
+	
 
-	// Details ----------------------------------------------------------------
+	// Details
 	@RequestMapping(value = "/details", method = RequestMethod.GET)
 	public ModelAndView details(@RequestParam int censusId) {
 		ModelAndView result;
@@ -223,13 +218,12 @@ public class CensusController extends AbstractController {
 
 		return result;
 	}
+	
+	
 
 	// Editar un censo para añadir o quitar usuarios
-	// ---------------------------------------------------------------
-
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	// public ModelAndView edit(@RequestParam int censusId, @CookieValue("user")
-	// String username) {
+	// public ModelAndView edit(@RequestParam int censusId, @CookieValue("user") String username) {
 	public ModelAndView edit(@RequestParam int censusId, String username) {
 		username = "admin1";
 		ModelAndView result = new ModelAndView("census/manage");
@@ -245,10 +239,10 @@ public class CensusController extends AbstractController {
 		return result;
 	}
 
-	/*
-	 * // Delete
-	 * ----------------------------------------------------------------
-	 * 
+	
+	
+	 // Delete
+    /* 
 	 * @RequestMapping(value = "/delete", method = RequestMethod.GET) public
 	 * ModelAndView delete(@RequestParam int censusId, String token) {
 	 * ModelAndView result = null; try{ censusService.delete(censusId, token);
@@ -258,13 +252,13 @@ public class CensusController extends AbstractController {
 	 * ModelAndView("redirect:/census/details.do?censusId="+censusId);
 	 * result.addObject("message", "No se pudo borrar el censo");
 	 * oops.getStackTrace(); }
-	 * 
-	 * 
 	 * return result; }
 	 */
+	
+	
+	
 
 	// Save
-
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid Census census, BindingResult binding) {
 		ModelAndView result;
@@ -280,19 +274,20 @@ public class CensusController extends AbstractController {
 				result = createEditModelAndView(census, "census.commit.error");
 			}
 		}
-
 		return result;
 	}
+	
+	
 
-	// Ancillary methods ------------------------------------------------------
+	// ANCILLIARY METHODS ------------------------------------------------------
 
 	protected ModelAndView createEditModelAndView(Census census) {
 		ModelAndView result;
-
 		result = createEditModelAndView(census, null);
-
 		return result;
 	}
+	
+	
 
 	protected ModelAndView createEditModelAndView(Census census, String message) {
 		ModelAndView result = new ModelAndView("census/create");
@@ -303,12 +298,11 @@ public class CensusController extends AbstractController {
 		HashMap<String, Boolean> mapa = census.getVoto_por_usuario();
 		result.addObject("census", census);
 		result.addObject("mapa", mapa);
-		result.addObject("message", message); // esta definida en el layout, no
-												// en la vista edit
+		result.addObject("message", message); // esta definida en el layout
 
 		return result;
-
 	}
+	
 
 	/*
 	 * @RequestMapping(value ="/prueba", method = RequestMethod.GET,
