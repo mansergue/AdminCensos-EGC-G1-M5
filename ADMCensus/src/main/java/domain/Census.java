@@ -23,17 +23,21 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Census extends DomainEntity {
 
-	private String username;// Username del usuario que crea la votacion
-	private int idVotacion;// Id que identifica de forma únia a la votacion
-	private String tituloVotacion;// Titulo de la votacion
+	private String username;// Usuario que crea la votacion
+	private int idVotacion;//Id único de una votacion
+	private String tituloVotacion;// Título de la votacion
 	private HashMap<String, Boolean> voto_por_usuario = new HashMap<String, Boolean>();
-	//Mapa encargado de asignar un true o false (ha votado o no) a un token unico de un usuario
-	private Date fechaInicioVotacion;// Fecha en la que se inicia la votacion
-	private Date fechaFinVotacion;// Fecha en la que finaliza la votacion
+	//Indica si un usuario ha votado o no
+	private Date fechaInicioVotacion;// Fecha de inicio
+	private Date fechaFinVotacion;// Fecha de fin
+	
+	
 
 	public Census() {
 
 	}
+	
+	
 
 	@MapKeyColumn(name = "token")
 	@Column(name = "valor")
