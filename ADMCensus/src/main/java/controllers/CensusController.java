@@ -202,7 +202,7 @@ public class CensusController extends AbstractController {
 		ModelAndView result = null;
 		try {
 
-			censusService.removeUserToCensu(censusId, username, username_remove);
+			censusService.removeUserToCensus(censusId, username, username_remove);
 			result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
 
 		} catch (Exception oops) {
