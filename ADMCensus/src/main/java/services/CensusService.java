@@ -83,11 +83,24 @@ public class CensusService {
 		return result;
 	}
 
-	public Collection<Census> findAll(int censusID) {
-		Collection<Census> result;
+	/**
+	 * Metodo que devuelve los censos en los que se puede registrar un usuario.
+	 * Para ello, el censo tiene que ser abierto, estar la votacion activa y que
+	 * el usuario dado no se encuentre ya registrado
+	 * 
+	 * @param username
+	 */
+	public Collection<Census> findCensusesToRegisterByUser(String username) {
+		Collection<Census> result = new ArrayList<Census>();
+		Collection<Census> openedCensuses;
+		openedCensuses = censusRepository.findAllOpenedCensuses();
 
-		result = censusRepository.findAll();
-		Assert.notNull(result);
+		for (Census c : openedCensuses) {
+			if (!c.getVoto_por_usuario().containsKey(username)
+					&& votacionActiva(c.getFechaInicioVotacion(), c.getFechaFinVotacion())) {
+				result.add(c);
+			}
+		}
 
 		return result;
 	}
@@ -103,23 +116,31 @@ public class CensusService {
 	 *            Nombre de usuario
 	 * @return boolean
 	 */
-	public boolean updateUser(int idVotacion, String username) {
-		boolean res = false;
+	// TODO habria que repasarlo cuando sepamos como funciona exactamente
+	public boolean updateUser(int idVotacion, String tipoVotacion, String username) {
+		boolean result = false;
 		Assert.isTrue(!username.equals(""));
 		Census c = findCensusByVote(idVotacion);
 		HashMap<String, Boolean> vpo = c.getVoto_por_usuario();
 
-		if (vpo.containsKey(username) && !vpo.get(username)) {
+		if (tipoVotacion.equals("abierta")) {
+			if (!vpo.containsKey(username)) {
+				vpo.put(username, true);
+				result = true;
+			}
+		} else {
+			if (vpo.containsKey(username) && !vpo.get(username)) {
 
-			vpo.remove(username);
-			vpo.put(username, true);
-			res = true;
+				vpo.remove(username);
+				vpo.put(username, true);
+				result = true;
+			}
 		}
 
 		c.setVoto_por_usuario(vpo);
 		save(c);
 
-		return res;
+		return result;
 	}
 
 	/**
@@ -240,8 +261,10 @@ public class CensusService {
 		for (Census c : allCensuses) {
 			// comprobamos si la votacion esta activa
 			if (votacionActiva(c.getFechaInicioVotacion(), c.getFechaFinVotacion())) {
-				if (c.getTipoCenso().equals("abierto") && !c.getVoto_por_usuario().containsKey(username)) {
-					result.add(c);
+				if (c.getTipoCenso().equals("abierto")) {
+					if (!c.getVoto_por_usuario().containsKey(username) || (c.getVoto_por_usuario().containsKey(username)
+							&& !c.getVoto_por_usuario().get(username)))
+						result.add(c);
 				} else if (c.getTipoCenso().equals("cerrado") && c.getVoto_por_usuario().containsKey(username)
 						&& !c.getVoto_por_usuario().get(username)) {
 					result.add(c);

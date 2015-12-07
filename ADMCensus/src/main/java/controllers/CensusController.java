@@ -12,6 +12,7 @@
 package controllers;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -57,7 +58,7 @@ public class CensusController extends AbstractController {
 	// fecha_fin, String tituloVotacion,
 	// @CookieValue("user") String username) throws ParseException{
 	public @ResponseBody Census create(@RequestParam int idVotacion, @RequestParam String fecha_inicio,
-			@RequestParam String fecha_fin, String tituloVotacion, String tipoVotacion, String username)
+			@RequestParam String fecha_fin, @RequestParam String tituloVotacion, String tipoVotacion, String username)
 					throws ParseException {
 		Census result = null;
 		username = "test1";
@@ -97,10 +98,11 @@ public class CensusController extends AbstractController {
 	@RequestMapping(value = "/updateUser", method = RequestMethod.GET)
 	// public @ResponseBody String updateUser(@RequestParam int idVotacion ,
 	// @CookieValue("user") String username) {
-	public @ResponseBody String updateUser(@RequestParam int idVotacion, String username) {
+	public @ResponseBody String updateUser(@RequestParam int idVotacion, @RequestParam String tipoVotacion,
+			String username) {
 		username = "test1";
 		try {
-			if (censusService.updateUser(idVotacion, username)) {
+			if (censusService.updateUser(idVotacion, tipoVotacion, username)) {
 				return new String("{\"result\":\"yes\"}");
 			} else {
 				return new String("{\"result\":\"no\"}");
@@ -196,19 +198,19 @@ public class CensusController extends AbstractController {
 		return result;
 	}
 
+	//TODO revisar redireccionamiento etc
 	@RequestMapping(value = "/registerUser", method = RequestMethod.GET)
-	// public ModelAndView addUser(@RequestParam int censusId,
-	// @CookieValue("user") String username, @RequestParam String username_add)
+	// public ModelAndView addUser(@RequestParam int censusId, @CookieValue("user") String username)
 	// {
-	public ModelAndView addUser(@RequestParam int censusId, @RequestParam String username_add) {
-		ModelAndView result = new ModelAndView("census/misVotaciones");
+	public ModelAndView addUser(@RequestParam int censusId, String username) {
+		ModelAndView result = new ModelAndView("census/censosARegistrar");
 		try {
 
-			censusService.addUserToOpenedCensus(censusId, username_add);
-			result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
+			censusService.addUserToOpenedCensus(censusId, username);
+			result = new ModelAndView("redirect:/census/getCensusesToRegister.do");
 
 		} catch (Exception oops) {
-			result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
+			//result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
 			result.addObject("message", "No se pudo añadir el usuario");
 			oops.getStackTrace();
 		}
@@ -308,6 +310,26 @@ public class CensusController extends AbstractController {
 				result = createEditModelAndView(census, "census.commit.error");
 			}
 		}
+
+		return result;
+	}
+
+	/**
+	 * 
+	 * @param username
+	 * @return
+	 */
+	@RequestMapping(value = "/getCensusesToRegister", method = RequestMethod.GET)
+	// public ModelAndView getAllCensusByCreador(@CookieValue("user") String
+	// username) {
+	public ModelAndView getCensusesToRegister(String username) {
+		username = "test1";
+		ModelAndView result = new ModelAndView("census/censosARegistrar");
+		Collection<Census> censuses = new ArrayList<Census>();
+		censuses = censusService.findCensusesToRegisterByUser(username);
+		result.addObject("censuses", censuses);
+		result.addObject("misVotaciones", false);
+		result.addObject("requestURI", "census/getCensusesToRegister.do");
 
 		return result;
 	}

@@ -97,5 +97,33 @@
 		<property name="fechaFinVotacion" value="12/03/2016 00:00" />
 	</bean>
 
+	<bean id="census6" class="domain.Census">
+		<property name="username" value="admin1" />
+		<property name="idVotacion" value="28" />
+		<property name="tituloVotacion" value="Independencia" />
+		<property name="tipoCenso" value="abierto" />
+		<property name="voto_por_usuario">
+			<map>
+			</map>
+		</property>
+
+		<property name="fechaInicioVotacion" value="10/11/2015 00:00" />
+		<property name="fechaFinVotacion" value="12/03/2016 00:00" />
+	</bean>
+
+	<bean id="census7" class="domain.Census">
+		<property name="username" value="admin1" />
+		<property name="idVotacion" value="29" />
+		<property name="tituloVotacion" value="Ordenadores en colegios" />
+		<property name="tipoCenso" value="abierto" />
+		<property name="voto_por_usuario">
+			<map>
+			</map>
+		</property>
+
+		<property name="fechaInicioVotacion" value="10/11/2015 00:00" />
+		<property name="fechaFinVotacion" value="12/03/2016 00:00" />
+	</bean>
+
 
 </beans>

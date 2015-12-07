@@ -20,8 +20,9 @@
 			
 			<li class='has-sub'><a><spring:message code="master.page.listar" /></a>
 				<ul>
-					<li><a href="census/votesByUser.do"><spring:message code="master.page.census.my.votes" /></a></li>
+					<li><a href="census/votesByUser.do"><spring:message code="master.page.census.activeVotes" /></a></li>
 					<li><a href="census/getAllCensusByCreador.do"><spring:message code="master.page.census.byCreator" /></a></li> 
+					<li><a href="census/getCensusesToRegister.do"><spring:message code="master.page.census.listRegister" /></a></li>
 				</ul>
 			</li>
 			<li class='has-sub'><a href="http://localhost:8080/CreacionAdminVotaciones"><spring:message code="master.page.votaciones" /></a></li>

@@ -47,4 +47,9 @@
 		<put-attribute name="body" value="/views/census/list.jsp" />
 	</definition>
 	
+	<definition name="census/censosARegistrar" extends="master.page">	
+		<put-attribute name="title" value="Register in a census" />
+		<put-attribute name="body" value="/views/census/registerList.jsp" />
+	</definition>
+	
 </tiles-definitions>

@@ -20,5 +20,11 @@ public interface CensusRepository extends JpaRepository<Census, Integer> {
 
 	@Query("select c from Census c where c.username = ?1")
 	public Collection<Census> findCensusByCreator(String username);
+	
+	/**
+	 * Devuelve los censos abiertos
+	 */
+	@Query("select c from Census c where c.tipoCenso = 'abierto'")
+	public Collection<Census> findAllOpenedCensuses();
 
 }
