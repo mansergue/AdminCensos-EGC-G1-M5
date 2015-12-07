@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -443,5 +444,33 @@ public class CensusService {
 
 		return res;
 	}
+	
+	
+	
+	//NUEVA FUNCIONALIDAD 2015/2016
+	
+	/**
+	 * Metodo para filtrar usuarios de un censo
+	 * @param username = Nombre del admin del censo
+	 * @param userSearch =  Usuario que buscamos
+	 * @param censusId
+	 * @return el filtro de búsqueda
+	 */
+	public Collection<Census> findUser(String username, String userSearch, int censusId) {
+		Assert.hasLength(username);
+		Assert.hasLength(userSearch);
+		Census c = findOne(censusId);
+		Assert.isTrue(c.getUsername().equals(username));
+		Assert.isTrue(c.getUsername().equals(username));
+		Collection<Census> res = new HashSet<Census>();
+		
+		HashMap<String, Boolean> vpo = c.getVoto_por_usuario();
+		if(vpo.containsKey(userSearch)){
+			res.add(c);
+		}
+		return res;
+	}
+	
+	
 
 }
