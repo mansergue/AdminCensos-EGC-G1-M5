@@ -92,7 +92,7 @@ public class CensusService {
 	 */
 	public Collection<Census> findCensusesToRegisterByUser(String username) {
 		Collection<Census> result = new ArrayList<Census>();
-		Collection<Census> openedCensuses;
+		Collection<Census> openedCensuses = new ArrayList<Census>();
 		openedCensuses = censusRepository.findAllOpenedCensuses();
 
 		for (Census c : openedCensuses) {
@@ -261,12 +261,7 @@ public class CensusService {
 		for (Census c : allCensuses) {
 			// comprobamos si la votacion esta activa
 			if (votacionActiva(c.getFechaInicioVotacion(), c.getFechaFinVotacion())) {
-				if (c.getTipoCenso().equals("abierto")) {
-					if (!c.getVoto_por_usuario().containsKey(username) || (c.getVoto_por_usuario().containsKey(username)
-							&& !c.getVoto_por_usuario().get(username)))
-						result.add(c);
-				} else if (c.getTipoCenso().equals("cerrado") && c.getVoto_por_usuario().containsKey(username)
-						&& !c.getVoto_por_usuario().get(username)) {
+				if (c.getVoto_por_usuario().containsKey(username) && !c.getVoto_por_usuario().get(username)) {
 					result.add(c);
 				}
 			}

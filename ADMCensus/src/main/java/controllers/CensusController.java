@@ -131,7 +131,7 @@ public class CensusController extends AbstractController {
 	// public ModelAndView getVotesByUser(@CookieValue("user") String username)
 	// {
 	public ModelAndView getVotesByUser(String username) {
-		username = "test2";
+		username = "test1";
 		ModelAndView result = new ModelAndView("census/votesByUser");
 		Collection<Census> cs;
 		cs = censusService.findPossibleCensusesByUser(username);
@@ -203,14 +203,15 @@ public class CensusController extends AbstractController {
 	// public ModelAndView addUser(@RequestParam int censusId, @CookieValue("user") String username)
 	// {
 	public ModelAndView addUser(@RequestParam int censusId, String username) {
-		ModelAndView result = new ModelAndView("census/censosARegistrar");
+		ModelAndView result = null;
+		username = "test1";
 		try {
 
 			censusService.addUserToOpenedCensus(censusId, username);
 			result = new ModelAndView("redirect:/census/getCensusesToRegister.do");
 
 		} catch (Exception oops) {
-			//result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
+			result = new ModelAndView("redirect:/census/getCensusesToRegister.do");
 			result.addObject("message", "No se pudo añadir el usuario");
 			oops.getStackTrace();
 		}
