@@ -180,7 +180,7 @@ public class CensusController extends AbstractController {
 		username = "admin1";
 		try {
 
-			censusService.addUserToCensus(censusId, username, username_add, dirEmail);
+			censusService.addUserToCensus(censusId, username, username_add);
 			result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
 
 		} catch (Exception oops) {
@@ -203,7 +203,7 @@ public class CensusController extends AbstractController {
 		ModelAndView result = null;
 		try {
 
-			censusService.removeUserToCensu(censusId, username, username_remove, dirEmail);
+			censusService.removeUserToCensu(censusId, username, username_remove);
 			result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
 
 		} catch (Exception oops) {
