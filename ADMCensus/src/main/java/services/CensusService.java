@@ -266,6 +266,23 @@ public class CensusService {
 	}
 
 	/**
+	 * Devuelve un determinado censo de un propietario
+	 * 
+	 * @param censusId
+	 * @param username
+	 * @return Census
+	 */
+	public Census findOneByCreator(int censusId, String username) {
+		Assert.isTrue(!username.equals(""));
+		Census result;
+		result = findOne(censusId);
+		Assert.isTrue(result != null);
+		Assert.isTrue(result.getUsername().equals(username));
+
+		return result;
+	}
+
+	/**
 	 * 
 	 * Añade un usuario con un username determidado a un censo CERRADO
 	 *

@@ -245,12 +245,16 @@ public class CensusController extends AbstractController {
 	}
 
 	// Details ----------------------------------------------------------------
+	//TODO habria que poner un @cookievalue y comprobar si es o no editable
 	@RequestMapping(value = "/details", method = RequestMethod.GET)
 	public ModelAndView details(@RequestParam int censusId) {
 		ModelAndView result;
 		Census census = censusService.findOne(censusId);
 		result = createEditModelAndView(census);
+		Boolean editable;
+		editable = census.getTipoCenso().equals("cerrado") && !census.getVoto_por_usuario().isEmpty();
 
+		result.addObject("editable", editable);
 		return result;
 	}
 
@@ -263,13 +267,17 @@ public class CensusController extends AbstractController {
 	public ModelAndView edit(@RequestParam int censusId, String username) {
 		username = "admin1";
 		ModelAndView result = new ModelAndView("census/manage");
+		Boolean editable;
 		// Llamada a todos los usuarios del sistema
 		Collection<String> usernames = RESTClient.getListUsernamesByJsonAutentication();
-		Census census = censusService.findOne(censusId);
+		Census census = censusService.findOneByCreator(censusId, username);
 		Collection<String> user_list = census.getVoto_por_usuario().keySet();
+		editable = census.getTipoCenso().equals("cerrado") && !census.getVoto_por_usuario().isEmpty()
+				&& census.getUsername().equals(username);
 		result.addObject("usernames", usernames);
 		result.addObject("census", census);
 		result.addObject("user", user_list);
+		result.addObject("editable", editable);
 		result.addObject("requestURI", "census/edit.do");
 
 		return result;

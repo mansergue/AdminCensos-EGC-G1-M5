@@ -43,7 +43,7 @@
 	
 <br/>
 
-<jstl:if test="${!empty usernames && census.tipoCenso == 'cerrado'}">
+<jstl:if test="${editable}">
 
 	<display:table pagesize="5" class="displaytag" name="usernames" requestURI="${requestURI}" id="row">
 		
