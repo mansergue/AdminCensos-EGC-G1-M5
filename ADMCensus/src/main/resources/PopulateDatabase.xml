@@ -37,12 +37,13 @@
 		<property name="tituloVotacion" value="Elecciones Generales" />
 		<property name="voto_por_usuario">
 			<map>
+				<entry key="test0" value="true"/>
 				<entry key="test1" value="true"/>
 				<entry key="test2" value="false"/>
 				<entry key="test3" value="true"/>
 				<entry key="test4" value="false"/>
 				<entry key="test5" value="false"/>
-				<entry key="test6" value="false"/>
+				<!-- <entry key="test6" value="false"/> -->
 			</map>
 		</property>
 		
