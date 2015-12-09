@@ -311,6 +311,7 @@ public class CensusService {
 	public Collection<Census> findUser(String username, String userSearch, int censusId) {
 		Assert.hasLength(username);
 		Assert.hasLength(userSearch);
+		Assert.isTrue(censusId > 0);
 		Census c = findOne(censusId);
 		Assert.isTrue(c.getUsername().equals(username));
 		Collection<Census> res = new ArrayList<Census>() ;

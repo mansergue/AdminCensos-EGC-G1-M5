@@ -10,11 +10,13 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!-- Search -->
-<form:form action="census/edit.do?censusId=${census.id}" method="get">
+<form:form action="census/edit.do?censusId=${census.id}" method="GET">
 	<spring:message code="census.user" />:
 	<input type="text" name="user" />
-	<input type="submit" value="<spring:message code="census.search" />" />
+<%-- 	<input type="submit" name="search" value="<spring:message code="census.search" />"/> --%>
+	<acme:cancel url="/census/findUser?username=${census.username}?userSearch=${user}?censusId=${census.id}" code="census.search"/>
 </form:form>
+
 
 
 		<spring:message code="census.token_propietario" />:

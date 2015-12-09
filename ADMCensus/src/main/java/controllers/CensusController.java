@@ -14,13 +14,10 @@ package controllers;
 import java.text.ParseException;
 import java.util.Collection;
 import java.util.HashMap;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -190,6 +187,8 @@ public class CensusController extends AbstractController {
 
 		return result;
 	}
+	
+	
 
 	// Remove Users
 	// ----------------------------------------------------------------
@@ -213,6 +212,32 @@ public class CensusController extends AbstractController {
 
 		return result;
 	}
+	
+	
+	// Find Users
+	
+	@RequestMapping(value = "/findUser", method = RequestMethod.GET)
+	// public ModelAndView findUser(@RequestParam int censusId,
+	// @CookieValue("user") String username, @RequestParam String
+	// userSearch) {
+		public ModelAndView findUser(String username, @RequestParam String userSearch, @RequestParam int censusId) {
+			username = "test1";
+			ModelAndView result = null;
+			try {
+				censusService.findUser(username, userSearch, censusId);
+				result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
+
+			} catch (Exception oops) {
+				result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
+				result.addObject("message", "No se pudo encontrar el usuario");
+				oops.getStackTrace();
+			}
+			return result;
+		}
+	
+	
+	
+	
 
 	// Details ----------------------------------------------------------------
 	@RequestMapping(value = "/details", method = RequestMethod.GET)
@@ -224,7 +249,7 @@ public class CensusController extends AbstractController {
 		return result;
 	}
 
-	// Editar un censo para añadir o quitar usuarios
+	// Editar un censo para añadir o quitar usuarios y buscarlos
 	// ---------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -244,10 +269,10 @@ public class CensusController extends AbstractController {
 
 		return result;
 	}
+	
 
-	/*
-	 * // Delete
-	 * ----------------------------------------------------------------
+
+	 /* // Delete
 	 * 
 	 * @RequestMapping(value = "/delete", method = RequestMethod.GET) public
 	 * ModelAndView delete(@RequestParam int censusId, String token) {
@@ -258,13 +283,13 @@ public class CensusController extends AbstractController {
 	 * ModelAndView("redirect:/census/details.do?censusId="+censusId);
 	 * result.addObject("message", "No se pudo borrar el censo");
 	 * oops.getStackTrace(); }
-	 * 
-	 * 
+	 *
 	 * return result; }
 	 */
 
+	
+	
 	// Save
-
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid Census census, BindingResult binding) {
 		ModelAndView result;
