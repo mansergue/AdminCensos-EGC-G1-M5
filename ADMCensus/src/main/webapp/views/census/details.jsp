@@ -58,6 +58,8 @@
 	
 <br/> --%>
 
+<acme:cancel url="census/export.do?censusId=${census.id}" code="census.export"/>
+
 <acme:cancel url="census/edit.do?censusId=${census.id }" code="census.edit"/>
 
 <acme:cancel url="census/getAllCensusByCreador.do" code="census.back"/>
