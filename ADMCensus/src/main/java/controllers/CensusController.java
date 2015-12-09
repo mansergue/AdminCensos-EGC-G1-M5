@@ -11,6 +11,10 @@
 
 package controllers;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -30,6 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
 import services.CensusService;
 import utilities.RESTClient;
 import domain.Census;
+import domain.User;
 
 @Controller
 @RequestMapping("/census")
@@ -233,7 +238,7 @@ public class CensusController extends AbstractController {
 	public ModelAndView edit(@RequestParam int censusId, String username) {
 		username = "admin1";
 		ModelAndView result = new ModelAndView("census/manage");
-		//Llamada a todos los usuarios del sistema
+		// Llamada a todos los usuarios del sistema
 		Collection<String> usernames = RESTClient.getListUsernamesByJsonAutentication();
 		Census census = censusService.findOne(censusId);
 		Collection<String> user_list = census.getVoto_por_usuario().keySet();
@@ -242,6 +247,88 @@ public class CensusController extends AbstractController {
 		result.addObject("user", user_list);
 		result.addObject("requestURI", "census/edit.do");
 
+		return result;
+	}
+
+	// Exportar un censo a txt
+	// ---------------------------------------------------------------
+
+	@RequestMapping(value = "/export", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam int censusId) throws IOException {
+		ModelAndView result;
+		Census census = censusService.findOne(censusId);
+		// File file = new File("/Documents and
+		// Settings/Student/Desktop/filename" + censusId + ".txt");
+		File file = new File("/home/agora-us-egc/Escritorio/filename" + censusId + ".txt");
+		// Comprobamos que el txt que vamos a crear no existe ya en este
+		// directorio,
+		// sino existe, creamos un txt nuevo, en caso de que exista uno, lo
+		// sustituimos
+		if (!file.exists()) {
+			file.createNewFile();
+		}
+		// Aquí estamos dando el formato que queremos que tenga nuestro txt
+		FileWriter fileWriter = new FileWriter(file);
+		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+		bufferedWriter.newLine();
+		bufferedWriter.write("Details of the census");
+		bufferedWriter.newLine();
+		bufferedWriter.newLine();
+		bufferedWriter.write("Owner: " + census.getUsername());
+		bufferedWriter.newLine();
+		bufferedWriter.write("Name of vote: " + census.getTituloVotacion());
+		bufferedWriter.newLine();
+		bufferedWriter.write("Vote number: " + census.getIdVotacion());
+		bufferedWriter.newLine();
+		bufferedWriter.write("Start date: " + census.getFechaInicioVotacion());
+		bufferedWriter.newLine();
+		bufferedWriter.write("Finish date: " + census.getFechaFinVotacion());
+		bufferedWriter.newLine();
+		bufferedWriter.write("---------------------");
+		bufferedWriter.newLine();
+		bufferedWriter.newLine();
+		bufferedWriter.write("Voters: ");
+		bufferedWriter.newLine();
+		// Todos los usuarios del sistema
+		Collection<String> usernames = RESTClient.getListUsernamesByJsonAutentication();
+		// Todos los que han votado en un censo
+		Collection<String> user_list = census.getVoto_por_usuario().keySet();
+		if (usernames.size() != 0) {
+			// Aquí compruebo que de todos los usuarios disponibles en el
+			// sistema, cuál de
+			// ellos ha votado ya en el censo
+			for (String aux : usernames) {
+				for (String voter : user_list) {
+					// Uno de los usuarios del sistema ya ha votado en dicho
+					// censo
+					if (aux.equals(voter)) {
+						// Añadimos este usuario que ya ha votado al text
+						User user = RESTClient.getCertainUserByJsonAuthentication(voter);
+						bufferedWriter.newLine();
+						bufferedWriter.write("User_Id: " + user.getU_id());
+						bufferedWriter.newLine();
+						bufferedWriter.write("Username: " + user.getUsername());
+						bufferedWriter.newLine();
+						bufferedWriter.write("Email: " + user.getEmail());
+						bufferedWriter.newLine();
+						bufferedWriter.write("Genre: " + user.getGenre());
+						bufferedWriter.newLine();
+						bufferedWriter.write("Autonomous community: " + user.getAutonomous_community());
+						bufferedWriter.newLine();
+						bufferedWriter.write("Age: " + user.getAge());
+						bufferedWriter.newLine();
+						bufferedWriter.write("*****************");
+						bufferedWriter.newLine();
+						break;
+					}
+				}
+			}
+		} else {
+			bufferedWriter.write("Nothing to display because there isn't any voters");
+		}
+
+		bufferedWriter.close();
+		result = new ModelAndView("redirect:getAllCensusByCreador.do");
 		return result;
 	}
 
