@@ -238,7 +238,7 @@ public class CensusController extends AbstractController {
 		Map<String,String> usernamesAndEmails = RESTClient.getMapUSernameAndEmailByJsonAutentication();
 		Census census = censusService.findOne(censusId);
 		Collection<String> user_list = census.getVoto_por_usuario().keySet();
-		result.addObject("usernamesAndEmails", usernamesAndEmails);//Añado mapa???????
+		result.addObject("usernames", usernamesAndEmails.keySet());
 		result.addObject("census", census);
 		result.addObject("user", user_list);
 		result.addObject("requestURI", "census/edit.do");
