@@ -20,8 +20,14 @@
 		<spring:message code="census.token_propietario" />:
 		<jstl:out value="${census.username}"/><br/>
 		
-		<spring:message code="census.votacion_id" />:
-		<jstl:out value="${census.idVotacion}"/><br />
+		<spring:message code="census.tipo" />:
+		<jstl:if test="${census.tipoCenso == 'abierto' }">
+			<spring:message code="census.abierto" /><br />
+		</jstl:if>
+		
+		<jstl:if test="${census.tipoCenso == 'cerrado' }">
+			<spring:message code="census.cerrado" /><br />
+		</jstl:if>
 		
 		<spring:message code="census.votacio.name" />:
 		<jstl:out value="${census.tituloVotacion}"/><br />

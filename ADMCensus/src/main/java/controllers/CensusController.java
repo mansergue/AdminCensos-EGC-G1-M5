@@ -171,12 +171,9 @@ public class CensusController extends AbstractController {
 	 * return result; }
 	 */
 
-	// Add Users
+	// Add Users (añadir usuarios a un censo cerrado, como administrador del
+	// censo)
 	// ----------------------------------------------------------------
-	// TODO: esto hay que analizar las posibilidades, ya que surge la
-	// posibilidad de "autoregistrarse" en un censo abierto y la de añadir
-	// usuarios a un censo cerrado
-
 	@RequestMapping(value = "/addUser", method = RequestMethod.GET)
 	// public ModelAndView addUser(@RequestParam int censusId,
 	// @CookieValue("user") String username, @RequestParam String username_add)
@@ -198,9 +195,11 @@ public class CensusController extends AbstractController {
 		return result;
 	}
 
-	//TODO revisar redireccionamiento etc
+	// Registrarse en un censo abierto y activo
+	// ----------------------------------------
 	@RequestMapping(value = "/registerUser", method = RequestMethod.GET)
-	// public ModelAndView addUser(@RequestParam int censusId, @CookieValue("user") String username)
+	// public ModelAndView addUser(@RequestParam int censusId,
+	// @CookieValue("user") String username)
 	// {
 	public ModelAndView addUser(@RequestParam int censusId, String username) {
 		ModelAndView result = null;
@@ -221,7 +220,7 @@ public class CensusController extends AbstractController {
 
 	// Remove Users
 	// ----------------------------------------------------------------
-	// TODO: hay que analizarlo tambien. De momento esta puesto para que solo el
+	// TODO: hay que analizarlo. De momento esta puesto para que solo el
 	// administrador de la votacion pueda eliminar usuarios del censo si el
 	// censo es CERRADO
 	@RequestMapping(value = "/removeUser", method = RequestMethod.GET)
@@ -315,11 +314,7 @@ public class CensusController extends AbstractController {
 		return result;
 	}
 
-	/**
-	 * 
-	 * @param username
-	 * @return
-	 */
+	// Nos devuelve una lista con los censos en los que nos podemos registrar
 	@RequestMapping(value = "/getCensusesToRegister", method = RequestMethod.GET)
 	// public ModelAndView getAllCensusByCreador(@CookieValue("user") String
 	// username) {

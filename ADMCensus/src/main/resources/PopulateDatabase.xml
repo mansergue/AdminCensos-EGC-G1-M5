@@ -39,7 +39,7 @@
 		<property name="tipoCenso" value="cerrado" />
 		<property name="voto_por_usuario">
 			<map>
-				<entry key="test1" value="true" />
+				<entry key="test1" value="false" />
 				<entry key="test2" value="false" />
 				<entry key="test3" value="true" />
 				<entry key="test4" value="false" />

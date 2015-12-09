@@ -116,25 +116,17 @@ public class CensusService {
 	 *            Nombre de usuario
 	 * @return boolean
 	 */
-	// TODO habria que repasarlo cuando sepamos como funciona exactamente
 	public boolean updateUser(int idVotacion, String tipoVotacion, String username) {
 		boolean result = false;
 		Assert.isTrue(!username.equals(""));
 		Census c = findCensusByVote(idVotacion);
 		HashMap<String, Boolean> vpo = c.getVoto_por_usuario();
 
-		if (tipoVotacion.equals("abierta")) {
-			if (!vpo.containsKey(username)) {
-				vpo.put(username, true);
-				result = true;
-			}
-		} else {
-			if (vpo.containsKey(username) && !vpo.get(username)) {
+		if (vpo.containsKey(username) && !vpo.get(username)) {
 
-				vpo.remove(username);
-				vpo.put(username, true);
-				result = true;
-			}
+			vpo.remove(username);
+			vpo.put(username, true);
+			result = true;
 		}
 
 		c.setVoto_por_usuario(vpo);
@@ -188,15 +180,8 @@ public class CensusService {
 
 		Census census = findCensusByVote(idVotacion);
 
-		if (census != null) {
-			// si el censo es abierto y no esta registrado su nombre, puede
-			// votar (si ya esta registrado es porque ya ha votado)
-			if (census.getTipoCenso().equals("abierto") && !census.getVoto_por_usuario().containsKey(username)) {
-				canVote = true;
-			} else if (census.getVoto_por_usuario().containsKey(username)
-					&& !census.getVoto_por_usuario().get(username)) {
-				canVote = true;
-			}
+		if (census.getVoto_por_usuario().containsKey(username) && !census.getVoto_por_usuario().get(username)) {
+			canVote = true;
 		}
 
 		if (canVote) {
@@ -243,10 +228,6 @@ public class CensusService {
 	/**
 	 * Metodo que devuelve todos los censos de las votaciones en las que un
 	 * usuario puede votar
-	 * 
-	 * Esto implica tanto las votaciones abiertas y activas, como las cerradas y
-	 * activas en las que el usuario este censado, SIEMPRE Y CUANDO EL USUARIO
-	 * NO HAYA VOTADO YA
 	 * 
 	 * @param username
 	 *            Nombre de usuario
