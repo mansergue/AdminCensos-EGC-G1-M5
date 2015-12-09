@@ -8,30 +8,43 @@
  * http://www.tdg-seville.info/License.html
  --%>
 
-<%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@taglib prefix="jstl"	uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
-<%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
-		
-		<spring:message code="census.token_propietario" />:
-		<jstl:out value="${census.username}"/><br/>
-		
-		<spring:message code="census.votacion_id" />:
-		<jstl:out value="${census.idVotacion}"/><br />
-		
-		<spring:message code="census.votacio.name" />:
-		<jstl:out value="${census.tituloVotacion}"/><br />
-		
-		<spring:message code="census.fecha.inicio" />:
-		<fmt:formatDate value="${census.fechaInicioVotacion}" pattern="dd/MM/yyyy"/><br/>		
-		
-		<spring:message code="census.fecha.fin" />:
-		<fmt:formatDate value="${census.fechaFinVotacion}" pattern="dd/MM/yyyy"/><br/>
-	<%--	
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+
+<spring:message code="census.token_propietario" />
+:
+<jstl:out value="${census.username}" />
+<br />
+
+<spring:message code="census.votacion_id" />
+:
+<jstl:out value="${census.idVotacion}" />
+<br />
+
+<spring:message code="census.votacio.name" />
+:
+<jstl:out value="${census.tituloVotacion}" />
+<br />
+
+<spring:message code="census.fecha.inicio" />
+:
+<fmt:formatDate value="${census.fechaInicioVotacion}"
+	pattern="dd/MM/yyyy" />
+<br />
+
+<spring:message code="census.fecha.fin" />
+:
+<fmt:formatDate value="${census.fechaFinVotacion}" pattern="dd/MM/yyyy" />
+<br />
+<%--	
 		
 		<hr>
 		
@@ -58,9 +71,11 @@
 	
 <br/> --%>
 
-<acme:cancel url="census/export.do?censusId=${census.id}" code="census.export"/>
+<acme:cancel url="census/export.do?censusId=${census.id}"
+	code="census.export" />
 
-<acme:cancel url="census/edit.do?censusId=${census.id }" code="census.edit"/>
+<acme:cancel url="census/edit.do?censusId=${census.id }"
+	code="census.edit" />
 
-<acme:cancel url="census/getAllCensusByCreador.do" code="census.back"/>
+<acme:cancel url="census/getAllCensusByCreador.do" code="census.back" />
 
