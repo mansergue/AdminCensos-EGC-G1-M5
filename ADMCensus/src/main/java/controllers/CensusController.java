@@ -187,8 +187,6 @@ public class CensusController extends AbstractController {
 
 		return result;
 	}
-	
-	
 
 	// Remove Users
 	// ----------------------------------------------------------------
@@ -212,32 +210,48 @@ public class CensusController extends AbstractController {
 
 		return result;
 	}
-	
-	
-	// Find Users
-	
-	@RequestMapping(value = "/findUser", method = RequestMethod.GET)
-	// public ModelAndView findUser(@RequestParam int censusId,
-	// @CookieValue("user") String username, @RequestParam String
-	// userSearch) {
-		public ModelAndView findUser(String username, @RequestParam String userSearch, @RequestParam int censusId) {
-			username = "test1";
-			ModelAndView result = null;
-			try {
-				censusService.findUser(username, userSearch, censusId);
-				result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
 
-			} catch (Exception oops) {
-				result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
-				result.addObject("message", "No se pudo encontrar el usuario");
-				oops.getStackTrace();
-			}
-			return result;
-		}
-	
-	
-	
-	
+	// Find Users
+
+	// @RequestMapping(value = "/findUser", method = RequestMethod.GET)
+	// // public ModelAndView findUser(@RequestParam int censusId,
+	// // @CookieValue("user") String username, @RequestParam String
+	// // userSearch) {
+	// public ModelAndView findUser(String username, @RequestParam String
+	// userSearch, @RequestParam int censusId) {
+	// username = "test1";
+	// ModelAndView result = null;
+	// try {
+	// censusService.findUser(username, userSearch, censusId);
+	// result = new ModelAndView("redirect:/census/edit.do?censusId=" +
+	// censusId);
+	//
+	// } catch (Exception oops) {
+	// result = new ModelAndView("redirect:/census/edit.do?censusId=" +
+	// censusId);
+	// result.addObject("message", "No se pudo encontrar el usuario");
+	// oops.getStackTrace();
+	// }
+	// return result;
+	// }
+
+	@RequestMapping(value = "/searchByUsername", method = RequestMethod.GET)
+	public ModelAndView findUser(@RequestParam String username, @RequestParam int censusId) {
+		ModelAndView result;
+		String requestUri = "census/searchByUsername.do?username=" + username;
+
+		Collection<String> usernames = censusService.findByUsername(username, censusId);
+
+		Census census = censusService.findOne(censusId);
+		Collection<String> user_list = census.getVoto_por_usuario().keySet();
+
+		result = new ModelAndView("census/manage");
+		result.addObject("requestURI", requestUri);
+		result.addObject("usernames", usernames);
+		result.addObject("census", census);
+		result.addObject("user", user_list);
+		return result;
+	}
 
 	// Details ----------------------------------------------------------------
 	@RequestMapping(value = "/details", method = RequestMethod.GET)
@@ -258,7 +272,7 @@ public class CensusController extends AbstractController {
 	public ModelAndView edit(@RequestParam int censusId, String username) {
 		username = "admin1";
 		ModelAndView result = new ModelAndView("census/manage");
-		//Llamada a todos los usuarios del sistema
+		// Llamada a todos los usuarios del sistema
 		Collection<String> usernames = RESTClient.getListUsernamesByJsonAutentication();
 		Census census = censusService.findOne(censusId);
 		Collection<String> user_list = census.getVoto_por_usuario().keySet();
@@ -269,10 +283,9 @@ public class CensusController extends AbstractController {
 
 		return result;
 	}
-	
 
-
-	 /* // Delete
+	/*
+	 * // Delete
 	 * 
 	 * @RequestMapping(value = "/delete", method = RequestMethod.GET) public
 	 * ModelAndView delete(@RequestParam int censusId, String token) {
@@ -287,8 +300,6 @@ public class CensusController extends AbstractController {
 	 * return result; }
 	 */
 
-	
-	
 	// Save
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid Census census, BindingResult binding) {
