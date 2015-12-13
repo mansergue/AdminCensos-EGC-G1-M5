@@ -257,9 +257,14 @@ public class CensusController extends AbstractController {
 	public ModelAndView edit(@RequestParam int censusId) throws IOException {
 		ModelAndView result;
 		Census census = censusService.findOne(censusId);
-		// File file = new File("/Documents and
-		// Settings/Student/Desktop/filename" + censusId + ".txt");
-		File file = new File("/home/agora-us-egc/Escritorio/filename" + censusId + ".txt");
+		String typeOS = System.getProperty("os.name");
+		String userHomeDir =System.getProperty("user.home");
+		File file = null;
+		if(typeOS.contains("Windows") == true){
+			file = new File(userHomeDir + "/Desktop/filename" + censusId + ".txt");
+		}else if(typeOS.contains("Linux") == true){
+			file = new File(userHomeDir + "/Escritorio/filename" + censusId + ".txt");
+		}
 		// Comprobamos que el txt que vamos a crear no existe ya en este
 		// directorio,
 		// sino existe, creamos un txt nuevo, en caso de que exista uno, lo
