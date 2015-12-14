@@ -129,7 +129,7 @@ public class CensusController extends AbstractController {
 	// public ModelAndView getVotesByUser(@CookieValue("user") String username)
 	// {
 	public ModelAndView getVotesByUser(String username) {
-		username = "test2";
+		username = "test1";
 		ModelAndView result = new ModelAndView("census/votesByUser");
 		Collection<Census> cs;
 		cs = censusService.findCensusByUser(username);
@@ -173,9 +173,9 @@ public class CensusController extends AbstractController {
 	// ----------------------------------------------------------------
 	@RequestMapping(value = "/addUser", method = RequestMethod.GET)
 	// public ModelAndView addUser(@RequestParam int censusId,
-	// @CookieValue("user") String username, @RequestParam String username_add, @RequestParam String dirEmail)
+	// @CookieValue("user") String username, @RequestParam String username_add)
 	// {
-	public ModelAndView addUser(@RequestParam int censusId, String username, @RequestParam String username_add, @RequestParam String dirEmail) {
+	public ModelAndView addUser(@RequestParam int censusId, String username, @RequestParam String username_add) {
 		ModelAndView result = new ModelAndView("census/misVotaciones");
 		username = "admin1";
 		try {
@@ -197,9 +197,9 @@ public class CensusController extends AbstractController {
 	@RequestMapping(value = "/removeUser", method = RequestMethod.GET)
 	// public ModelAndView removeUser(@RequestParam int censusId,
 	// @CookieValue("user") String username, @RequestParam String
-	// username_remove, @RequestParam String dirEmail) {
-	public ModelAndView removeUser(@RequestParam int censusId, String username, @RequestParam String username_remove, @RequestParam String dirEmail) {
-		username = "test1";
+	// username_remove) {
+	public ModelAndView removeUser(@RequestParam int censusId, String username, @RequestParam String username_remove) {
+		username = "admin1";
 		ModelAndView result = null;
 		try {
 
@@ -234,8 +234,8 @@ public class CensusController extends AbstractController {
 	public ModelAndView edit(@RequestParam int censusId, String username) {
 		username = "admin1";
 		ModelAndView result = new ModelAndView("census/manage");
-		//Llamada a todos los usuarios del sistema
-		Map<String,String> usernamesAndEmails = RESTClient.getMapUSernameAndEmailByJsonAutentication();
+		// Llamada a todos los usuarios del sistema
+		Map<String, String> usernamesAndEmails = RESTClient.getMapUSernameAndEmailByJsonAutentication();
 		Census census = censusService.findOne(censusId);
 		Collection<String> user_list = census.getVoto_por_usuario().keySet();
 		result.addObject("usernames", usernamesAndEmails.keySet());

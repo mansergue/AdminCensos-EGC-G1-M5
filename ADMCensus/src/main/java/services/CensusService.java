@@ -21,9 +21,8 @@ import domain.Census;
 @Transactional
 public class CensusService {
 
-	private static String cuerpoEmail = ""; // Atributo necesario para mandar
-											// email con la modificacion del
-											// censo
+	// Atributo necesario para mandar email con la modificación del censo
+	private static String cuerpoEmail = "";
 
 	// Managed repository -----------------------------------------------------
 
@@ -243,8 +242,7 @@ public class CensusService {
 										// produce un cambio en el censo
 		Map<String, String> usernamesAndEmails = RESTClient.getMapUSernameAndEmailByJsonAutentication();
 		dirEmail = usernamesAndEmails.get(username_add);
-		cuerpoEmail = currentMoment.toString() + "-> Se ha incorporado al censo cuya votación es "
-				+ c.getTituloVotacion();
+		cuerpoEmail = currentMoment.toString() + "-> Se ha incorporado al censo de " + c.getTituloVotacion();
 		try {// Se procede al envio del correo con el resultado de la inclusion
 				// en el censo
 			Gmail.send(cuerpoEmail, dirEmail);
@@ -425,8 +423,7 @@ public class CensusService {
 										// produce un cambio en el censo
 		Map<String, String> usernamesAndEmails = RESTClient.getMapUSernameAndEmailByJsonAutentication();
 		dirEmail = usernamesAndEmails.get(username_remove);
-		cuerpoEmail = currentMoment.toString() + "-> Se ha eliminado del censo cuya votación es "
-				+ c.getTituloVotacion();
+		cuerpoEmail = currentMoment.toString() + "-> Se ha eliminado del censo de " + c.getTituloVotacion();
 		try {// Se procede al envio del correo con el resultado de la exclusion
 				// en el censo
 			Gmail.send(cuerpoEmail, dirEmail);
