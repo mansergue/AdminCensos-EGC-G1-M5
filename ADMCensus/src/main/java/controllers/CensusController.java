@@ -14,6 +14,7 @@ package controllers;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.validation.Valid;
@@ -21,16 +22,15 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Census;
 import services.CensusService;
 import utilities.RESTClient;
-import domain.Census;
 
 @Controller
 @RequestMapping("/census")
@@ -245,14 +245,17 @@ public class CensusController extends AbstractController {
 	}
 
 	// Details ----------------------------------------------------------------
-	//TODO habria que poner un @cookievalue y comprobar si es o no editable
+	// TODO habria que poner un @cookievalue y comprobar si es o no editable
 	@RequestMapping(value = "/details", method = RequestMethod.GET)
 	public ModelAndView details(@RequestParam int censusId) {
 		ModelAndView result;
+		Date now = new Date();
+		String username = "admin1";
 		Census census = censusService.findOne(censusId);
 		result = createEditModelAndView(census);
 		Boolean editable;
-		editable = census.getTipoCenso().equals("cerrado") && !census.getVoto_por_usuario().isEmpty();
+		editable = census.getTipoCenso().equals("cerrado") && census.getUsername().equals(username)
+				&& census.getFechaFinVotacion().after(now);
 
 		result.addObject("editable", editable);
 		return result;
@@ -267,13 +270,14 @@ public class CensusController extends AbstractController {
 	public ModelAndView edit(@RequestParam int censusId, String username) {
 		username = "admin1";
 		ModelAndView result = new ModelAndView("census/manage");
+		Date now = new Date();
 		Boolean editable;
 		// Llamada a todos los usuarios del sistema
 		Collection<String> usernames = RESTClient.getListUsernamesByJsonAutentication();
 		Census census = censusService.findOneByCreator(censusId, username);
 		Collection<String> user_list = census.getVoto_por_usuario().keySet();
-		editable = census.getTipoCenso().equals("cerrado") && !census.getVoto_por_usuario().isEmpty()
-				&& census.getUsername().equals(username);
+		editable = census.getTipoCenso().equals("cerrado") && census.getUsername().equals(username)
+				&& census.getFechaFinVotacion().after(now);
 		result.addObject("usernames", usernames);
 		result.addObject("census", census);
 		result.addObject("user", user_list);

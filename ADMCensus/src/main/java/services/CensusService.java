@@ -449,7 +449,8 @@ public class CensusService {
 	/**
 	 *
 	 * Metodo creado para saber si existe una votacion activa en el rango de
-	 * fechas
+	 * fechas. Una votacion sera activa si su fecha de fin es posterior a la
+	 * fecha actual.
 	 * 
 	 * @param fecha_inicio
 	 *            Fecha inicio de la votacion
@@ -461,9 +462,8 @@ public class CensusService {
 		Boolean res = false;
 		Date fecha_actual = new Date();
 		Long fecha_actual_long = fecha_actual.getTime();
-		Long fecha_inicio_long = fecha_inicio.getTime();
 		Long fecha_fin_long = fecha_fin.getTime();
-		if (fecha_inicio_long < fecha_actual_long && fecha_fin_long > fecha_actual_long) {
+		if (fecha_fin_long > fecha_actual_long) {
 			res = true;
 		}
 
