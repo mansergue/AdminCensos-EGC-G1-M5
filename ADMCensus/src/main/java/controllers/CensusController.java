@@ -218,6 +218,8 @@ public class CensusController extends AbstractController {
 		String requestUri = "census/searchByUsername.do?username=" + username;
 
 		Collection<String> usernames = censusService.findByUsername(username, censusId);
+		//Collection<String> usernames = RESTClient.getListUsernamesByJsonAutentication();
+
 
 		Census census = censusService.findOne(censusId);
 		Collection<String> user_list = census.getVoto_por_usuario().keySet();
