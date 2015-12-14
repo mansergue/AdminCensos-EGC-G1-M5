@@ -307,6 +307,8 @@ public class CensusController extends AbstractController {
 					// Uno de los usuarios del sistema ya ha votado en dicho
 					// censo
 					if (aux.equals(voter)) {
+						//Obtenemos el mapa del censo, para saber si el usuario ha votado o no
+						HashMap<String, Boolean> map = census.getVoto_por_usuario();
 						// Añadimos este usuario que ya ha votado al text
 						User user = RESTClient.getCertainUserByJsonAuthentication(voter);
 						bufferedWriter.newLine();
@@ -321,6 +323,8 @@ public class CensusController extends AbstractController {
 						bufferedWriter.write("Autonomous community: " + user.getAutonomous_community());
 						bufferedWriter.newLine();
 						bufferedWriter.write("Age: " + user.getAge());
+						bufferedWriter.newLine();
+						bufferedWriter.write("Has voted?: " + map.get(voter));
 						bufferedWriter.newLine();
 						bufferedWriter.write("*****************");
 						bufferedWriter.newLine();
