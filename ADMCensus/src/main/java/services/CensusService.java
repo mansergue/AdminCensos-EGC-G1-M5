@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import repositories.CensusRepository;
+import utilities.RESTClient;
 import domain.Census;
 
 @Service
@@ -26,7 +27,7 @@ public class CensusService {
 		super();
 	}
 
-	// Others Methods----------------------------------------------------------
+	// Methods-----------------------------------------------------------------
 
 	/**
 	 * Crea un censo a partir de una votación
@@ -346,39 +347,12 @@ public class CensusService {
 	// NUEVA FUNCIONALIDAD 2015/2016
 
 	/**
-	 * Metodo para filtrar usuarios de un censo
+	 * Método para filtrar usuarios de un censo
 	 * 
 	 * @param username
-	 *            = Nombre del admin del censo
-	 * @param userSearch
-	 *            = Usuario que buscamos
+	 *            = Username del usuario que buscamos
 	 * @param censusId
-	 * @return el filtro de búsqueda
-	 */
-	public Collection<Census> findUser(String username, String userSearch, int censusId) {
-		Assert.hasLength(username);
-		Assert.hasLength(userSearch);
-		Assert.isTrue(censusId > 0);
-		Census c = findOne(censusId);
-		Assert.isTrue(c.getUsername().equals(username));
-		Collection<Census> res = new ArrayList<Census>();
-
-		HashMap<String, Boolean> vpo = c.getVoto_por_usuario();
-		for (String s : vpo.keySet()) {
-			if (s.equals(userSearch)) {
-				res.add(c);
-			}
-		}
-		return res;
-	}
-
-	/**
-	 * Metodo para buscar un usuario en concreto para un censo determinado
-	 * 
-	 * @param userSearch
-	 *            = Usuario que buscamos
-	 * @param censusId
-	 *            = Id del censo sobre el que vamos a realizar el filtro
+	 *            = Id del censo sobre el que vamos a realizar la búsqueda
 	 * @return el filtro de búsqueda
 	 */
 
@@ -387,24 +361,18 @@ public class CensusService {
 		Assert.isTrue(censusId > 0);
 		Census censo = findOne(censusId);
 		Assert.notNull(censo);
-		// Está será la coleccion en la que devolveremos aquellos votantes del
-		// census
-		// que tengan como username el que se pasa como parámetro en la función
 		Collection<String> result = new ArrayList<String>();
+		Collection<String> usernames = RESTClient.getListUsernamesByJsonAutentication();
 
-		HashMap<String, Boolean> vpo = censo.getVoto_por_usuario();
-		// Comprobamos que de todos los votantes del censo haya alguno que tenga
-		// como
-		// username el pasado por parámetros
-		for (String votante : vpo.keySet()) {
-			System.out.println(votante);
-			if (votante.equals(username)) {
-				// Añadimos los votantes que pasan el filtro
-				result.add(votante);
+		
+		for(String user: usernames){
+			if (user.equals(username)) {
+				// Añadimos al resultado los votantes que pasan el filtro
+				result.add(user);
 			}
 		}
-
 		return result;
 	}
 
+	
 }
