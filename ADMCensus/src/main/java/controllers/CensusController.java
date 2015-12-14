@@ -204,7 +204,7 @@ public class CensusController extends AbstractController {
 	// {
 	public ModelAndView addUser(@RequestParam int censusId, String username) {
 		ModelAndView result = null;
-		username = "test1";
+		username = "jorge";
 		try {
 
 			censusService.addUserToOpenedCensus(censusId, username);
@@ -332,7 +332,7 @@ public class CensusController extends AbstractController {
 	// public ModelAndView getAllCensusByCreador(@CookieValue("user") String
 	// username) {
 	public ModelAndView getCensusesToRegister(String username) {
-		username = "test1";
+		username = "jorge";
 		ModelAndView result = new ModelAndView("census/censosARegistrar");
 		Collection<Census> censuses = new ArrayList<Census>();
 		censuses = censusService.findCensusesToRegisterByUser(username);

@@ -200,38 +200,6 @@ public class CensusService {
 	}
 
 	/**
-	 * DEPRECATED Metodo que devuelve todas las votaciones ACTIVAS en las que un
-	 * usuario está censado y aun no ha votado (votaciones cerradas en las que
-	 * un usuario puede votar)
-	 *
-	 * @param username
-	 *            Nombre de usuario
-	 * @return Collection<census>
-	 */
-	// public Collection<Census> findCensusByUser(String username) {
-	// Assert.isTrue(!username.equals(""));
-	// Collection<Census> cs = new ArrayList<Census>();
-	// Collection<Census> allCensuses = findAll(); // Obtengo todos los censos
-	//
-	// for (Census c : allCensuses) {
-	// HashMap<String, Boolean> vpo = c.getVoto_por_usuario();
-	// if (vpo.containsKey(username)) {
-	// boolean votado = vpo.get(username);
-	// boolean activa = votacionActiva(c.getFechaInicioVotacion(),
-	// c.getFechaFinVotacion());
-	// // Si el usuario esta en el censo, la votación esta activa y no
-	// // ha votado tengo que mostrar su censo.
-	// if (!votado && activa) {
-	// cs.add(c);
-	// }
-	// }
-	//
-	// }
-	//
-	// return cs;
-	// }
-
-	/**
 	 * Metodo que devuelve todos los censos de las votaciones en las que un
 	 * usuario puede votar
 	 * 
@@ -311,8 +279,8 @@ public class CensusService {
 		save(census);
 		// Envio de correo
 		String dirEmail;
-		Date currentMoment = new Date();// Fecha para controlar cuando se
-										// produce un cambio en el censo
+		// Fecha para controlar cuando se produce un cambio en el censo
+		Date currentMoment = new Date();
 		Map<String, String> usernamesAndEmails = RESTClient.getMapUSernameAndEmailByJsonAutentication();
 		dirEmail = usernamesAndEmails.get(username_add);
 		cuerpoEmail = currentMoment.toString() + "-> Se ha incorporado al censo de " + census.getTituloVotacion();
@@ -342,6 +310,19 @@ public class CensusService {
 		vpo.put(username_add, false);
 		census.setVoto_por_usuario(vpo);
 		save(census);
+		// Envio de correo
+		String dirEmail;
+		Date currentMoment = new Date();// Fecha para controlar cuando se
+										// produce un cambio en el censo
+		Map<String, String> usernamesAndEmails = RESTClient.getMapUSernameAndEmailByJsonAutentication();
+		dirEmail = usernamesAndEmails.get(username_add);
+		cuerpoEmail = currentMoment.toString() + "-> Se ha incorporado al censo de " + census.getTituloVotacion();
+		try {// Se procede al envio del correo con el resultado de la inclusion
+				// en el censo
+			Gmail.send(cuerpoEmail, dirEmail);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
