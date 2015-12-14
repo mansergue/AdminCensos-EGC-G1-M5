@@ -211,29 +211,6 @@ public class CensusController extends AbstractController {
 		return result;
 	}
 
-	// Find Users
-
-	// @RequestMapping(value = "/findUser", method = RequestMethod.GET)
-	// // public ModelAndView findUser(@RequestParam int censusId,
-	// // @CookieValue("user") String username, @RequestParam String
-	// // userSearch) {
-	// public ModelAndView findUser(String username, @RequestParam String
-	// userSearch, @RequestParam int censusId) {
-	// username = "test1";
-	// ModelAndView result = null;
-	// try {
-	// censusService.findUser(username, userSearch, censusId);
-	// result = new ModelAndView("redirect:/census/edit.do?censusId=" +
-	// censusId);
-	//
-	// } catch (Exception oops) {
-	// result = new ModelAndView("redirect:/census/edit.do?censusId=" +
-	// censusId);
-	// result.addObject("message", "No se pudo encontrar el usuario");
-	// oops.getStackTrace();
-	// }
-	// return result;
-	// }
 
 	@RequestMapping(value = "/searchByUsername", method = RequestMethod.GET)
 	public ModelAndView findUser(@RequestParam String username, @RequestParam int censusId) {
