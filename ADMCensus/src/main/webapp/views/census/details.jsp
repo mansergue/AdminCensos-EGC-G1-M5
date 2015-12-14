@@ -51,37 +51,15 @@
 :
 <fmt:formatDate value="${census.fechaFinVotacion}" pattern="dd/MM/yyyy" />
 <br />
-<%--	
-		
-		<hr>
-		
-		<jstl:forEach var="type" items="${mapa}">
-			<spring:message code="census.token"/>: 
-			<jstl:out value="${type.key}"/>
-			
-			<spring:message code="user.value"/>: 
-			<jstl:out value="${type.value}"/>
-			
-			<jstl:if test="${type.value != true}">
-			
-				<a href="census/removeUser.do?censusId=${census.id}&token=${type.key}"><img src="images/trash.png" style="width: 32px; height: 32px;"></a>
-
-			</jstl:if>
-			
-			<jstl:if test="${type.value == true}">
-			
-				<img src="images/pulgar-arriba.png" style="width: 32px; height: 32px;">
-
-			</jstl:if>
-			<br />
-		</jstl:forEach>
-	
-<br/> --%>
 
 <jstl:if test="${editable}">
 	<acme:cancel url="census/edit.do?censusId=${census.id }"
 		code="census.edit" />
 </jstl:if>
+
+<acme:cancel url="census/export.do?censusId=${census.id}"
+	code="census.export" />
+
 
 <acme:cancel url="census/getAllCensusByCreador.do" code="census.back" />
 

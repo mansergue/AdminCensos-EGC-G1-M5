@@ -39,6 +39,8 @@
 		<property name="tipoCenso" value="cerrado" />
 		<property name="voto_por_usuario">
 			<map>
+				<entry key="test0" value="true"/>
+				<entry key="test1" value="true"/>
 			</map>
 		</property>
 
