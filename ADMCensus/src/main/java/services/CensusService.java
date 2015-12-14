@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,11 +13,16 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.CensusRepository;
+import utilities.Gmail;
+import utilities.RESTClient;
 import domain.Census;
 
 @Service
 @Transactional
 public class CensusService {
+
+	// Atributo necesario para mandar email con la modificación del censo
+	private static String cuerpoEmail = "";
 
 	// Managed repository -----------------------------------------------------
 
@@ -303,6 +309,19 @@ public class CensusService {
 		vpo.put(username_add, false);
 		census.setVoto_por_usuario(vpo);
 		save(census);
+		// Envio de correo
+		String dirEmail;
+		Date currentMoment = new Date();// Fecha para controlar cuando se
+										// produce un cambio en el censo
+		Map<String, String> usernamesAndEmails = RESTClient.getMapUSernameAndEmailByJsonAutentication();
+		dirEmail = usernamesAndEmails.get(username_add);
+		cuerpoEmail = currentMoment.toString() + "-> Se ha incorporado al censo de " + census.getTituloVotacion();
+		try {// Se procede al envio del correo con el resultado de la inclusion
+				// en el censo
+			Gmail.send(cuerpoEmail, dirEmail);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -347,6 +366,20 @@ public class CensusService {
 		vpo.remove(username_remove);
 		census.setVoto_por_usuario(vpo);
 		save(census);
+		// Envio de correo
+		String dirEmail;
+		// Fecha para controlar cuando se produce un cambio en el censo
+		Date currentMoment = new Date();
+		Map<String, String> usernamesAndEmails = RESTClient.getMapUSernameAndEmailByJsonAutentication();
+		dirEmail = usernamesAndEmails.get(username_remove);
+		cuerpoEmail = currentMoment.toString() + "-> Se ha eliminado del censo de " + census.getTituloVotacion();
+		// Se procede al envio del correo con el resultado de la exclusion del
+		// usuario del censo
+		try {
+			Gmail.send(cuerpoEmail, dirEmail);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

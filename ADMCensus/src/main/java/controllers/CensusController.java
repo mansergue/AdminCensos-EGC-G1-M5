@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -114,7 +115,7 @@ public class CensusController extends AbstractController {
 
 	}
 
-	// Devuelve un censo con sus usuarios para deliveraciones al preguntar por
+	// Devuelve un censo con sus usuarios para deliberaciones al preguntar por
 	// una votacion
 	@RequestMapping(value = "/findCensusByVote", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Census findCensusByVote(@RequestParam int idVotacion) {
@@ -228,7 +229,7 @@ public class CensusController extends AbstractController {
 	// @CookieValue("user") String username, @RequestParam String
 	// username_remove) {
 	public ModelAndView removeUser(@RequestParam int censusId, String username, @RequestParam String username_remove) {
-		username = "test1";
+		username = "admin1";
 		ModelAndView result = null;
 		try {
 
@@ -273,12 +274,12 @@ public class CensusController extends AbstractController {
 		Date now = new Date();
 		Boolean editable;
 		// Llamada a todos los usuarios del sistema
-		Collection<String> usernames = RESTClient.getListUsernamesByJsonAutentication();
+		Map<String, String> usernamesAndEmails = RESTClient.getMapUSernameAndEmailByJsonAutentication();
 		Census census = censusService.findOneByCreator(censusId, username);
 		Collection<String> user_list = census.getVoto_por_usuario().keySet();
 		editable = census.getTipoCenso().equals("cerrado") && census.getUsername().equals(username)
 				&& census.getFechaFinVotacion().after(now);
-		result.addObject("usernames", usernames);
+		result.addObject("usernames", usernamesAndEmails.keySet());
 		result.addObject("census", census);
 		result.addObject("user", user_list);
 		result.addObject("editable", editable);

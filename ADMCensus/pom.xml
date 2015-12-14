@@ -321,6 +321,14 @@
 		    <version>1.7.4</version>
 		</dependency>
 		
+		<!-- Dependencias para email -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency>
+		
+		
 		
 		<!-- Dependencias para los JSon -->
 		<dependency>
