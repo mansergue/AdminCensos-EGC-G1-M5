@@ -254,12 +254,14 @@ public class CensusController extends AbstractController {
 	// ---------------------------------------------------------------
 
 	@RequestMapping(value = "/export", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam int censusId) throws IOException {
+	public ModelAndView export(@RequestParam int censusId) throws IOException {
 		ModelAndView result;
 		Census census = censusService.findOne(censusId);
 		String typeOS = System.getProperty("os.name");
 		String userHomeDir =System.getProperty("user.home");
 		File file = null;
+		//Hacemos un cambio en el directorio donde se guardará el fichero txt
+		//dependiendo de si estamos trabajando sobre Windows o sobre Linux
 		if(typeOS.contains("Windows") == true){
 			file = new File(userHomeDir + "/Desktop/filename" + censusId + ".txt");
 		}else if(typeOS.contains("Linux") == true){
