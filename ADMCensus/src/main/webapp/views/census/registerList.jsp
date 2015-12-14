@@ -11,34 +11,9 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<display:table pagesize="5" class="displaytag" name="censues"
+<display:table pagesize="5" class="displaytag" name="censuses"
 	requestURI="${requestURI}" id="row">
 
-	<!-- Action links -->
-
-	<jstl:if test="${!misVotaciones}">
-		<display:column>
-			<a href="census/details.do?censusId=${row.id}"> <img
-				alt="<spring:message	code="census.details" />"
-				src="images/details.png" style="height: 25px; width: 25px;">
-
-			</a>
-		</display:column>
-	</jstl:if>
-
-	<jstl:if test="${misVotaciones}">
-		<display:column>
-			<a href="http://localhost:8000/cabinaus/${row.idVotacion}"> <img
-				alt="<spring:message	code="census.details" />"
-				src="images/votar.gif" style="height: 25px; width: 25px;">
-
-			</a>
-		</display:column>
-	</jstl:if>
-
-	<jstl:if test="">
-
-	</jstl:if>
 
 	<!-- Attributes -->
 	<spring:message code="census.token_propietario" var="username" />
@@ -64,6 +39,12 @@
 	<spring:message code="census.number.person" var="sizeHeader" />
 	<display:column title="${sizeHeader}" sortable="true">
 		<jstl:out value="${row.voto_por_usuario.size() }"></jstl:out>
+	</display:column>
+
+	<spring:message code="census.register" var="registerHeader" />
+	<display:column title="${registerHeader}" sortable="false">
+		<a href="census/registerUser.do?censusId=${row.id }"><spring:message
+				code="census.register"></spring:message></a>
 	</display:column>
 
 

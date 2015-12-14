@@ -26,8 +26,10 @@ public class Census extends DomainEntity {
 	private String username;// Username del usuario que crea la votacion
 	private int idVotacion;// Id que identifica de forma únia a la votacion
 	private String tituloVotacion;// Titulo de la votacion
+	private String tipoCenso;// Indica si el censo es "abierto" o "cerrado"
 	private HashMap<String, Boolean> voto_por_usuario = new HashMap<String, Boolean>();
-	//Mapa encargado de asignar un true o false (ha votado o no) a un token unico de un usuario
+	// Mapa encargado de asignar un true o false (ha votado o no) a un token
+	// unico de un usuario
 	private Date fechaInicioVotacion;// Fecha en la que se inicia la votacion
 	private Date fechaFinVotacion;// Fecha en la que finaliza la votacion
 
@@ -71,6 +73,15 @@ public class Census extends DomainEntity {
 
 	public void setTituloVotacion(String tituloVotacion) {
 		this.tituloVotacion = tituloVotacion;
+	}
+
+	@NotBlank
+	public String getTipoCenso() {
+		return tipoCenso;
+	}
+
+	public void setTipoCenso(String tipoCenso) {
+		this.tipoCenso = tipoCenso;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
