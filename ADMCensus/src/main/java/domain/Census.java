@@ -36,6 +36,8 @@ public class Census extends DomainEntity {
 	public Census() {
 
 	}
+	
+	
 
 	@MapKeyColumn(name = "token")
 	@Column(name = "valor")
@@ -43,37 +45,45 @@ public class Census extends DomainEntity {
 	public HashMap<String, Boolean> getVoto_por_usuario() {
 		return voto_por_usuario;
 	}
+	
 
 	public void setVoto_por_usuario(HashMap<String, Boolean> voto_por_usuario) {
 		this.voto_por_usuario = voto_por_usuario;
 	}
+	
 
 	@NotBlank
 	public String getUsername() {
 		return username;
 	}
+	
 
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	
 
 	@Column(unique = true)
 	public int getIdVotacion() {
 		return idVotacion;
 	}
+	
 
 	public void setIdVotacion(int idVotacion) {
 		this.idVotacion = idVotacion;
 	}
+	
 
 	@NotBlank
 	public String getTituloVotacion() {
 		return tituloVotacion;
 	}
+	
 
 	public void setTituloVotacion(String tituloVotacion) {
 		this.tituloVotacion = tituloVotacion;
 	}
+	
 
 	@NotBlank
 	public String getTipoCenso() {
@@ -90,10 +100,12 @@ public class Census extends DomainEntity {
 	public Date getFechaInicioVotacion() {
 		return fechaInicioVotacion;
 	}
+	
 
 	public void setFechaInicioVotacion(Date fechaInicioVotacion) {
 		this.fechaInicioVotacion = fechaInicioVotacion;
 	}
+	
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")

@@ -21,9 +21,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -239,6 +237,7 @@ public class CensusController extends AbstractController {
 		try {
 
 			censusService.removeUserOfClosedCensus(censusId, username, username_remove);
+
 			result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
 
 		} catch (Exception oops) {
@@ -247,6 +246,33 @@ public class CensusController extends AbstractController {
 			oops.getStackTrace();
 		}
 
+		return result;
+	}
+
+	//TODO Habría que poner el @CookieValue
+	@RequestMapping(value = "/searchByUsername", method = RequestMethod.GET)
+	public ModelAndView findUser(@RequestParam String usernameSearch, @RequestParam int censusId) {
+		String username = "admin1";
+		ModelAndView result;
+		String requestUri = "census/searchByUsername.do?username=" + usernameSearch;
+
+		Collection<String> usernames = censusService.findByUsername(usernameSearch, censusId);
+
+		Census census = censusService.findOne(censusId);
+		Date now = new Date();
+
+		Boolean editable;
+		editable = census.getTipoCenso().equals("cerrado") && census.getUsername().equals(username)
+				&& census.getFechaFinVotacion().after(now);
+
+		Collection<String> user_list = census.getVoto_por_usuario().keySet();
+
+		result = new ModelAndView("census/manage");
+		result.addObject("requestURI", requestUri);
+		result.addObject("usernames", usernames);
+		result.addObject("census", census);
+		result.addObject("user", user_list);
+		result.addObject("editable", editable);
 		return result;
 	}
 
@@ -267,7 +293,7 @@ public class CensusController extends AbstractController {
 		return result;
 	}
 
-	// Editar un censo para añadir o quitar usuarios
+	// Editar un censo para añadir o quitar usuarios y buscarlos
 	// ---------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -276,11 +302,13 @@ public class CensusController extends AbstractController {
 	public ModelAndView edit(@RequestParam int censusId, String username) {
 		username = "admin1";
 		ModelAndView result = new ModelAndView("census/manage");
+
 		Date now = new Date();
 		Boolean editable;
 		// Llamada a todos los usuarios del sistema
 		Map<String, String> usernamesAndEmails = RESTClient.getMapUSernameAndEmailByJsonAutentication();
 		Census census = censusService.findOneByCreator(censusId, username);
+
 		Collection<String> user_list = census.getVoto_por_usuario().keySet();
 		editable = census.getTipoCenso().equals("cerrado") && census.getUsername().equals(username)
 				&& census.getFechaFinVotacion().after(now);
@@ -393,7 +421,6 @@ public class CensusController extends AbstractController {
 
 	/*
 	 * // Delete
-	 * ----------------------------------------------------------------
 	 * 
 	 * @RequestMapping(value = "/delete", method = RequestMethod.GET) public
 	 * ModelAndView delete(@RequestParam int censusId, String token) {
@@ -404,13 +431,11 @@ public class CensusController extends AbstractController {
 	 * ModelAndView("redirect:/census/details.do?censusId="+censusId);
 	 * result.addObject("message", "No se pudo borrar el censo");
 	 * oops.getStackTrace(); }
-	 * 
-	 * 
+	 *
 	 * return result; }
 	 */
 
 	// Save
-
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid Census census, BindingResult binding) {
 		ModelAndView result;
