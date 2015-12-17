@@ -366,7 +366,7 @@ public class CensusService {
 
 		
 		for(String user: usernames){
-			if (user.equals(username)) {
+			if (user.contains(username)) {
 				// Añadimos al resultado los votantes que pasan el filtro
 				result.add(user);
 			}
