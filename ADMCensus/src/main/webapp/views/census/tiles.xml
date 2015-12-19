@@ -37,7 +37,7 @@
 	</definition>
 	
 	<definition name="census/misCensos" extends="master.page">	
-		<put-attribute name="title" value="My censues" />
+		<put-attribute name="title" value="My censuses" />
 		<put-attribute name="body" value="/views/census/list.jsp" />
 	</definition>
 	
@@ -45,6 +45,11 @@
 	<definition name="census/votesByUser" extends="master.page">	
 		<put-attribute name="title" value="my active votes" />
 		<put-attribute name="body" value="/views/census/list.jsp" />
+	</definition>
+	
+	<definition name="census/censosARegistrar" extends="master.page">	
+		<put-attribute name="title" value="Register in a census" />
+		<put-attribute name="body" value="/views/census/registerList.jsp" />
 	</definition>
 	
 </tiles-definitions>

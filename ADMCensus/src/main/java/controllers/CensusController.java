@@ -1,13 +1,18 @@
 
 package controllers;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
-
 import javax.swing.JOptionPane;
+import java.util.Map;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -17,9 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Census;
 import services.CensusService;
 import utilities.RESTClient;
-import domain.Census;
+import domain.User;
 
 @Controller
 @RequestMapping("/census")
@@ -47,11 +53,12 @@ public class CensusController extends AbstractController {
 	//String tituloVotacion, @CookieValue("user") String username) 
 	//throws ParseException{
 	public @ResponseBody Census create(@RequestParam int idVotacion, @RequestParam String fecha_inicio,
-			@RequestParam String fecha_fin, String tituloVotacion, String username) throws ParseException {
+			@RequestParam String fecha_fin, @RequestParam String tituloVotacion, String tipoVotacion, String username)
+					throws ParseException {
 		Census result = null;
 		username = "test1";
 
-		Census c = censusService.create(idVotacion, username, fecha_inicio, fecha_fin, tituloVotacion);
+		Census c = censusService.create(idVotacion, username, fecha_inicio, fecha_fin, tituloVotacion, tipoVotacion);
 		try {
 			result = censusService.save(c);
 		} catch (Exception oops) {
@@ -87,10 +94,11 @@ public class CensusController extends AbstractController {
 	@RequestMapping(value = "/updateUser", method = RequestMethod.GET)
 	// public @ResponseBody String updateUser(@RequestParam int idVotacion ,
 	// @CookieValue("user") String username) {
-	public @ResponseBody String updateUser(@RequestParam int idVotacion, String username) {
+	public @ResponseBody String updateUser(@RequestParam int idVotacion, @RequestParam String tipoVotacion,
+			String username) {
 		username = "test1";
 		try {
-			if (censusService.updateUser(idVotacion, username)) {
+			if (censusService.updateUser(idVotacion, tipoVotacion, username)) {
 				return new String("{\"result\":\"yes\"}");
 			} else {
 				return new String("{\"result\":\"no\"}");
@@ -101,6 +109,7 @@ public class CensusController extends AbstractController {
 		}
 	}
 	
+
 
 	// Devuelve un censo con sus usuarios para deliberaciones 
 	@RequestMapping(value = "/findCensusByVote", method = RequestMethod.GET, produces = "application/json")
@@ -118,10 +127,10 @@ public class CensusController extends AbstractController {
 	// public ModelAndView getVotesByUser(@CookieValue("user") String username)
 	// {
 	public ModelAndView getVotesByUser(String username) {
-		username = "test2";
+		username = "test1";
 		ModelAndView result = new ModelAndView("census/votesByUser");
 		Collection<Census> cs;
-		cs = censusService.findCensusByUser(username);
+		cs = censusService.findPossibleCensusesByUser(username);
 		result.addObject("misVotaciones", true);
 		result.addObject("censuses", cs);
 		result.addObject("requestURI", "census/votesByUser.do");
@@ -158,9 +167,10 @@ public class CensusController extends AbstractController {
 	 * return result; }
 	 */
 
+
+	// Add Users (añadir usuarios a un censo cerrado, como administrador del
+	// censo)
 	
-	
-	// Add Users
 	@RequestMapping(value = "/addUser", method = RequestMethod.GET)
 	// public ModelAndView addUser(@RequestParam int censusId,
 	// @CookieValue("user") String username, @RequestParam String username_add)
@@ -169,7 +179,8 @@ public class CensusController extends AbstractController {
 		ModelAndView result = new ModelAndView("census/misVotaciones");
 		username = "admin1";
 		try {
-			censusService.addUserToCensus(censusId, username, username_add);
+
+			censusService.addUserToClosedCensus(censusId, username, username_add);
 			result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
 
 		} catch (Exception oops) {
@@ -183,18 +194,46 @@ public class CensusController extends AbstractController {
 	}
 
 	
-	
+	// Registrarse en un censo abierto y activo
+	// ----------------------------------------
+	@RequestMapping(value = "/registerUser", method = RequestMethod.GET)
+	// public ModelAndView addUser(@RequestParam int censusId,
+	// @CookieValue("user") String username)
+	// {
+	public ModelAndView addUser(@RequestParam int censusId, String username) {
+		ModelAndView result = null;
+		username = "jorge";
+		try {
+
+			censusService.addUserToOpenedCensus(censusId, username);
+			result = new ModelAndView("redirect:/census/getCensusesToRegister.do");
+
+		} catch (Exception oops) {
+			result = new ModelAndView("redirect:/census/getCensusesToRegister.do");
+			result.addObject("message", "No se pudo añadir el usuario");
+			oops.getStackTrace();
+		}
+
+		return result;
+	}
+
+
 	// Remove Users
+	// ----------------------------------------------------------------
+	// TODO: hay que analizarlo. De momento esta puesto para que solo el
+	// administrador de la votacion pueda eliminar usuarios del censo si el
+	// censo es CERRADO
 	@RequestMapping(value = "/removeUser", method = RequestMethod.GET)
 	// public ModelAndView removeUser(@RequestParam int censusId,
 	// @CookieValue("user") String username, @RequestParam String
 	// username_remove) {
 	public ModelAndView removeUser(@RequestParam int censusId, String username, @RequestParam String username_remove) {
-		username = "test1";
+		username = "admin1";
 		ModelAndView result = null;
 		try {
 
-			censusService.removeUserToCensu(censusId, username, username_remove);
+			censusService.removeUserOfClosedCensus(censusId, username, username_remove);
+
 			result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
 
 		} catch (Exception oops) {
@@ -205,41 +244,188 @@ public class CensusController extends AbstractController {
 		}
 		return result;
 	}
+	
+	
+	//TODO Habría que poner el @CookieValue
+		@RequestMapping(value = "/searchByUsername", method = RequestMethod.GET)
+		public ModelAndView findUser(@RequestParam String usernameSearch, @RequestParam int censusId) {
+			String username = "admin1";
+			ModelAndView result;
+			String requestUri = "census/searchByUsername.do?username=" + usernameSearch;
+
+			Collection<String> usernames = censusService.findByUsername(usernameSearch, censusId);
+			
+			Census census = censusService.findOne(censusId);
+			Date now = new Date();
+
+			Boolean editable;
+			editable = census.getTipoCenso().equals("cerrado") && census.getUsername().equals(username)
+					&& census.getFechaFinVotacion().after(now);
+
+			Collection<String> user_list = census.getVoto_por_usuario().keySet();
+
+			result = new ModelAndView("census/manage");
+			result.addObject("requestURI", requestUri);
+			result.addObject("usernames", usernames);
+			result.addObject("census", census);
+			result.addObject("user", user_list);
+			result.addObject("editable", editable);
+			return result;
+		}
 	
 	
 
 	// Details
 	@RequestMapping(value = "/details", method = RequestMethod.GET)
 	public ModelAndView details(@RequestParam int censusId) {
-		ModelAndView result;
-		Census census = censusService.findOne(censusId);
-		result = createEditModelAndView(census);
-		return result;
+	ModelAndView result;
+	Date now = new Date();
+	String username = "admin1";
+	Census census = censusService.findOne(censusId);
+	result = createEditModelAndView(census);
+	Boolean editable;
+	editable = census.getTipoCenso().equals("cerrado") && census.getUsername().equals(username)
+			&& census.getFechaFinVotacion().after(now);
+	
+	result.addObject("editable", editable);
+	return result;
+
 	}
 	
 	
 
-	// Editar un censo para añadir o quitar usuarios
+	// Editar un censo para añadir o quitar usuarios y buscarlos
+	// ---------------------------------------------------------------
+
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	// public ModelAndView edit(@RequestParam int censusId, @CookieValue("user") String username) {
 	public ModelAndView edit(@RequestParam int censusId, String username) {
 		username = "admin1";
 		ModelAndView result = new ModelAndView("census/manage");
-		//Llamada a todos los usuarios del sistema
-		Collection<String> usernames = RESTClient.getListUsernamesByJsonAutentication();
-		Census census = censusService.findOne(censusId);
+
+		Date now = new Date();
+		Boolean editable;
+		// Llamada a todos los usuarios del sistema
+		Map<String, String> usernamesAndEmails = RESTClient.getMapUSernameAndEmailByJsonAutentication();
+		Census census = censusService.findOneByCreator(censusId, username);
+
 		Collection<String> user_list = census.getVoto_por_usuario().keySet();
-		result.addObject("usernames", usernames);
+		editable = census.getTipoCenso().equals("cerrado") && census.getUsername().equals(username)
+				&& census.getFechaFinVotacion().after(now);
+		result.addObject("usernames", usernamesAndEmails.keySet());
 		result.addObject("census", census);
 		result.addObject("user", user_list);
+		result.addObject("editable", editable);
 		result.addObject("requestURI", "census/edit.do");
 
 		return result;
 	}
 
+
 	
+
+	// Exportar un censo a txt
+	// ---------------------------------------------------------------
+
+	@RequestMapping(value = "/export", method = RequestMethod.GET)
+	public ModelAndView export(@RequestParam int censusId) throws IOException {
+		ModelAndView result;
+		Census census = censusService.findOne(censusId);
+		String typeOS = System.getProperty("os.name");
+		String userHomeDir = System.getProperty("user.home");
+		File file = null;
+		// Hacemos un cambio en el directorio donde se guardará el fichero txt
+		// dependiendo de si estamos trabajando sobre Windows o sobre Linux
+		if (typeOS.contains("Windows")) {
+			file = new File(userHomeDir + "/Desktop/filename" + censusId + ".txt");
+		} else if (typeOS.contains("Linux")) {
+			file = new File(userHomeDir + "/Escritorio/filename" + censusId + ".txt");
+		} else if (typeOS.contains("Mac")) {
+			file = new File(userHomeDir + "/Desktop/filename" + censusId + ".txt");
+		}
+
+		// Comprobamos que el txt que vamos a crear no existe ya en este
+		// directorio,
+		// sino existe, creamos un txt nuevo, en caso de que exista uno, lo
+		// sustituimos
+		if (!file.exists()) {
+			file.createNewFile();
+		}
+		// Aquí estamos dando el formato que queremos que tenga nuestro txt
+		FileWriter fileWriter = new FileWriter(file);
+		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+		bufferedWriter.newLine();
+		bufferedWriter.write("Details of the census");
+		bufferedWriter.newLine();
+		bufferedWriter.newLine();
+		bufferedWriter.write("Owner: " + census.getUsername());
+		bufferedWriter.newLine();
+		bufferedWriter.write("Name of vote: " + census.getTituloVotacion());
+		bufferedWriter.newLine();
+		bufferedWriter.write("Vote number: " + census.getIdVotacion());
+		bufferedWriter.newLine();
+		bufferedWriter.write("Start date: " + census.getFechaInicioVotacion());
+		bufferedWriter.newLine();
+		bufferedWriter.write("Finish date: " + census.getFechaFinVotacion());
+		bufferedWriter.newLine();
+		bufferedWriter.write("---------------------");
+		bufferedWriter.newLine();
+		bufferedWriter.newLine();
+		bufferedWriter.write("Voters: ");
+		bufferedWriter.newLine();
+		// Todos los usuarios del sistema
+		Map<String, String> mapUsers = RESTClient.getMapUSernameAndEmailByJsonAutentication();
+		Collection<String> usernames = mapUsers.keySet();
+		// Todos los que han votado en un censo
+		Collection<String> user_list = census.getVoto_por_usuario().keySet();
+		if (usernames.size() != 0) {
+			// Aquí compruebo que de todos los usuarios disponibles en el
+			// sistema, cuál de
+			// ellos ha votado ya en el censo
+			for (String aux : usernames) {
+				for (String voter : user_list) {
+					// Uno de los usuarios del sistema ya ha votado en dicho
+					// censo
+					if (aux.equals(voter)) {
+						// Obtenemos el mapa del censo, para saber si el usuario
+						// ha votado o no
+						HashMap<String, Boolean> map = census.getVoto_por_usuario();
+						// Añadimos este usuario que ya ha votado al text
+						User user = RESTClient.getCertainUserByJsonAuthentication(voter);
+						bufferedWriter.newLine();
+						bufferedWriter.write("User_Id: " + user.getU_id());
+						bufferedWriter.newLine();
+						bufferedWriter.write("Username: " + user.getUsername());
+						bufferedWriter.newLine();
+						bufferedWriter.write("Email: " + user.getEmail());
+						bufferedWriter.newLine();
+						bufferedWriter.write("Genre: " + user.getGenre());
+						bufferedWriter.newLine();
+						bufferedWriter.write("Autonomous community: " + user.getAutonomous_community());
+						bufferedWriter.newLine();
+						bufferedWriter.write("Age: " + user.getAge());
+						bufferedWriter.newLine();
+						bufferedWriter.write("Has voted?: " + map.get(voter));
+						bufferedWriter.newLine();
+						bufferedWriter.write("*****************");
+						bufferedWriter.newLine();
+						break;
+					}
+				}
+			}
+		} else {
+			bufferedWriter.write("Nothing to display because there isn't any voters");
+		}
+
+		bufferedWriter.close();
+		result = new ModelAndView("redirect:getAllCensusByCreador.do");
+		return result;
+	}
 	
-	 /*// Delete
+
+	/*
+	 * // Delete
+	 * 
 	 * @RequestMapping(value = "/delete", method = RequestMethod.GET) public
 	 * ModelAndView delete(@RequestParam int censusId, String token) {
 	 * ModelAndView result = null; 
@@ -250,6 +436,7 @@ public class CensusController extends AbstractController {
 	 * result.addObject("message", "error");
 	 * JOptionPane.showMessageDialog(null, "Error");
 	 * oops.getStackTrace(); }
+	 *
 	 * return result; }
 	 */
 	
@@ -275,9 +462,23 @@ public class CensusController extends AbstractController {
 		return result;
 	}
 	
-	
+	// Nos devuelve una lista con los censos en los que nos podemos registrar
+	@RequestMapping(value = "/getCensusesToRegister", method = RequestMethod.GET)
+	// public ModelAndView getAllCensusByCreador(@CookieValue("user") String
+	// username) {
+	public ModelAndView getCensusesToRegister(String username) {
+		username = "jorge";
+		ModelAndView result = new ModelAndView("census/censosARegistrar");
+		Collection<Census> censuses = new ArrayList<Census>();
+		censuses = censusService.findCensusesToRegisterByUser(username);
+		result.addObject("censuses", censuses);
+		result.addObject("misVotaciones", false);
+		result.addObject("requestURI", "census/getCensusesToRegister.do");
 
-	// ANCILLIARY METHODS ------------------------------------------------------
+		return result;
+	}
+
+	// Ancillary methods ------------------------------------------------------
 
 	protected ModelAndView createEditModelAndView(Census census) {
 		ModelAndView result;
