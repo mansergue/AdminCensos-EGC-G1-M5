@@ -13,6 +13,8 @@ import repositories.CensusRepository;
 @Transactional
 public class StringToCensusConverter implements Converter<String, Census> {
 
+	// Convertimos un String en un objeto de tipo Census -----------------
+
 	@Autowired
 	CensusRepository censusRepository;
 

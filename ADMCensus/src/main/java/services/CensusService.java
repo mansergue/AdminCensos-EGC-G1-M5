@@ -19,10 +19,12 @@ import domain.Census;
 @Transactional
 public class CensusService {
 
-	// Atributo necesario para mandar email con la modificación del censo
+	// Atributo necesario para mandar email con la modificación del censo.
+
 	private static String cuerpoEmail = "";
 
 	// Managed repository -----------------------------------------------------
+
 	@Autowired
 	private CensusRepository censusRepository;
 
@@ -32,7 +34,7 @@ public class CensusService {
 		super();
 	}
 
-	// Methods-----------------------------------------------------------------
+	// Methods ----------------------------------------------------------------
 
 	/**
 	 * Crea un censo a partir de una votación
@@ -52,20 +54,21 @@ public class CensusService {
 	 * @return census
 	 * @throws ParseException
 	 */
-	public Census create(int idVotacion, String username, String fecha_inicio, String fecha_fin, String tituloVotacion,
+
+	public Census create(int idVotacion, String username, String fechaInicio, String fechaFin, String tituloVotacion,
 			String tipoVotacion) throws ParseException {
 		Assert.isTrue(!username.equals(""));
 		Assert.isTrue(tipoVotacion.equals("abierta") || tipoVotacion.equals("cerrada"));
 		Census result = new Census();
-		long start_date = Long.parseLong(fecha_inicio);
-		long finish_date = Long.parseLong(fecha_fin);
+		long startDate = Long.parseLong(fechaInicio);
+		long finishDate = Long.parseLong(fechaFin);
 
-		Date fecha_comienzo = new Date(start_date);
-		Date fecha_final = new Date(finish_date);
-		Assert.isTrue(fecha_comienzo.before(fecha_final));
+		Date fechaComienzo = new Date(startDate);
+		Date fechaFinal = new Date(finishDate);
+		Assert.isTrue(fechaComienzo.before(fechaFinal));
 
-		result.setFechaFinVotacion(fecha_final);
-		result.setFechaInicioVotacion(fecha_comienzo);
+		result.setFechaFinVotacion(fechaFinal);
+		result.setFechaInicioVotacion(fechaComienzo);
 
 		result.setIdVotacion(idVotacion);
 		result.setTituloVotacion(tituloVotacion);
@@ -76,7 +79,7 @@ public class CensusService {
 		}
 		result.setUsername(username);
 		HashMap<String, Boolean> vpo = new HashMap<String, Boolean>();
-		result.setVoto_por_usuario(vpo);
+		result.setVotoPorUsuario(vpo);
 		return result;
 	}
 
@@ -87,13 +90,14 @@ public class CensusService {
 	 * 
 	 * @param username
 	 */
+
 	public Collection<Census> findCensusesToRegisterByUser(String username) {
 		Collection<Census> result = new ArrayList<Census>();
 		Collection<Census> openedCensuses = new ArrayList<Census>();
 		openedCensuses = censusRepository.findAllOpenedCensuses();
 
 		for (Census c : openedCensuses) {
-			if (!c.getVoto_por_usuario().containsKey(username)
+			if (!c.getVotoPorUsuario().containsKey(username)
 					&& votacionActiva(c.getFechaInicioVotacion(), c.getFechaFinVotacion())) {
 				result.add(c);
 			}
@@ -117,11 +121,12 @@ public class CensusService {
 	 *            = Nombre de usuario
 	 * @return boolean
 	 */
+
 	public boolean updateUser(int idVotacion, String tipoVotacion, String username) {
 		boolean result = false;
 		Assert.isTrue(!username.equals(""));
 		Census c = findCensusByVote(idVotacion);
-		HashMap<String, Boolean> vpo = c.getVoto_por_usuario();
+		HashMap<String, Boolean> vpo = c.getVotoPorUsuario();
 
 		if (vpo.containsKey(username) && !vpo.get(username)) {
 			vpo.remove(username);
@@ -129,7 +134,7 @@ public class CensusService {
 			result = true;
 		}
 
-		c.setVoto_por_usuario(vpo);
+		c.setVotoPorUsuario(vpo);
 		save(c);
 
 		return result;
@@ -145,13 +150,17 @@ public class CensusService {
 	 *            = Nombre de usuario
 	 * @return format json
 	 */
+
 	public String canDelete(int idVotacion, String username) {
 		Assert.hasLength(username);
 		String res = "";
 		Census c = findCensusByVote(idVotacion);
 
-		if (c.getVoto_por_usuario().isEmpty()) {
-			res = "[{\"result\":\"yes\"}]";// Si se puede se elimina
+		if (c.getVotoPorUsuario().isEmpty()) {
+			res = "[{\"result\":\"yes\"}]";
+
+			// Si se puede se elimina.
+
 			delete(c.getId(), username);
 		} else {
 			res = "[{\"result\":\"no\"}]";
@@ -169,6 +178,7 @@ public class CensusService {
 	 *            = Nombre de usuario
 	 * @return string format json
 	 */
+
 	public String canVote(int idVotacion, String username) {
 		Assert.isTrue(!username.equals(""));
 		String result = "";
@@ -176,7 +186,7 @@ public class CensusService {
 
 		Census census = findCensusByVote(idVotacion);
 
-		if (census.getVoto_por_usuario().containsKey(username) && !census.getVoto_por_usuario().get(username)) {
+		if (census.getVotoPorUsuario().containsKey(username) && !census.getVotoPorUsuario().get(username)) {
 			canVote = true;
 
 		}
@@ -191,15 +201,14 @@ public class CensusService {
 	}
 
 	/**
-	 * <<<<<<< HEAD Metodo que devuelve todos los censos de las votaciones en
-	 * las que un usuario puede votar ======= Devuelve los censos de votaciones
-	 * activas en las que un user aún no ha votado >>>>>>>
-	 * refs/remotes/origin/BuscarUsuarioCenso
+	 * Devuelve los censos de votaciones activas en las que un user aún no ha
+	 * votado
 	 * 
 	 * @param username
 	 *            = Nombre de usuario
 	 * @return Collection<census>
 	 */
+
 	public Collection<Census> findPossibleCensusesByUser(String username) {
 		Assert.isTrue(username != "");
 		Collection<Census> allCensuses = findAll();
@@ -208,7 +217,7 @@ public class CensusService {
 		for (Census c : allCensuses) {
 			// comprobamos si la votacion esta activa
 			if (votacionActiva(c.getFechaInicioVotacion(), c.getFechaFinVotacion())) {
-				if (c.getVoto_por_usuario().containsKey(username) && !c.getVoto_por_usuario().get(username)) {
+				if (c.getVotoPorUsuario().containsKey(username) && !c.getVotoPorUsuario().get(username)) {
 					result.add(c);
 				}
 			}
@@ -223,6 +232,7 @@ public class CensusService {
 	 *            = Nombre de usuario
 	 * @return Collection<census>
 	 */
+
 	public Collection<Census> findCensusByCreator(String username) {
 		Assert.hasLength(username);
 		Collection<Census> result = censusRepository.findCensusByCreator(username);
@@ -236,6 +246,7 @@ public class CensusService {
 	 * @param username
 	 * @return Census
 	 */
+
 	public Census findOneByCreator(int censusId, String username) {
 		Assert.isTrue(!username.equals(""));
 		Census result;
@@ -257,20 +268,25 @@ public class CensusService {
 	 * @param username_add
 	 *            = Usuario que se va a añadir al censo
 	 */
+
 	public void addUserToClosedCensus(int censusId, String username, String username_add) {
 		Census census = findOne(censusId);
 		Assert.isTrue(census.getTipoCenso().equals("cerrado"));
 		Assert.isTrue(votacionActiva(census.getFechaInicioVotacion(), census.getFechaFinVotacion()));
 		Assert.isTrue(census.getUsername().equals(username));
-		HashMap<String, Boolean> vpo = census.getVoto_por_usuario();
+		HashMap<String, Boolean> vpo = census.getVotoPorUsuario();
 
 		Assert.isTrue(!vpo.containsKey(username_add));
 		vpo.put(username_add, false);
-		census.setVoto_por_usuario(vpo);
+		census.setVotoPorUsuario(vpo);
 		save(census);
-		// Envio de correo
+
+		// Envío de correo.
+
 		String dirEmail;
-		// Fecha para controlar cuando se produce un cambio en el censo
+
+		// Fecha para controlar cuando se produce un cambio en el censo.
+
 		Date currentMoment = new Date();
 		Map<String, String> usernamesAndEmails = RESTClient.getMapUSernameAndEmailByJsonAutentication();
 		dirEmail = usernamesAndEmails.get(username_add);
@@ -292,24 +308,32 @@ public class CensusService {
 	 * @param username_add
 	 *            Nombre de usuario que se va a añadir al censo
 	 */
+
 	public void addUserToOpenedCensus(int censusId, String username_add) {
 		Census census = findOne(censusId);
 		Assert.isTrue(census.getTipoCenso().equals("abierto"));
 		Assert.isTrue(votacionActiva(census.getFechaInicioVotacion(), census.getFechaFinVotacion()));
-		HashMap<String, Boolean> vpo = census.getVoto_por_usuario();
+		HashMap<String, Boolean> vpo = census.getVotoPorUsuario();
 		Assert.isTrue(!vpo.containsKey(username_add));
 		vpo.put(username_add, false);
-		census.setVoto_por_usuario(vpo);
+		census.setVotoPorUsuario(vpo);
 		save(census);
-		// Envio de correo
+
+		// Envío de correo.
+
 		String dirEmail;
-		Date currentMoment = new Date();// Fecha para controlar cuando se
-										// produce un cambio en el censo
+
+		// Fecha para controlar cuando se produce un cambio en el censo.
+
+		Date currentMoment = new Date();
 		Map<String, String> usernamesAndEmails = RESTClient.getMapUSernameAndEmailByJsonAutentication();
 		dirEmail = usernamesAndEmails.get(username_add);
 		cuerpoEmail = currentMoment.toString() + "-> Se ha incorporado al censo de " + census.getTituloVotacion();
-		try {// Se procede al envio del correo con el resultado de la inclusion
-				// en el censo
+		try {
+
+			// Se procede al envio del correo con el resultado de la inclusion
+			// en el censo.
+
 			Gmail.send(cuerpoEmail, dirEmail);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -328,26 +352,33 @@ public class CensusService {
 	 * @param username_add
 	 *            = Usuario que se va a eliminar del censo
 	 */
+
 	public void removeUserOfClosedCensus(int censusId, String username, String username_remove) {
 		Census census = findOne(censusId);
 		Assert.isTrue(census.getTipoCenso().equals("cerrado"));
 		Assert.isTrue(votacionActiva(census.getFechaInicioVotacion(), census.getFechaFinVotacion()));
-		HashMap<String, Boolean> vpo = census.getVoto_por_usuario();
+		HashMap<String, Boolean> vpo = census.getVotoPorUsuario();
 		Assert.isTrue(census.getUsername().equals(username));
 
 		Assert.isTrue(vpo.containsKey(username_remove) && !vpo.get(username_remove));
 		vpo.remove(username_remove);
-		census.setVoto_por_usuario(vpo);
+		census.setVotoPorUsuario(vpo);
 		save(census);
-		// Envio de correo
+
+		// Envío de correo.
+
 		String dirEmail;
-		// Fecha para controlar cuando se produce un cambio en el censo
+
+		// Fecha para controlar cuando se produce un cambio en el censo.
+
 		Date currentMoment = new Date();
 		Map<String, String> usernamesAndEmails = RESTClient.getMapUSernameAndEmailByJsonAutentication();
 		dirEmail = usernamesAndEmails.get(username_remove);
 		cuerpoEmail = currentMoment.toString() + "-> Se ha eliminado del censo de " + census.getTituloVotacion();
+
 		// Se procede al envio del correo con el resultado de la exclusion del
 		// usuario del censo
+
 		try {
 			Gmail.send(cuerpoEmail, dirEmail);
 		} catch (Exception e) {
@@ -361,22 +392,26 @@ public class CensusService {
 	 * @param census
 	 * @return census
 	 */
+
 	public Census save(Census census) {
 		Census c = censusRepository.save(census);
 		return c;
 	}
 
 	/**
-	 * ELimina un censo si no tiene usuarios
+	 * Elimina un censo si no tiene usuarios
 	 * 
 	 * @param censusId
 	 *            = Identificador del censo
 	 * @param username
 	 */
+
 	public void delete(int censusId, String username) {
 		Census c = findOne(censusId);
-		// Puedo borrarlo siempre y cuando no haya usuarios registrados
-		Assert.isTrue(c.getVoto_por_usuario().isEmpty());
+
+		// Puedo borrarlo siempre y cuando no haya usuarios registrados.
+
+		Assert.isTrue(c.getVotoPorUsuario().isEmpty());
 		Assert.isTrue(c.getUsername().equals(username));
 		censusRepository.delete(censusId);
 	}
@@ -388,6 +423,7 @@ public class CensusService {
 	 *            = Identificador del censo
 	 * @return census
 	 */
+
 	public Census findOne(int censusId) {
 		Census c = censusRepository.findOne(censusId);
 		Assert.notNull(c);
@@ -404,13 +440,16 @@ public class CensusService {
 	 *            = Usuario del cual queremos obtener su estado de voto
 	 * @return String
 	 */
+
 	public String createResponseJson(int idVotacion, String username) {
 		String response = "";
 		Census c = findCensusByVote(idVotacion);
-		// formato: idVotacion, username, true/false
-		if (c.getVoto_por_usuario().get(username)) {
+
+		// Formato: idVotacion, username, true/false.
+
+		if (c.getVotoPorUsuario().get(username)) {
 			response = response + "{\"idVotacion\":" + idVotacion + ",\"username\":\"" + username + "\",\"result\":"
-					+ c.getVoto_por_usuario().get(username) + "}";
+					+ c.getVotoPorUsuario().get(username) + "}";
 		} else {
 			response = response + "{\"result\":" + "0}";
 		}
@@ -422,6 +461,7 @@ public class CensusService {
 	 * 
 	 * @return Collection<Census>
 	 */
+
 	public Collection<Census> findAll() {
 		Collection<Census> result;
 		result = censusRepository.findAll();
@@ -435,6 +475,7 @@ public class CensusService {
 	 *            = Id de la votacion sobre la que se busca un censo
 	 * @return census
 	 */
+
 	public Census findCensusByVote(int idVotacion) {
 		Census result = censusRepository.findCensusByVote(idVotacion);
 		Assert.notNull(result);
@@ -453,18 +494,19 @@ public class CensusService {
 	 *            = Fecha fin de la votacion
 	 * @return true si está activa
 	 */
-	private boolean votacionActiva(Date fecha_inicio, Date fecha_fin) {
+
+	private boolean votacionActiva(Date fechaInicio, Date fechaFin) {
 		Boolean res = false;
-		Date fecha_actual = new Date();
-		Long fecha_actual_long = fecha_actual.getTime();
-		Long fecha_fin_long = fecha_fin.getTime();
-		if (fecha_fin_long > fecha_actual_long) {
+		Date fechaActual = new Date();
+		Long fechaActualLong = fechaActual.getTime();
+		Long fechaFinLong = fechaFin.getTime();
+		if (fechaFinLong > fechaActualLong) {
 			res = true;
 		}
 		return res;
 	}
 
-	// NUEVA FUNCIONALIDAD 2015/2016
+	// Nueva Funcionalidad - 2015/2016.
 
 	/**
 	 * Método para filtrar usuarios de un censo
@@ -487,7 +529,9 @@ public class CensusService {
 
 		for (String user : usernames) {
 			if (user.contains(username)) {
-				// Añadimos al resultado los votantes que pasan el filtro
+
+				// Añadimos al resultado los votantes que pasan el filtro.
+
 				result.add(user);
 			}
 		}

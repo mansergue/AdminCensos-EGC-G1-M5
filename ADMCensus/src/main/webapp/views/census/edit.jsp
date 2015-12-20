@@ -16,7 +16,7 @@
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="token_propietario" />
-	<form:hidden path="voto_por_usuario"/>
+	<form:hidden path="votoPorUsuario"/>
 	<form:hidden path="votacion_id"/>
 	
 	
