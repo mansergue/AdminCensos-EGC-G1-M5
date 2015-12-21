@@ -11,7 +11,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<display:table pagesize="5" class="displaytag" name="censuses"
+<display:table pagesize="5" class="displaytag" name="censues"
 	requestURI="${requestURI}" id="row">
 
 	<!-- Action links -->

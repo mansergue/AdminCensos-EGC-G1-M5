@@ -21,7 +21,7 @@
 
 <div id="copyright" class="container">
 	<p>
-		Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> | Agora@Us Co., Inc. 
+		Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> AgoraUs Co., Inc. | Cracion/Administracion de censos | 
 		
 	</p>
 </div>
