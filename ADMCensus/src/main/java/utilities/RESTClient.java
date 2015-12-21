@@ -65,7 +65,6 @@ public class RESTClient {
 	 * leerá para formar un tipo User que será lo que se devuelva.
 	 * 
 	 */
-
 	public static User getCertainUserByJsonAuthentication(String username) {
 		RestTemplate restTemplate = new RestTemplate();
 		String result = restTemplate.getForObject("http://auth-egc.azurewebsites.net/api/getUser?username=" + username,
@@ -75,42 +74,43 @@ public class RESTClient {
 		User user = new User();
 		for (String field : lista) {
 			if (field.contains("u_id")) {
-				String[] auxList = field.split(":");
-				String uId = auxList[1];
-				uId = uId.replaceAll("\"", "");
-				System.out.println(uId);
-				int uIdConverted = Integer.parseInt(uId);
-				user.setUId(uIdConverted);
+				String[] aux_list = field.split(":");
+				String u_id = aux_list[1];
+				u_id = u_id.replaceAll("\"", "");
+				System.out.println(u_id);
+				int u_idConverted = Integer.parseInt(u_id);
+				user.setU_id(u_idConverted);
 			}
 			if (field.contains("username")) {
-				String[] auxList = field.split(":");
-				String usernameUser = auxList[1];
+				String[] aux_list = field.split(":");
+				String usernameUser = aux_list[1];
 				usernameUser = usernameUser.replaceAll("\"", "");
 				user.setUsername(usernameUser);
 			}
 			if (field.contains("email")) {
-				String[] auxList = field.split(":");
-				String email = auxList[1];
+				String[] aux_list = field.split(":");
+				String email = aux_list[1];
 				email = email.replaceAll("\"", "");
 				user.setEmail(email);
 			}
 			if (field.contains("genre")) {
-				String[] auxList = field.split(":");
-				String genre = auxList[1];
+				String[] aux_list = field.split(":");
+				String genre = aux_list[1];
 				genre = genre.replaceAll("\"", "");
 				user.setGenre(genre);
 			}
 			if (field.contains("autonomous_community")) {
-				String[] auxList = field.split(":");
-				String autonomousCommunity = auxList[1];
-				autonomousCommunity = autonomousCommunity.replaceAll("\"", "");
-				user.setAutonomousCommunity(autonomousCommunity);
+				String[] aux_list = field.split(":");
+				String autonomous_community = aux_list[1];
+				autonomous_community = autonomous_community.replaceAll("\"", "");
+				user.setAutonomous_community(autonomous_community);
 			}
 			if (field.contains("age")) {
-				String[] auxList = field.split(":");
-				String age = auxList[1];
-				String[] ageList = age.split("}");
-				String finalAge = ageList[0];
+				String[] aux_list = field.split(":");
+				String age = aux_list[1];
+				String[] age_list = age.split("}");
+				// age = age.replaceAll("}", "");
+				String finalAge = age_list[0];
 
 				int ageConverted = Integer.parseInt(finalAge);
 				user.setAge(ageConverted);

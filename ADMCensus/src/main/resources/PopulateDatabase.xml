@@ -21,7 +21,7 @@
 		<property name="idVotacion" value="23" />
 		<property name="tituloVotacion" value="Elecciones" />
 		<property name="tipoCenso" value="cerrado" />
-		<property name="votoPorUsuario">
+		<property name="voto_por_usuario">
 			<map>
 				<entry key="test1" value="true" />
 				<entry key="test2" value="false" />
@@ -37,7 +37,7 @@
 		<property name="idVotacion" value="24" />
 		<property name="tituloVotacion" value="Censo cerrado VACIO, ACTIVO" />
 		<property name="tipoCenso" value="cerrado" />
-		<property name="votoPorUsuario">
+		<property name="voto_por_usuario">
 			<map>
 				<entry key="test0" value="true"/>
 				<entry key="test1" value="true"/>
@@ -53,7 +53,7 @@
 		<property name="idVotacion" value="25" />
 		<property name="tituloVotacion" value="Censo cerrado NO VACIO, NO ACTIVO" />
 		<property name="tipoCenso" value="cerrado" />
-		<property name="votoPorUsuario">
+		<property name="voto_por_usuario">
 			<map>
 				<entry key="test3" value="true" />
 			</map>
@@ -68,7 +68,7 @@
 		<property name="idVotacion" value="26" />
 		<property name="tituloVotacion" value="Censo abierto NO VACIO, ACTIVO" />
 		<property name="tipoCenso" value="abierto" />
-		<property name="votoPorUsuario">
+		<property name="voto_por_usuario">
 			<map>
 				<entry key="test2" value="false" />
 				<entry key="test3" value="true" />
@@ -84,7 +84,7 @@
 		<property name="idVotacion" value="27" />
 		<property name="tituloVotacion" value="Censo abierto NO VACIO, NO ACTIVO" />
 		<property name="tipoCenso" value="abierto" />
-		<property name="votoPorUsuario">
+		<property name="voto_por_usuario">
 			<map>
 				<entry key="test3" value="true" />
 			</map>
@@ -99,7 +99,7 @@
 		<property name="idVotacion" value="28" />
 		<property name="tituloVotacion" value="Censo abierto vacio NO ACTIVO" />
 		<property name="tipoCenso" value="abierto" />
-		<property name="votoPorUsuario">
+		<property name="voto_por_usuario">
 			<map>
 			</map>
 		</property>
@@ -113,7 +113,7 @@
 		<property name="idVotacion" value="29" />
 		<property name="tituloVotacion" value="Censo abierto vacio activo" />
 		<property name="tipoCenso" value="abierto" />
-		<property name="votoPorUsuario">
+		<property name="voto_por_usuario">
 			<map>
 			</map>
 		</property>
@@ -127,7 +127,7 @@
 		<property name="idVotacion" value="30" />
 		<property name="tituloVotacion" value="Censo cerrado vacio activo" />
 		<property name="tipoCenso" value="cerrado" />
-		<property name="votoPorUsuario">
+		<property name="voto_por_usuario">
 			<map>
 			</map>
 		</property>
@@ -141,7 +141,7 @@
 		<property name="idVotacion" value="31" />
 		<property name="tituloVotacion" value="Censo cerrado vacio NO activo" />
 		<property name="tipoCenso" value="cerrado" />
-		<property name="votoPorUsuario">
+		<property name="voto_por_usuario">
 			<map>
 			</map>
 		</property>

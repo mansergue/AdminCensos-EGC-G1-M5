@@ -1,22 +1,19 @@
 package domain;
 
 public class User {
-
-	// Datos requeridos para un usuario ------------------------------
-
-	private int uId;
+	private int u_id;
 	private String username;
 	private String email;
 	private String genre;
-	private String autonomousCommunity;
+	private String autonomous_community;
 	private int age;
 
-	public int getUId() {
-		return uId;
+	public int getU_id() {
+		return u_id;
 	}
 
-	public void setUId(int uId) {
-		this.uId = uId;
+	public void setU_id(int u_id) {
+		this.u_id = u_id;
 	}
 
 	public String getUsername() {
@@ -43,12 +40,12 @@ public class User {
 		this.genre = genre;
 	}
 
-	public String getAutonomousCommunity() {
-		return autonomousCommunity;
+	public String getAutonomous_community() {
+		return autonomous_community;
 	}
 
-	public void setAutonomousCommunity(String autonomousCommunity) {
-		this.autonomousCommunity = autonomousCommunity;
+	public void setAutonomous_community(String autonomous_community) {
+		this.autonomous_community = autonomous_community;
 	}
 
 	public int getAge() {

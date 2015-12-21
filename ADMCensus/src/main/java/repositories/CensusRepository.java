@@ -9,19 +9,17 @@ import domain.Census;
 
 @Repository
 public interface CensusRepository extends JpaRepository<Census, Integer> {
-
-	// Buscar un censo de una votación.
-
+	
+	//Buscar un censo de una votación
 	@Query("select c from Census c where c.idVotacion = ?1")
 	public Census findCensusByVote(int idVotacion);
-
-	// Buscar un censo por creador.
-
+	
+	//Buscar un censo por creador
 	@Query("select c from Census c where c.username = ?1")
 	public Collection<Census> findCensusByCreator(String username);
-
-	// Buscar los censos abiertos.
-
+	/**
+	 * Devuelve los censos abiertos
+	 */
 	@Query("select c from Census c where c.tipoCenso = 'abierto'")
 	public Collection<Census> findAllOpenedCensuses();
 }

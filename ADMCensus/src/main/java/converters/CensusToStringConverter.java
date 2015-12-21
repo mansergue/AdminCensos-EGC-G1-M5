@@ -10,8 +10,6 @@ import domain.Census;
 @Transactional
 public class CensusToStringConverter implements Converter<Census, String> {
 
-	// Convertimos un objeto de tipo Census en un String -----------------
-
 	@Override
 	public String convert(Census census) {
 		String result;

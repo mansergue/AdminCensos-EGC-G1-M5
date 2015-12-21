@@ -63,7 +63,7 @@
 
 	<spring:message code="census.number.person" var="sizeHeader" />
 	<display:column title="${sizeHeader}" sortable="true">
-		<jstl:out value="${row.votoPorUsuario.size() }"></jstl:out>
+		<jstl:out value="${row.voto_por_usuario.size() }"></jstl:out>
 	</display:column>
 
 
