@@ -21,6 +21,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.JOptionPane;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -150,7 +152,7 @@ public class CensusController extends AbstractController {
 		Collection<Census> cs;
 		cs = censusService.findPossibleCensusesByUser(username);
 		result.addObject("misVotaciones", true);
-		result.addObject("censues", cs);
+		result.addObject("censuses", cs);
 		result.addObject("requestURI", "census/votesByUser.do");
 
 		return result;
@@ -167,7 +169,7 @@ public class CensusController extends AbstractController {
 		ModelAndView result = new ModelAndView("census/misCensos");
 		Collection<Census> cs;
 		cs = censusService.findCensusByCreator(username);
-		result.addObject("censues", cs);
+		result.addObject("censuses", cs);
 		result.addObject("misVotaciones", false);
 		result.addObject("requestURI", "census/getAllCensusByCreador.do");
 
@@ -191,7 +193,8 @@ public class CensusController extends AbstractController {
 
 		} catch (Exception oops) {
 			result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
-			result.addObject("message", "No se pudo añadir el usuario");
+			result.addObject("message", "error");
+			JOptionPane.showMessageDialog(null, "Error");
 			oops.getStackTrace();
 		}
 
@@ -214,7 +217,8 @@ public class CensusController extends AbstractController {
 
 		} catch (Exception oops) {
 			result = new ModelAndView("redirect:/census/getCensusesToRegister.do");
-			result.addObject("message", "No se pudo añadir el usuario");
+			result.addObject("message", "error");
+			JOptionPane.showMessageDialog(null, "Error");
 			oops.getStackTrace();
 		}
 
@@ -243,7 +247,8 @@ public class CensusController extends AbstractController {
 
 		} catch (Exception oops) {
 			result = new ModelAndView("redirect:/census/edit.do?censusId=" + censusId);
-			result.addObject("message", "No se pudo eliminar el usuario porque ya ha votado");
+			result.addObject("message", "error");
+			JOptionPane.showMessageDialog(null, "Error");
 			oops.getStackTrace();
 		}
 
