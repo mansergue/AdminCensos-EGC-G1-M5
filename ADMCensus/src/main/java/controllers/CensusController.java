@@ -45,6 +45,8 @@ public class CensusController extends AbstractController {
 	@Autowired
 	private CensusService censusService;
 
+	// public String username = WelcomeController.username;
+
 	// Constructors -----------------------------------------------------------
 
 	public CensusController() {
@@ -476,14 +478,15 @@ public class CensusController extends AbstractController {
 	// public ModelAndView getAllCensusByCreador(@CookieValue("user") String
 	// username) {
 
-	public ModelAndView getCensusesToRegister(String username) {
-		username = "test1";
+	public ModelAndView getCensusesToRegister(@RequestParam String token) {
+		String username = token.split(":")[0];
 		ModelAndView result = new ModelAndView("census/censosARegistrar");
 		Collection<Census> censuses = new ArrayList<Census>();
 		censuses = censusService.findCensusesToRegisterByUser(username);
 		result.addObject("censuses", censuses);
 		result.addObject("misVotaciones", false);
 		result.addObject("requestURI", "census/getCensusesToRegister.do");
+		result.addObject("token", token);
 
 		return result;
 	}

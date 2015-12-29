@@ -18,11 +18,12 @@
 	<ul>
 		<security:authorize access="isAnonymous()">
 			
+			<li><a href="http://auth-egc.azurewebsites.net/?returnUrl=http://localhost:8080/ADMCensus/welcome/index.do"><spring:message code="master.page.login" /></a></li>
 			<li class='has-sub'><a><spring:message code="master.page.listar" /></a>
 				<ul>
-					<li><a href="census/votesByUser.do"><spring:message code="master.page.census.activeVotes" /></a></li>
-					<li><a href="census/getAllCensusByCreador.do"><spring:message code="master.page.census.byCreator" /></a></li> 
-					<li><a href="census/getCensusesToRegister.do"><spring:message code="master.page.census.listRegister" /></a></li>
+					<li><a href="census/votesByUser.do?token=${token}"><spring:message code="master.page.census.activeVotes" /></a></li>
+					<li><a href="census/getAllCensusByCreador.do?token=${token}"><spring:message code="master.page.census.byCreator" /></a></li> 
+					<li><a href="census/getCensusesToRegister.do?token=${token}"><spring:message code="master.page.census.listRegister" /></a></li>
 				</ul>
 			</li>
 			<li class='has-sub'><a href="http://localhost:8080/CreacionAdminVotaciones"><spring:message code="master.page.votaciones" /></a></li>

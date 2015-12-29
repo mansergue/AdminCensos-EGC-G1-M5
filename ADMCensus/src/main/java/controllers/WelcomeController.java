@@ -18,20 +18,28 @@ public class WelcomeController extends AbstractController {
 		super();
 	}
 
+	// public static String username;
 	// Index ------------------------------------------------------------------
 
 	@RequestMapping(value = "/index")
-	public ModelAndView index(@RequestParam(required = false, defaultValue = "John Doe") String name) {
+	public ModelAndView index(@RequestParam(required = false, defaultValue = "no_logged") String token) {
 		ModelAndView result;
 		SimpleDateFormat formatter;
 		String moment;
+		String username;
+		String password;
 
+		username = token.split(":")[0];
+		password = token.split(":")[1];
 		formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		moment = formatter.format(new Date());
 
 		result = new ModelAndView("welcome/index");
-		result.addObject("name", name);
+		result.addObject("name", username);
 		result.addObject("moment", moment);
+		result.addObject("username", username);
+		result.addObject("password", password);
+		result.addObject("token", token);
 
 		return result;
 	}
