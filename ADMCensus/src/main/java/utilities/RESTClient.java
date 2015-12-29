@@ -33,13 +33,13 @@ public class RESTClient {
 			String[] lista2 = result.split(",");
 			for (String campo : lista2) {
 				String[] auxList = campo.split(":");
-				if (campo.contains("username")) {
+				if (campo.contains("Username")) {
 					username = auxList[1];
 					username = username.replaceAll("\"", "");
 					mapUsernamesEmails.put(username, null);
 
 				}
-				if (campo.contains("email")) {
+				if (campo.contains("Email")) {
 					email = auxList[1];
 					email = email.replaceAll("\"", "");
 					mapUsernamesEmails.put(username, email);
@@ -62,7 +62,7 @@ public class RESTClient {
 	 * concreto pasándole un username, el Json obtenido de autenticación se
 	 * leerá para formar un tipo User que será lo que se devuelva.
 	 */
-	
+
 	public static User getCertainUserByJsonAuthentication(String username) {
 		RestTemplate restTemplate = new RestTemplate();
 		String result = restTemplate.getForObject("http://auth-egc.azurewebsites.net/api/getUser?username=" + username,
@@ -71,7 +71,7 @@ public class RESTClient {
 		String[] lista = result.split(",");
 		User user = new User();
 		for (String field : lista) {
-			if (field.contains("uId")) {
+			if (field.contains("U_id")) {
 				String[] auxList = field.split(":");
 				String uId = auxList[1];
 				uId = uId.replaceAll("\"", "");
@@ -79,31 +79,31 @@ public class RESTClient {
 				int uIdConverted = Integer.parseInt(uId);
 				user.setUId(uIdConverted);
 			}
-			if (field.contains("username")) {
+			if (field.contains("Username")) {
 				String[] auxList = field.split(":");
 				String usernameUser = auxList[1];
 				usernameUser = usernameUser.replaceAll("\"", "");
 				user.setUsername(usernameUser);
 			}
-			if (field.contains("email")) {
+			if (field.contains("Email")) {
 				String[] auxList = field.split(":");
 				String email = auxList[1];
 				email = email.replaceAll("\"", "");
 				user.setEmail(email);
 			}
-			if (field.contains("genre")) {
+			if (field.contains("Genre")) {
 				String[] auxList = field.split(":");
 				String genre = auxList[1];
 				genre = genre.replaceAll("\"", "");
 				user.setGenre(genre);
 			}
-			if (field.contains("autonomousCommunity")) {
+			if (field.contains("Autonomous_community")) {
 				String[] auxList = field.split(":");
 				String autonomousCommunity = auxList[1];
 				autonomousCommunity = autonomousCommunity.replaceAll("\"", "");
 				user.setAutonomousCommunity(autonomousCommunity);
 			}
-			if (field.contains("age")) {
+			if (field.contains("Age")) {
 				String[] auxList = field.split(":");
 				String age = auxList[1];
 				String[] age_list = age.split("}");
