@@ -56,7 +56,7 @@
 <div id="contenedor">
 
 <div id="logo">
-	<a href="welcome/index.do?token=${token}"><img src="images/logo.jpg" alt="Acme-Adventure Co., Inc." style="width: 300px; height: 200px;" /></a>
+	<a href="welcome/index.do"><img src="images/logo.jpg" alt="Acme-Adventure Co., Inc." style="width: 300px; height: 200px;" /></a>
 	<br /><br />
 	<a href="?language=en" title="English"><strong>English</strong></a>&nbsp;|&nbsp;<a href="?language=es"><strong>Español</strong></a>
 </div>

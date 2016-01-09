@@ -23,12 +23,14 @@
 				<ul>
 					<li><a href="census/votesByUser.do?token=${token}"><spring:message code="master.page.census.activeVotes" /></a></li>
 					<li><a href="census/getAllCensusByCreador.do?token=${token}"><spring:message code="master.page.census.byCreator" /></a></li> 
-					<li><a href="census/getCensusesToRegister.do?token=${token}"><spring:message code="master.page.census.listRegister" /></a></li>
+					<li><a href="census/getCensusesToRegister.do"><spring:message code="master.page.census.listRegister" /></a></li>
 				</ul>
 			</li>
 			<li class='has-sub'><a href="http://localhost:8080/CreacionAdminVotaciones"><spring:message code="master.page.votaciones" /></a></li>
 			<li class='has-sub'><a href="http://localhost:8080/results_view"><spring:message code="master.page.resultados" /></a></li>
 			<li class='has-sub'><a href="http://localhost:8080/Deliberations"><spring:message code="master.page.deliberaciones" /></a></li>
+			<li><a href="https://recuento.herokuapp.com/"><spring:message code="master.page.recuento" /></a></li>
+			<li><a href="http://localhost:8080/ADMCensus/welcome/index.do?token=logout"><spring:message code="master.page.logout" /></a></li>
 		</security:authorize>
 	</ul>
 </div>

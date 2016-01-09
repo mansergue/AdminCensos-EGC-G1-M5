@@ -56,7 +56,7 @@
 		<display:column title="${joinsHeader}">
 			<jstl:if test="${!(fn:contains(user, row))}">
 				<a
-					href="census/addUser.do?censusId=${census.id}&username_add=${row}">
+					href="census/addUser.do?censusId=${census.id}&usernameAdd=${row}">
 					<img src="images/join.png" style="width: 32px; height: 32px;" />
 				</a>
 			</jstl:if>
@@ -66,7 +66,7 @@
 		<display:column title="${noJoinsHeader}">
 			<jstl:if test="${(fn:contains(user, row))}">
 				<a
-					href="census/removeUser.do?censusId=${census.id}&username_remove=${row}">
+					href="census/removeUser.do?censusId=${census.id}&usernameRemove=${row}">
 					<img src="images/trash.png" style="width: 32px; height: 32px;" />
 				</a>
 			</jstl:if>
