@@ -30,6 +30,7 @@
 			<li class='has-sub'><a href="http://localhost:8080/results_view"><spring:message code="master.page.resultados" /></a></li>
 			<li class='has-sub'><a href="http://localhost:8080/Deliberations"><spring:message code="master.page.deliberaciones" /></a></li>
 			<li><a href="https://recuento.herokuapp.com/"><spring:message code="master.page.recuento" /></a></li>
+			<li><a href="http://storage-egc1516.rhcloud.com/"><spring:message code="master.page.almacenamiento" /></a></li>
 			<li><a href="http://localhost:8080/ADMCensus/welcome/index.do?token=logout"><spring:message code="master.page.logout" /></a></li>
 		</security:authorize>
 	</ul>
