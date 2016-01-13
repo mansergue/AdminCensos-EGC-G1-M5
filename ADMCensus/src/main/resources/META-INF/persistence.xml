@@ -28,6 +28,7 @@
 			<!-- <property name="hibernate.hbm2ddl.auto" value="none" /> -->
 		</properties>
 
+
 	</persistence-unit>
 	
 </persistence>
