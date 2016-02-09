@@ -34,7 +34,7 @@
 
 	<bean id="census2" class="domain.Census">
 		<property name="username" value="admin1" />
-		<property name="idVotacion" value="24" />
+		<property name="idVotacion" value="3" />
 		<property name="tituloVotacion" value="Censo cerrado VACIO, ACTIVO" />
 		<property name="tipoCenso" value="cerrado" />
 		<property name="votoPorUsuario">
