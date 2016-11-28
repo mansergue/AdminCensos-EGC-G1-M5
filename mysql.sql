@@ -1,9 +1,11 @@
+start transaction;
+
+
 create user 'acme-user'@'%' identified by password '*4F10007AADA9EE3DBB2CC36575DFC6F4FDE27577';
 
 create user 'acme-manager'@'%' identified by password '*FDB8CD304EB2317D10C95D797A4BD7492560F55F';
 
-drop database if exists `ADMCensus`;
-create database `ADMCensus`;
+
 
 
 grant select, insert, update, delete 
@@ -13,6 +15,14 @@ grant select, insert, update, delete, create, drop, references, index, alter,
         create temporary tables, lock tables, create view, create routine, 
         alter routine, execute, trigger, show view
     on `ADMCensus`.* to 'acme-manager'@'%';
+
+
+drop database if exists `ADMCensus`;
+create database `ADMCensus`;
+USE `ADMCensus`;
+
+
+SET NAMES utf8;
 
 
 
@@ -148,3 +158,5 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2016-11-23 17:59:36
+
+commit;
