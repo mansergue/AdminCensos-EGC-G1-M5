@@ -44,6 +44,9 @@ public class Census extends DomainEntity {
 	
 	// Fecha en la que finaliza la votación
 	private Date fechaFinVotacion;
+	
+	// Si este atributo es verdadero, significa que el censo pertenece a una votacion en la cual se permite cambiar tu voto.
+	private boolean open = false; 
 
 	public Census() {
 		
@@ -128,6 +131,14 @@ public class Census extends DomainEntity {
 
 	public void setFechaFinVotacion(Date fechaFinVotacion) {
 		this.fechaFinVotacion = fechaFinVotacion;
+	}
+	
+	public boolean getOpen(){
+		return open;
+	}
+	
+	public void setOpen(boolean open){
+		this.open=open;
 	}
 
 }
