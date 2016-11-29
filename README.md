@@ -7,7 +7,8 @@ Se usará este repositorio para el desarrollo del módulo "Administración y ges
   Por ejemplo tenemos las siguientes equivalencias entre EGit y línea de comandos: 
       - Commit: git commit –a; Push Branch “nombre_rama”: git push; Pull: git pull; Switch to new branch: git branch nombre_nueva_rama; Switch to “nombre_rama_existente”: git checkout nombre_rama_existente; Merge: git merge “nombre_rama”; Add to Index: git add “nombre_archivo”; Show in History: git log.
   2. Uso del plugin EGit en Eclipse con windows xp(máquina virtual de DP). Esta forma es prácticamente idéntica al uso del plugin en ubuntu, ya que solamente cambia el sistema operativo. 
-  3. Línea de comandos con gitbash en windows 10 o windows7. De esta forma la gestión se hará en el sistema operativo nativo, con la desventaja de que los comandos deberán de ser todos escritos. Usamos también gitGUI para hacer los merge,crear ramas y subir algunos archivos.
+  3. Línea de comandos con gitbash en windows 10 o windows 7. De esta forma la gestión se hará en el sistema operativo nativo, con la desventaja de que los comandos deberán de ser todos escritos. Usamos también gitGUI para hacer los merge,crear ramas y subir algunos archivos.
+  4. Realizar el commit-push directamente en github. Este procedimiento se realizara para cambios en archivos de menor importancia, como el Readme.md por ejemplo. Se realizará el cambio con el editor de github directamente, y se pondrá un título y comentario para el commit.
   
   
   
@@ -23,7 +24,7 @@ Se usará este repositorio para el desarrollo del módulo "Administración y ges
       5.-Menor: Una pérdida menor de funcionalidad, o un problema al cual se le puede dar la vuelta
       6.-Trivial: Un problema cosmético, como puede ser una falta de ortografía o un texto desalineado.
       7.-Mejora: Solicitud de una nueva característica o funcionalidad.
-      (fuente:https://es.wikipedia.org/wiki/Sistema_de_seguimiento_de_errores)
+      (fuente: https://es.wikipedia.org/wiki/Sistema_de_seguimiento_de_errores)
    
    2.  Resolución: En esta fase se invierten horas de trabajo en buscar y aplicar posibles soluciones a los problemas posteriormente analizados. Como ya mencionamos antes se puede reanalizar cualquier incidencia si se considera necesario.
    
