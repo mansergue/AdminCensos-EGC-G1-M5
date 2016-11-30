@@ -26,6 +26,6 @@ Se usará este repositorio para el desarrollo del módulo "Administración y ges
       7.-Mejora: Solicitud de una nueva característica o funcionalidad.
       (fuente: https://es.wikipedia.org/wiki/Sistema_de_seguimiento_de_errores)
    
-   2.  Resolución: En esta fase se invierten horas de trabajo en buscar y aplicar posibles soluciones a los problemas posteriormente analizados. Como ya mencionamos antes se puede reanalizar cualquier incidencia si se considera necesario.
+   2.  Resolución: En esta fase se invierten horas de trabajo en buscar y aplicar posibles soluciones a los problemas anteriormente analizados. Como ya mencionamos antes se puede reanalizar cualquier incidencia si se considera necesario.
    
    3. Cierre: Corresponde a la fase final en la cual se habrían solventado los problemas y se procede a cerrar la correspondiente incidencia documentando brevemente la solución aplicada y/o posibles metodologías que se podrían usar en adelante para evitar problemas similares.
