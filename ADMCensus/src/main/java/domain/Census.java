@@ -1,5 +1,5 @@
 package domain;
-
+// Prueba de gestión de cod
 import java.util.Date;
 import java.util.HashMap;
 
