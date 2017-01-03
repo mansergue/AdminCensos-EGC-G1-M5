@@ -12,34 +12,35 @@ import domain.User;
 public class RESTClient {
 
 	/***
-	 * MÈtodo que lee un Json de autenticaciÛn y devuelve un map con los
+	 * M√©todo que lee un Json de autenticaci√≥n y devuelve un map con los
 	 * username de todos los usuarios registrados en el sistema como clave y sus
-	 * emails como valor para que el admin del censo pueda aÒadir usuarios y se
+	 * emails como valor para que el admin del censo pueda a√±adir usuarios y se
 	 * les notifique mediante email.
 	 */
 
 	public static Map<String, String> getMapUSernameAndEmailByJsonAutentication() {
 
 		RestTemplate restTemplate = new RestTemplate();
-		String result = restTemplate.getForObject("http://auth-egc.azurewebsites.net/api/getUsers", String.class);
+		String result = restTemplate.getForObject("https://authb.agoraus1.egc.duckdns.org/api/index.php?method=getUsers", String.class);
+//		System.out.println(result);
 		String[] lista = result.split("},");
+//		System.out.println(lista);
 
 		Map<String, String> mapUsernamesEmails = new HashMap<String, String>();
 		String username = null;
 		String email;
-		for (@SuppressWarnings("unused")
-		String usuario : lista) {
+		for (@SuppressWarnings("unused")String usuario : lista) {
 
 			String[] lista2 = result.split(",");
 			for (String campo : lista2) {
 				String[] auxList = campo.split(":");
-				if (campo.contains("Username")) {
+				if (campo.contains("username")) {
 					username = auxList[1];
 					username = username.replaceAll("\"", "");
 					mapUsernamesEmails.put(username, null);
 
 				}
-				if (campo.contains("Email")) {
+				if (campo.contains("email")) {
 					email = auxList[1];
 					email = email.replaceAll("\"", "");
 					mapUsernamesEmails.put(username, email);
@@ -58,9 +59,9 @@ public class RESTClient {
 	}
 
 	/***
-	 * MÈtodo que lee nos devuelve el Json con la informaciÛn de un usuario en
-	 * concreto pas·ndole un username, el Json obtenido de autenticaciÛn se
-	 * leer· para formar un tipo User que ser· lo que se devuelva.
+	 * M√©todo que lee nos devuelve el Json con la informaci√≥n de un usuario en
+	 * concreto pas√°ndole un username, el Json obtenido de autenticaci√≥n se
+	 * leer√° para formar un tipo User que ser√° lo que se devuelva.
 	 */
 
 	public static User getCertainUserByJsonAuthentication(String username) {
