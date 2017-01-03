@@ -2,20 +2,12 @@ package domain;
 
 public class User {
 	
-	private int uId;
 	private String username;
+	private String password;
 	private String email;
 	private String genre;
 	private String autonomousCommunity;
 	private int age;
-
-	public int getUId() {
-		return uId;
-	}
-
-	public void setUId(int uId) {
-		this.uId = uId;
-	}
 
 	public String getUsername() {
 		return username;
@@ -23,6 +15,14 @@ public class User {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPasswod(String password) {
+		this.password = password;
 	}
 
 	public String getEmail() {
