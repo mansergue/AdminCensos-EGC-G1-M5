@@ -212,7 +212,9 @@ public class CensusService {
 
 	public Collection<Census> findPossibleCensusesByUser(String username) {
 		Assert.isTrue(username != "");
+		System.out.println(username+"\n");
 		Collection<Census> allCensuses = findAll();
+		System.out.println(allCensuses+"\n");
 		Collection<Census> result = new ArrayList<Census>();
 
 		for (Census c : allCensuses) {
@@ -220,11 +222,16 @@ public class CensusService {
 			// Comprobamos si la votación está activa
 
 			if (votacionActiva(c.getFechaInicioVotacion(), c.getFechaFinVotacion())) {
-				if (c.getVotoPorUsuario().containsKey(username) && !c.getVotoPorUsuario().get(username)) {
+//				System.out.println(votacionActiva(c.getFechaInicioVotacion(), c.getFechaFinVotacion())+"\n");
+//				System.out.println("primera"+c.getVotoPorUsuario().containsKey(username)+"  ");
+//				System.out.println("segunda"+c.getVotoPorUsuario().get(username)+"\n");
+				if (c.getVotoPorUsuario().containsKey(username) && c.getVotoPorUsuario().get(username)) {
+					
 					result.add(c);
 				}
 			}
 		}
+		System.out.println(result);
 		return result;
 	}
 
