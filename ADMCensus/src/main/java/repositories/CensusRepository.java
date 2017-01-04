@@ -10,7 +10,7 @@ import domain.Census;
 @Repository
 public interface CensusRepository extends JpaRepository<Census, Integer> {
 	
-	// Buscar un censo de una votación
+	// Buscar un censo de una votaciÃ³n
 	
 	@Query("select c from Census c where c.idVotacion = ?1")
 	public Census findCensusByVote(int idVotacion);
@@ -22,6 +22,6 @@ public interface CensusRepository extends JpaRepository<Census, Integer> {
 	
 	// Devuelve los censos abiertos
 	
-	@Query("select c from Census c where c.tipoCenso = 'abierto'")
+	@Query("select c from Census c where c.tipoCenso = 'abierto' AND c.open=true'")
 	public Collection<Census> findAllOpenedCensuses();
 }
