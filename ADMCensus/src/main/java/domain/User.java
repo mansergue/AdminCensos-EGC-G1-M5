@@ -1,8 +1,18 @@
 package domain;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Email;
+
+import security.UserAccount;
+
 @Entity
 @Access(AccessType.PROPERTY)
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class User extends DomainEntity{
 	
 	private String email;
