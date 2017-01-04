@@ -19,7 +19,7 @@ import domain.Census;
 @Transactional
 public class CensusService {
 
-	// Atributo necesario para mandar email con la modificaciÛn del censo
+	// Atributo necesario para mandar email con la modificaci√≥n del censo
 	private static String cuerpoEmail = "";
 
 	// Managed repository -----------------------------------------------------
@@ -36,10 +36,10 @@ public class CensusService {
 	// Methods ----------------------------------------------------------------
 
 	/**
-	 * Crea un censo a partir de una votaciÛn
+	 * Crea un censo a partir de una votaci√≥n
 	 * 
 	 * @param idVotacion
-	 *            = Identificador de la votaciÛn
+	 *            = Identificador de la votaci√≥n
 	 * @param username
 	 *            = Nombre de usuario que ha creado la votacion
 	 * @param fechaInicio
@@ -79,6 +79,7 @@ public class CensusService {
 		result.setUsername(username);
 		HashMap<String, Boolean> vpo = new HashMap<String, Boolean>();
 		result.setVotoPorUsuario(vpo);
+		result.setOpen(true);
 		return result;
 	}
 
@@ -113,10 +114,10 @@ public class CensusService {
 	}
 
 	/**
-	 * MÈtodo usado por cabina que actualiza a true el estado de voto de un user
+	 * M√©todo usado por cabina que actualiza a true el estado de voto de un user
 	 * 
 	 * @param idVotacion
-	 *            = Identificador de la votaciÛn
+	 *            = Identificador de la votaci√≥n
 	 * @param username
 	 *            = Nombre de usuario
 	 * @return boolean
@@ -142,10 +143,10 @@ public class CensusService {
 	}
 
 	/**
-	 * Devuelve un json para saber si se puede borrar o no una votaciÛn
+	 * Devuelve un json para saber si se puede borrar o no una votaci√≥n
 	 * 
 	 * @param idVotacion
-	 *            = Identificador de la votaciÛn
+	 *            = Identificador de la votaci√≥n
 	 * @param username
 	 *            = Nombre de usuario
 	 * @return format json
@@ -170,10 +171,10 @@ public class CensusService {
 
 	/**
 	 * Devuelve un json indicando si un usuario puede votar en una determinada
-	 * votaciÛn
+	 * votaci√≥n
 	 * 
 	 * @param idVotacion
-	 *            = Identificador de la votaciÛn
+	 *            = Identificador de la votaci√≥n
 	 * @param username
 	 *            = Nombre de usuario
 	 * @return string format json
@@ -201,7 +202,7 @@ public class CensusService {
 	}
 
 	/**
-	 * MÈtodo que devuelve todos los censos de las votaciones en las que un
+	 * M√©todo que devuelve todos los censos de las votaciones en las que un
 	 * usuario puede votar.
 	 * 
 	 * @param username
@@ -216,7 +217,7 @@ public class CensusService {
 
 		for (Census c : allCensuses) {
 
-			// Comprobamos si la votaciÛn est· activa
+			// Comprobamos si la votaci√≥n est√° activa
 
 			if (votacionActiva(c.getFechaInicioVotacion(), c.getFechaFinVotacion())) {
 				if (c.getVotoPorUsuario().containsKey(username) && !c.getVotoPorUsuario().get(username)) {
@@ -261,14 +262,14 @@ public class CensusService {
 
 	/**
 	 * 
-	 * AÒade un usuario con un username determidado a un censo CERRADO
+	 * A√±ade un usuario con un username determidado a un censo CERRADO
 	 *
 	 * @param censusId
-	 *            = Identificador del censo al que aÒadir el usuario
+	 *            = Identificador del censo al que a√±adir el usuario
 	 * @param username
 	 *            = Creador (propietario) del censo
 	 * @param username_add
-	 *            = Usuario que se va a aÒadir al censo
+	 *            = Usuario que se va a a√±adir al censo
 	 */
 
 	public void addUserToClosedCensus(int censusId, String username, String usernameAdd) {
@@ -283,11 +284,11 @@ public class CensusService {
 		census.setVotoPorUsuario(vpo);
 		save(census);
 
-		// EnvÌo de correo
+		// Env√≠o de correo
 
 		String dirEmail;
 
-		// Fecha para controlar cu·ndo se produce un cambio en el censo
+		// Fecha para controlar cu√°ndo se produce un cambio en el censo
 
 		Date currentMoment = new Date();
 		Map<String, String> usernamesAndEmails = RESTClient.getMapUSernameAndEmailByJsonAutentication();
@@ -295,7 +296,7 @@ public class CensusService {
 		cuerpoEmail = currentMoment.toString() + "-> Se ha incorporado al censo de " + census.getTituloVotacion();
 		try {
 
-			// Se procede al envÌo del correo con el resultado de la inclusiÛn
+			// Se procede al env√≠o del correo con el resultado de la inclusi√≥n
 			// en el censo
 			Gmail.send(cuerpoEmail, dirEmail);
 		} catch (Exception e) {
@@ -305,12 +306,12 @@ public class CensusService {
 
 	/**
 	 * 
-	 * AÒade un usuario a un censo ABIERTO (registrarse en un censo abierto)
+	 * A√±ade un usuario a un censo ABIERTO (registrarse en un censo abierto)
 	 *
 	 * @param censusId
-	 *            Identificador del censo al que aÒadir el usuario
+	 *            Identificador del censo al que a√±adir el usuario
 	 * @param username_add
-	 *            Nombre de usuario que se va a aÒadir al censo
+	 *            Nombre de usuario que se va a a√±adir al censo
 	 */
 
 	public void addUserToOpenedCensus(int censusId, String usernameAdd) {
@@ -323,7 +324,7 @@ public class CensusService {
 		census.setVotoPorUsuario(vpo);
 		save(census);
 
-		// EnvÌo de correo
+		// Env√≠o de correo
 
 		String dirEmail;
 		// Fecha para controlar cuando se
@@ -336,7 +337,7 @@ public class CensusService {
 		cuerpoEmail = currentMoment.toString() + "-> Se ha incorporado al censo de " + census.getTituloVotacion();
 		try {
 
-			// Se procede al envio del correo con el resultado de la inclusiÛn
+			// Se procede al envio del correo con el resultado de la inclusi√≥n
 			// en el censo
 			Gmail.send(cuerpoEmail, dirEmail);
 		} catch (Exception e) {
@@ -368,7 +369,7 @@ public class CensusService {
 		census.setVotoPorUsuario(vpo);
 		save(census);
 
-		// EnvÌo de correo
+		// Env√≠o de correo
 
 		String dirEmail;
 
@@ -380,7 +381,7 @@ public class CensusService {
 		dirEmail = usernamesAndEmails.get(username_remove);
 		cuerpoEmail = currentMoment.toString() + "-> Se ha eliminado del censo de " + census.getTituloVotacion();
 
-		// Se procede al envio del correo con el resultado de la exclusiÛn del
+		// Se procede al envio del correo con el resultado de la exclusi√≥n del
 		// usuario del censo
 		try {
 			Gmail.send(cuerpoEmail, dirEmail);
@@ -470,7 +471,7 @@ public class CensusService {
 	}
 
 	/**
-	 * Metodo para buscar el censo de una votaciÛn
+	 * Metodo para buscar el censo de una votaci√≥n
 	 * 
 	 * @param idVotacion
 	 *            = Id de la votacion sobre la que se busca un censo
@@ -485,7 +486,7 @@ public class CensusService {
 
 	/**
 	 *
-	 * MÈtodo creado para saber si existe una votacion activa en el rango de
+	 * M√©todo creado para saber si existe una votacion activa en el rango de
 	 * fechas. Una votacion sera activa si su fecha de fin es posterior a la
 	 * fecha actual.
 	 * 
@@ -493,7 +494,7 @@ public class CensusService {
 	 *            = Fecha inicio de la votacion
 	 * @param fechaFin
 	 *            = Fecha fin de la votacion
-	 * @return true si est· activa
+	 * @return true si est√° activa
 	 */
 
 	private boolean votacionActiva(Date fechaInicio, Date fechaFin) {
@@ -510,13 +511,13 @@ public class CensusService {
 	// NUEVA FUNCIONALIDAD 2015/2016
 
 	/**
-	 * MÈtodo para filtrar usuarios de un censo
+	 * M√©todo para filtrar usuarios de un censo
 	 * 
 	 * @param username
 	 *            = Username del usuario que buscamos
 	 * @param censusId
-	 *            = Id del censo sobre el que vamos a realizar la b˙squeda
-	 * @return el filtro de b˙squeda
+	 *            = Id del censo sobre el que vamos a realizar la b√∫squeda
+	 * @return el filtro de b√∫squeda
 	 */
 
 	public Collection<String> findByUsername(String username, int censusId) {
@@ -531,7 +532,7 @@ public class CensusService {
 		for (String user : usernames) {
 			if (user.contains(username)) {
 
-				// AÒadimos al resultado los votantes que pasan el filtro
+				// A√±adimos al resultado los votantes que pasan el filtro
 
 				result.add(user);
 			}
