@@ -115,9 +115,21 @@ public class RESTClient {
 
 	}
 	
-	public static void main(String[] args) throws IOException{
+		public static void main(String[] args) throws IOException{
 		Map<String, String> usernamesAndEmails = getMapUSernameAndEmailByJsonAutentication();
-		System.out.println(usernamesAndEmails);	
+//		System.out.println(usernamesAndEmails);
+		Set<String> aux= usernamesAndEmails.keySet();
+		System.out.println(aux);
+		for(String s:aux){
+			System.out.println(s);
+			User user =getCertainUserByJsonAuthentication(s);
+			System.out.println(user.getUsername());
+			System.out.println(user.getPassword());
+			System.out.println(user.getEmail());
+			System.out.println(user.getGenre());
+			System.out.println(user.getAutonomousCommunity());
+			System.out.println(user.getAge()+"\n"+"////////////////////////////////"+"\n");
+		}
 		
 	}
 }
