@@ -63,10 +63,10 @@ public class CensusController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Census create(@RequestParam int idVotacion, @RequestParam String fechaInicio,
 			@RequestParam String fechaFin, @RequestParam String tituloVotacion, String tipoVotacion,
-			@CookieValue("user") String username) throws ParseException {
+			@CookieValue("user") String username, boolean open) throws ParseException {
 		Census result = null;
 
-		Census c = censusService.create(idVotacion, username, fechaInicio, fechaFin, tituloVotacion, tipoVotacion);
+		Census c = censusService.create(idVotacion, username, fechaInicio, fechaFin, tituloVotacion, tipoVotacion, open);
 		try {
 			result = censusService.save(c);
 		} catch (Exception oops) {
