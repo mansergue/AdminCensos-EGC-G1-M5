@@ -55,7 +55,7 @@ public class CensusService {
 	 */
 
 	public Census create(int idVotacion, String username, String fechaInicio, String fechaFin, String tituloVotacion,
-			String tipoVotacion) throws ParseException {
+			String tipoVotacion, boolean open) throws ParseException {
 		Assert.isTrue(!username.equals(""));
 		Assert.isTrue(tipoVotacion.equals("abierta") || tipoVotacion.equals("cerrada"));
 		Census result = new Census();
@@ -79,7 +79,7 @@ public class CensusService {
 		result.setUsername(username);
 		HashMap<String, Boolean> vpo = new HashMap<String, Boolean>();
 		result.setVotoPorUsuario(vpo);
-		result.setOpen(true);
+		result.setOpen(open);
 		return result;
 	}
 
