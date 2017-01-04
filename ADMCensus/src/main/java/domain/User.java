@@ -1,30 +1,16 @@
 package domain;
 
-public class User {
+@Entity
+@Access(AccessType.PROPERTY)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class User extends DomainEntity{
 	
-	private String username;
-	private String password;
 	private String email;
 	private String genre;
 	private String autonomousCommunity;
 	private int age;
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPasswod(String password) {
-		this.password = password;
-	}
-
+        
+	@Email
 	public String getEmail() {
 		return email;
 	}
@@ -55,5 +41,19 @@ public class User {
 
 	public void setAge(int age) {
 		this.age = age;
+	}
+	
+	
+	//Realationships
+	UserAccount userAccount;
+	
+	@NotNull
+	@OneToOne(cascade = CascadeType.ALL, optional = false)
+	public UserAccount getUserAccount() {
+		return userAccount;
+	}
+
+	public void setUserAccount(UserAccount userAccount) {
+		this.userAccount = userAccount;
 	}
 }
