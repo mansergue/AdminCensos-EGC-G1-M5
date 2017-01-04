@@ -57,11 +57,16 @@ public class UserService {
 		return result;
 	}
 
+
 	public User save(User user) {
 		User result = userRepository.save(user);
 		return result;
 	}
+	
 
+	public User findOne(int userId) {
+		return userRepository.findOne(userId);
+	}
 
 	// Other business methods -------------------------------------------------
 	
