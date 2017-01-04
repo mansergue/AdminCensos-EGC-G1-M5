@@ -53,11 +53,6 @@ public class RESTClient {
 		return mapUsernamesEmails;
 	}
 
-	public static void main(String[] args) throws IOException {
-		Map<String, String> usernamesAndEmails = getMapUSernameAndEmailByJsonAutentication();
-		System.out.println(usernamesAndEmails);
-	}
-
 	/***
 	 * Método que lee nos devuelve el Json con la información de un usuario en
 	 * concreto pasándole un username, el Json obtenido de autenticación se
@@ -66,56 +61,63 @@ public class RESTClient {
 
 	public static User getCertainUserByJsonAuthentication(String username) {
 		RestTemplate restTemplate = new RestTemplate();
-		String result = restTemplate.getForObject("http://auth-egc.azurewebsites.net/api/getUser?username=" + username,
+		String result = restTemplate.getForObject("https://beta.authb.agoraus1.egc.duckdns.org/api/index.php?method=getUser&user=" + username,
 				String.class);
-		System.out.println(result);
+//		System.out.println(result);
 		String[] lista = result.split(",");
 		User user = new User();
 		for (String field : lista) {
-			if (field.contains("U_id")) {
-				String[] auxList = field.split(":");
-				String uId = auxList[1];
-				uId = uId.replaceAll("\"", "");
-				System.out.println(uId);
-				int uIdConverted = Integer.parseInt(uId);
-				user.setUId(uIdConverted);
-			}
-			if (field.contains("Username")) {
+			if (field.contains("username")) {
 				String[] auxList = field.split(":");
 				String usernameUser = auxList[1];
 				usernameUser = usernameUser.replaceAll("\"", "");
 				user.setUsername(usernameUser);
 			}
-			if (field.contains("Email")) {
+			if (field.contains("password")) {
+				String[] auxList = field.split(":");
+				String password = auxList[1];
+				password = password.replaceAll("\"", "");
+				user.setPasswod(password);
+			}
+			if (field.contains("email")) {
 				String[] auxList = field.split(":");
 				String email = auxList[1];
 				email = email.replaceAll("\"", "");
 				user.setEmail(email);
 			}
-			if (field.contains("Genre")) {
+			if (field.contains("genre")) {
 				String[] auxList = field.split(":");
 				String genre = auxList[1];
 				genre = genre.replaceAll("\"", "");
 				user.setGenre(genre);
 			}
-			if (field.contains("Autonomous_community")) {
+			if (field.contains("autonomous_community")) {
 				String[] auxList = field.split(":");
 				String autonomousCommunity = auxList[1];
 				autonomousCommunity = autonomousCommunity.replaceAll("\"", "");
 				user.setAutonomousCommunity(autonomousCommunity);
 			}
-			if (field.contains("Age")) {
+			if (field.contains("age")) {
 				String[] auxList = field.split(":");
 				String age = auxList[1];
 				String[] age_list = age.split("}");
 				String finalAge = age_list[0];
-
-				int ageConverted = Integer.parseInt(finalAge);
+				String[] s=finalAge.split("\"");
+				for(String x:s){
+					System.out.println(x);
+				}
+				int ageConverted = Integer.parseInt(s[1]);
 				user.setAge(ageConverted);
 			}
 		}
-		System.out.println(user);
+//		System.out.println(user);
 		return user;
 
+	}
+	
+	public static void main(String[] args) throws IOException{
+		Map<String, String> usernamesAndEmails = getMapUSernameAndEmailByJsonAutentication();
+		System.out.println(usernamesAndEmails);	
+		
 	}
 }
