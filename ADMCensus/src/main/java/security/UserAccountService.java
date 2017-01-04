@@ -60,6 +60,7 @@ public class UserAccountService {
 		password = passwordEncoder.encodePassword(userAccount.getPassword(), null);
 		userAccount.setPassword(password);
 		return userAccount;
+		
 	}
 
 }
