@@ -16,9 +16,8 @@
 
 <div id="cssmenu">
 	<ul>
-		<security:authorize access="isAnonymous()">
 			
-			<li><a href="https://beta.authb.agoraus1.egc.duckdns.org/"><spring:message code="master.page.login" /></a></li>
+			<li><a href="user/login.do"><spring:message code="master.page.login" /></a></li>
 			<li class='has-sub'><a><spring:message code="master.page.listar" /></a>
 				<ul>
 					<li><a href="census/votesByUser.do?token=${token}"><spring:message code="master.page.census.activeVotes" /></a></li>
@@ -32,7 +31,6 @@
 			<li><a href="https://recuento.agoraus1.egc.duckdns.org/"><spring:message code="master.page.recuento" /></a></li>
 			<li><a href="http://storage-egc1516.rhcloud.com/"><spring:message code="master.page.almacenamiento" /></a></li>
 			<li><a href="https://censos.agoraus1.egc.duckdns.org/welcome/index.do?token=logout"><spring:message code="master.page.logout" /></a></li>
-		</security:authorize>
 	</ul>
 </div>
 

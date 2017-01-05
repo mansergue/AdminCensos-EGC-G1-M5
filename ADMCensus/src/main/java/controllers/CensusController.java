@@ -38,6 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
 import domain.Census;
 import domain.User;
 import services.CensusService;
+import services.UserService;
 import utilities.RESTClient;
 
 @Controller
@@ -46,6 +47,9 @@ public class CensusController extends AbstractController {
 
 	@Autowired
 	private CensusService censusService;
+	
+	@Autowired
+	private UserService userService;
 
 	// Constructors -----------------------------------------------------------
 
@@ -123,17 +127,17 @@ public class CensusController extends AbstractController {
 
 	// Método para la vista de votaciones por usuario -------------------------
 
-	@RequestMapping(value = "/votesByUser", method = RequestMethod.GET)
-	public ModelAndView getVotesByUser(@CookieValue("user") String username) {
-		ModelAndView result = new ModelAndView("census/votesByUser");
-		Collection<Census> cs;
-		cs = censusService.findPossibleCensusesByUser(username);
-		result.addObject("misVotaciones", true);
-		result.addObject("censuses", cs);
-		result.addObject("requestURI", "census/votesByUser.do");
+		@RequestMapping(value = "/votesByUser", method = RequestMethod.GET)
+		public ModelAndView getVotesByUser() {
+			ModelAndView result = new ModelAndView("census/votesByUser");
+			Collection<Census> cs;
+			cs = censusService.findPossibleCensusesByUser(userService.findByPrincipal().getUserAccount().getUsername());
+			result.addObject("misVotaciones", true);
+			result.addObject("censuses", cs);
+			result.addObject("requestURI", "census/votesByUser.do");
 
-		return result;
-	}
+			return result;
+		}
 
 	// Metodo para la vista de censos por creador -----------------------------
 
