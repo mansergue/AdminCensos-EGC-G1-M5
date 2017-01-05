@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import domain.User;
 import repositories.UserRepository;
@@ -25,8 +26,6 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-	// Supporting services ----------------------------------------------------
-
 	// Constructors -----------------------------------------------------------
 
 	public UserService() {
@@ -36,15 +35,10 @@ public class UserService {
 	// Simple CRUD methods ----------------------------------------------------
 
 	public User create(String username) {
-		User result;
-		UserAccount userAccount;
-		Authority authority;
-		Collection<Authority> authorities;
-
-		result = new User();
-		userAccount = new UserAccount();
-		authorities = new ArrayList<Authority>();
-		authority = new Authority();
+		User user= new User();
+		UserAccount userAccount= new UserAccount();
+		Authority authority= new Authority();
+		Collection<Authority> authorities= new ArrayList<Authority>();
 
 		authority.setAuthority("USER");
 		authorities.add(authority);
@@ -52,15 +46,15 @@ public class UserService {
 		userAccount.setPassword(new Md5PasswordEncoder().encodePassword(username, null));
 		userAccount.setAuthorities(authorities);
 
-		result.setUserAccount(userAccount);
+		user.setUserAccount(userAccount);
 
-		return result;
+		return user;
 	}
 
 
 	public User save(User user) {
-		User result = userRepository.save(user);
-		return result;
+		User newUser = userRepository.save(user);
+		return newUser;
 	}
 	
 
@@ -69,24 +63,34 @@ public class UserService {
 	}
 
 	// Other business methods -------------------------------------------------
+	public User findByUserAccount(UserAccount userAccount) {
+		Assert.notNull(userAccount);
+
+		User result;
+		result = userRepository.findByUserAccount(userAccount);
+		return result;
+	}
 	
 	public User findByPrincipal() {
 		User result;
-
-		result = new User();
-		result = userRepository.findByPrincipal(LoginService.getPrincipal().getId());
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+		result = findByUserAccount(userAccount);
+		Assert.notNull(result);
 
 		return result;
 	}
 
 	public User findByUsername(String username) {
-		User result;
+		User user;
 
-		result = new User();
-		result = userRepository.findByUsername(username);
-
-		return result;
+		user = new User();
+		user = userRepository.findByUsername(username);
+		Assert.notNull(user);
+		
+		return user;
 	}
-
+	
 }
 

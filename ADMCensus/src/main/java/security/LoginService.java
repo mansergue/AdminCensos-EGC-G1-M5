@@ -75,18 +75,17 @@ public class LoginService implements UserDetailsService {
 
 	
 	public String contructToken(UserAccount userAccount) {
-		
-		String passwordEnconde = new Md5PasswordEncoder().encodePassword(
+		String password = new Md5PasswordEncoder().encodePassword(
 				userAccount.getPassword(), null);
-		passwordEnconde = userAccount.getUsername()
+		password = userAccount.getUsername()
 				+ new Md5PasswordEncoder()
-						.encodePassword(passwordEnconde, null);
-		passwordEnconde = userAccount.getUsername()
+						.encodePassword(password, null);
+		password = userAccount.getUsername()
 				+ ":"
 				+ new Md5PasswordEncoder()
-						.encodePassword(passwordEnconde, null);
+						.encodePassword(password, null);
 
-		return passwordEnconde;
+		return password;
 	}
 
 }
