@@ -26,19 +26,17 @@
 		<security:intercept-url pattern="/views/misc/index.jsp" access="permitAll" /> 
 		<security:intercept-url pattern="/views/census/manage.jsp" access="permitAll" /> 
 
-		<security:intercept-url pattern="/security/login.do" access="permitAll" /> 
-		<security:intercept-url pattern="/security/loginFailure.do" access="permitAll" /> 
-
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" /> 
-
+		<security:intercept-url pattern="/user/login.do" access="permitAll" /> 
+		<security:intercept-url pattern="/user/entry.do" access="permitAll" /> 
+		
 		<security:intercept-url pattern="/census/**" access="permitAll" />
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
 		<security:form-login 
-			login-page="/security/login.do"
+			login-page="/user/login.do"
 			password-parameter="password" 
-			username-parameter="username"
-			authentication-failure-url="/security/loginFailure.do" />
+			username-parameter="username" />
 
 		<security:logout 
 			logout-success-url="/" 
