@@ -73,7 +73,9 @@ public class LoginService implements UserDetailsService {
 		return result;
 	}
 
-	public String verToken(UserAccount userAccount) {
+	
+	public String contructToken(UserAccount userAccount) {
+		
 		String passwordEnconde = new Md5PasswordEncoder().encodePassword(
 				userAccount.getPassword(), null);
 		passwordEnconde = userAccount.getUsername()
