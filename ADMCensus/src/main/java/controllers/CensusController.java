@@ -11,8 +11,13 @@
 
 package controllers;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
+
 import java.io.BufferedWriter;
 import java.io.File;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
@@ -34,6 +39,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfWriter;
 
 import domain.Census;
 import domain.User;
@@ -400,6 +410,93 @@ public class CensusController extends AbstractController {
 		return result;
 	}
 
+	// Exportar un censo a .pdf -----------------------------------------------
+
+		@RequestMapping(value = "/exportPDF", method = RequestMethod.GET)
+		public ModelAndView exportPDF(@RequestParam int censusId) throws IOException, DocumentException {
+			ModelAndView result;
+			Census census = censusService.findOne(censusId);
+			String typeOS = System.getProperty("os.name");
+			String userHomeDir = System.getProperty("user.home");
+			FileOutputStream archivo= null;
+
+			// Hacemos un cambio en el directorio donde se guardará el fichero .pdf
+			// dependiendo de si estamos trabajando sobre Windows o sobre Linux
+
+			if (typeOS.contains("Windows")) {
+				archivo = new FileOutputStream(userHomeDir +"/Desktop/filename" + censusId + ".pdf");
+			} else if (typeOS.contains("Linux")) {
+				archivo = new FileOutputStream(userHomeDir + "/Escritorio/filename" + censusId + ".pdf");
+			} else if (typeOS.contains("Mac")) {
+				archivo = new FileOutputStream(userHomeDir + "/Desktop/filename" + censusId + ".pdf");
+			}
+
+			
+			Document documento = new Document();
+		    PdfWriter.getInstance(documento, archivo);
+		    documento.open();
+			// Aquí estamos dando el formato que queremos que tenga nuestro .pdf
+		    
+		    documento.add(new Paragraph("Details of the census"+"\n"+"\n"));
+		    documento.add(new Paragraph("Owner: " + census.getUsername()+"\n"));
+		    documento.add(new Paragraph("Name of vote: " + census.getTituloVotacion()+"\n"));
+		    documento.add(new Paragraph("Vote number: " + census.getIdVotacion()+"\n"));
+		    documento.add(new Paragraph("Start date: " + census.getFechaInicioVotacion()+"\n"));
+		    documento.add(new Paragraph("Finish date: " + census.getFechaFinVotacion()+"\n"+"---------------------"+"\n"+"\n"));
+		    documento.add(new Paragraph("Voters: "+"\n"));
+
+			// Todos los usuarios del sistema
+
+			Map<String, String> mapUsers = RESTClient.getMapUSernameAndEmailByJsonAutentication();
+			Collection<String> usernames = mapUsers.keySet();
+
+			// Todos los que han votado en un censo
+
+			Collection<String> userList = census.getVotoPorUsuario().keySet();
+			if (usernames.size() != 0) {
+
+				// Aquí compruebo que de todos los usuarios disponibles en el
+				// sistema, cuál de
+				// ellos ha votado ya en el censo
+
+				for (String aux : usernames) {
+					for (String voter : userList) {
+
+						// Uno de los usuarios del sistema ya ha votado en dicho
+						// censo
+
+						if (aux.equals(voter)) {
+
+							// Obtenemos el mapa del censo, para saber si el usuario
+							// ha votado o no
+
+							HashMap<String, Boolean> map = census.getVotoPorUsuario();
+
+							// Añadimos este usuario que ya ha votado al text
+
+							User user = RESTClient.getCertainUserByJsonAuthentication(voter);
+							
+							documento.add(new Paragraph("\n"+"User_Id: " + user.getUserAccount().getUsername()+"\n"));
+						    documento.add(new Paragraph("Username: " + user.getUserAccount().getPassword()+"\n"));
+						    documento.add(new Paragraph("Email: " + user.getEmail()+"\n"));
+						    documento.add(new Paragraph("Genre: " + user.getGenre()+"\n"));
+						    documento.add(new Paragraph("Autonomous community: " + user.getAutonomousCommunity()+"\n"));
+						    documento.add(new Paragraph("Age: " + user.getAge()+"\n"));
+						    documento.add(new Paragraph("Has voted?: " + map.get(voter)+"\n"+"*****************"+"\n"));
+						    System.out.println("fin de escritura del PDF");
+							break;
+						}
+					}
+				}
+			} else {
+				documento.add(new Paragraph("Nothing to display because there isn't any voters"));
+			}
+
+			documento.close();
+			result = new ModelAndView("redirect:getAllCensusByCreador.do");
+			return result;
+		}
+		
 	// Save -------------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")

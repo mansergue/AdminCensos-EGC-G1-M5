@@ -59,7 +59,9 @@
 
 <acme:cancel url="census/export.do?censusId=${census.id}"
 	code="census.export" />
-
+	
+<acme:cancel url="census/exportPDF.do?censusId=${census.id}"
+	code="census.exportPDF" />
 
 <acme:cancel url="census/getAllCensusByCreador.do" code="census.back" />
 
