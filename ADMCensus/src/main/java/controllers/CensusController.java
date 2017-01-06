@@ -424,10 +424,10 @@ public class CensusController extends AbstractController {
 	// Nos devuelve una lista con los censos en los que nos podemos registrar -
 
 	@RequestMapping(value = "/getCensusesToRegister", method = RequestMethod.GET)
-	public ModelAndView getCensusesToRegister(@CookieValue("user") String username) {
+	public ModelAndView getCensusesToRegister() {
 		ModelAndView result = new ModelAndView("census/censosARegistrar");
 		Collection<Census> censuses = new ArrayList<Census>();
-		censuses = censusService.findCensusesToRegisterByUser(username);
+		censuses = censusService.findCensusesToRegisterByUser(userService.findByPrincipal().getUserAccount().getUsername());
 		result.addObject("censuses", censuses);
 		result.addObject("misVotaciones", false);
 		result.addObject("requestURI", "census/getCensusesToRegister.do");
