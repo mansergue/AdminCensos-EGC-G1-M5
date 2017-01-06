@@ -371,9 +371,9 @@ public class CensusController extends AbstractController {
 
 						User user = RESTClient.getCertainUserByJsonAuthentication(voter);
 						bufferedWriter.newLine();
-						bufferedWriter.write("User_Id: " + user.getUId());
+						bufferedWriter.write("User_Id: " + user.getUserAccount().getUsername());
 						bufferedWriter.newLine();
-						bufferedWriter.write("Username: " + user.getUsername());
+						bufferedWriter.write("Username: " + user.getUserAccount().getPassword());
 						bufferedWriter.newLine();
 						bufferedWriter.write("Email: " + user.getEmail());
 						bufferedWriter.newLine();
