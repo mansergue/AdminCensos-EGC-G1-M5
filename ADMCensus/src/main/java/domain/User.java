@@ -12,6 +12,7 @@ import org.hibernate.validator.constraints.Email;
 import security.UserAccount;
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Access(AccessType.PROPERTY)
 public class User extends DomainEntity{
 	
