@@ -1,27 +1,25 @@
 package utilities;
 
 import java.io.IOException;
-
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.Set;
 import org.springframework.web.client.RestTemplate;
-
 import domain.User;
-
+import security.UserAccount;
 public class RESTClient {
 
 	/***
-	 * Método que lee un Json de autenticación y devuelve un map con los
+	 * MÃ©todo que lee un Json de autenticaciÃ³n y devuelve un map con los
 	 * username de todos los usuarios registrados en el sistema como clave y sus
-	 * emails como valor para que el admin del censo pueda añadir usuarios y se
+	 * emails como valor para que el admin del censo pueda aÃ±adir usuarios y se
 	 * les notifique mediante email.
 	 */
 
 	public static Map<String, String> getMapUSernameAndEmailByJsonAutentication() {
 
 		RestTemplate restTemplate = new RestTemplate();
-		String result = restTemplate.getForObject("https://authb.agoraus1.egc.duckdns.org/api/index.php?method=getUsers", String.class);
+		String result = restTemplate.getForObject("https://autha.agoraus1.egc.duckdns.org/api/index.php?method=getUsers", String.class);
 //		System.out.println(result);
 		String[] lista = result.split("},");
 //		System.out.println(lista);
@@ -54,30 +52,31 @@ public class RESTClient {
 	}
 
 	/***
-	 * Método que lee nos devuelve el Json con la información de un usuario en
-	 * concreto pasándole un username, el Json obtenido de autenticación se
-	 * leerá para formar un tipo User que será lo que se devuelva.
+	 * MÃ©todo que lee nos devuelve el Json con la informaciÃ³n de un usuario en
+	 * concreto pasÃ¡ndole un username, el Json obtenido de autenticaciÃ³n se
+	 * leerÃ¡ para formar un tipo User que serÃ¡ lo que se devuelva.
 	 */
 
 	public static User getCertainUserByJsonAuthentication(String username) {
 		RestTemplate restTemplate = new RestTemplate();
-		String result = restTemplate.getForObject("https://beta.authb.agoraus1.egc.duckdns.org/api/index.php?method=getUser&user=" + username,
+		String result = restTemplate.getForObject("https://autha.agoraus1.egc.duckdns.org/api/index.php?method=getUser&user=" + username,
 				String.class);
 //		System.out.println(result);
 		String[] lista = result.split(",");
 		User user = new User();
+		UserAccount userAccount=new UserAccount();
 		for (String field : lista) {
 			if (field.contains("username")) {
 				String[] auxList = field.split(":");
 				String usernameUser = auxList[1];
 				usernameUser = usernameUser.replaceAll("\"", "");
-				user.setUsername(usernameUser);
+				userAccount.setUsername(usernameUser);
 			}
 			if (field.contains("password")) {
 				String[] auxList = field.split(":");
 				String password = auxList[1];
 				password = password.replaceAll("\"", "");
-				user.setPasswod(password);
+				userAccount.setPassword(password);
 			}
 			if (field.contains("email")) {
 				String[] auxList = field.split(":");
@@ -111,25 +110,25 @@ public class RESTClient {
 			}
 		}
 //		System.out.println(user);
+		user.setUserAccount(userAccount);
 		return user;
 
 	}
 	
 		public static void main(String[] args) throws IOException{
 		Map<String, String> usernamesAndEmails = getMapUSernameAndEmailByJsonAutentication();
-//		System.out.println(usernamesAndEmails);
+		System.out.println(usernamesAndEmails);
 		Set<String> aux= usernamesAndEmails.keySet();
 		System.out.println(aux);
 		for(String s:aux){
 			System.out.println(s);
 			User user =getCertainUserByJsonAuthentication(s);
-			System.out.println(user.getUsername());
-			System.out.println(user.getPassword());
+			System.out.println(user.getUserAccount().getUsername());
+			System.out.println(user.getUserAccount().getPassword());
 			System.out.println(user.getEmail());
 			System.out.println(user.getGenre());
 			System.out.println(user.getAutonomousCommunity());
 			System.out.println(user.getAge()+"\n"+"////////////////////////////////"+"\n");
 		}
-		
 	}
 }
