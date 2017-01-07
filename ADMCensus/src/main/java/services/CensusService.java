@@ -546,5 +546,45 @@ public class CensusService {
 		}
 		return result;
 	}
+	// NUEVAS FUNCIONALIDADES 2016/2017
+	
+	//Número de censos abiertos
+	public int openCensuses(){
+		int result=censusRepository.openCensuses();
+		return result;
+	}
+	
+	//Censo con más votaciones
+	public Census censusMoreVotes(){
+		Collection<Census> censuses=findAll();
+		System.out.println();
+		Census aux=new Census();
+		Map<String, Boolean> votos=new HashMap<String,Boolean>();
+		int i=0;
+		int j=0;
+		
+		
+		for(Census c:censuses){
+			votos=c.getVotoPorUsuario();
+			for(Map.Entry<String, Boolean> entry : votos.entrySet()) {
+				if(entry.getValue()==true){
+					i++;
+				}	
+				
+			}
+			if(i>j||j==0){
+				aux=c;
+			}
+			if(j==0){
+				j=i;
+			}	
+			
+		}
+		return aux;
+	}
+	
+	
+	//Censo con menos votaciones
+
 
 }
