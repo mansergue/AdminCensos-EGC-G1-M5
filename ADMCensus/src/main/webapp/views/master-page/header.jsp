@@ -27,6 +27,7 @@
 				</ul>
 			</li>
 			<li class='has-sub'><a href="https://cavotacion.agoraus1.egc.duckdns.org/"><spring:message code="master.page.votaciones" /></a></li>
+			<li><a class="fNiv" href="dashboard/list.do"><spring:message code="master.page.dashboard" /></a></li>
 			<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /></a></li>
 			</security:authorize>
 	</ul>
