@@ -22,10 +22,10 @@ public interface CensusRepository extends JpaRepository<Census, Integer> {
 	
 	// Devuelve los censos abiertos
 	
-	@Query("select c from Census c where c.tipoCenso = 'abierto' AND c.open=true")
+	@Query("select c from Census c where c.tipo = 'abierto'")
 	public Collection<Census> findAllOpenedCensuses();
 	
 	//Número de censos abiertos
-	@Query("select count(c) from Census c where c.tipoCenso = 'abierto' AND c.open=true")
+	@Query("select count(c) from Census c where c.tipo = 'abierto'")
 	public int openCensuses();
 }
