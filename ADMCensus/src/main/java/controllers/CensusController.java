@@ -81,22 +81,23 @@ public class CensusController extends AbstractController {
 	// respuesta positiva -----------------------------------------------------
 
 	@RequestMapping(value = "/canDelete", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody String canDelete(@RequestParam int idVotacion, @CookieValue("user") String username) {
+	public @ResponseBody String canDelete(@RequestParam int idVotacion, @RequestParam String username) {
 		return censusService.canDelete(idVotacion, username);
 	}
 
 	// Devuelve JSon a cabina para saber si un usuario puede votar ------------
 
 	@RequestMapping(value = "/canVote", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody String canVote(@RequestParam int idVotacion, @CookieValue("user") String username) {
+	public @ResponseBody String canVote(@RequestParam int idVotacion, @RequestParam String username) {
+		//Llamar a todas las votaciones de recuento y las que falten meterlas en nuestra base de datos
 		return censusService.canVote(idVotacion, username);
 	}
 
 	// Actualiza el estado de un usuario en una votación por cabina -----------
 
 	@RequestMapping(value = "/updateUser", method = RequestMethod.GET)
-	public @ResponseBody String updateUser(@RequestParam int idVotacion, @RequestParam String tipoVotacion,
-			@CookieValue("user") String username) {
+	public @ResponseBody String updateUser(@RequestParam int idVotacion, @RequestParam String tipoVotacion,@RequestParam String username) {
+		//Llamar a todas las votaciones de recuento y las que falten meterlas en nuestra base de datos
 		try {
 			if (censusService.updateUser(idVotacion, tipoVotacion, username)) {
 				return new String("{\"result\":\"yes\"}");
