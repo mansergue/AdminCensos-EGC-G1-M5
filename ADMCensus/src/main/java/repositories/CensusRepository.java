@@ -17,8 +17,8 @@ public interface CensusRepository extends JpaRepository<Census, Integer> {
 	
 	// Buscar un censo por creador
 	
-	@Query("select c from Census c where c.username = ?1")
-	public Collection<Census> findCensusByCreator(String username);
+	@Query("select c from Census c where c.usernameCreator = ?1")
+	public Collection<Census> findCensusByCreator(String usernameCreator);
 	
 	// Devuelve los censos abiertos
 	
