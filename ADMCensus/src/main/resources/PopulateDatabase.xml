@@ -158,5 +158,41 @@
 		<property name="open" value="false" />
 	</bean>
 
+	<bean id="census10" class="domain.Census">
+    		<property name="username" value="pabcargar2" />
+    		<property name="idVotacion" value="32" />
+    		<property name="tituloVotacion" value="Censo abierto vacio activo" />
+    		<property name="tipoCenso" value="abierto" />
+    		<property name="votoPorUsuario">
+     		 	<map>
+        			<entry key="pabcargar2" value="true" />
+        			<entry key="admin1" value="true" />
+     		 	</map>
+    		</property>
+
+    		<property name="fechaInicioVotacion" value="10/07/2015 00:00" />
+    		<property name="fechaFinVotacion" value="12/05/2018 00:00" />
+    		<property name="open" value="true" />
+  	</bean>
+  
+ 	<bean id="census11" class="domain.Census">
+    		<property name="username" value="pabcargar2" />
+    		<property name="idVotacion" value="33" />
+    		<property name="tituloVotacion" value="Censo abierto vacio activo" />
+    		<property name="tipoCenso" value="abierto" />
+    		<property name="votoPorUsuario">
+      			<map>
+        			<entry key="pabcargar2" value="true" />
+        			<entry key="admin1" value="true" />
+        			<entry key="josea" value="true" />
+     			</map>
+    		</property>
+
+    		<property name="fechaInicioVotacion" value="10/07/2015 00:00" />
+    		<property name="fechaFinVotacion" value="12/05/2018 00:00" />
+    		<property name="open" value="true" />
+  	</bean>
+
+
 
 </beans>
