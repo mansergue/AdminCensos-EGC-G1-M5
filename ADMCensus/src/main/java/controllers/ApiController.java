@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +56,16 @@ public class ApiController extends AbstractController {
 		return result;
 	}
 	
+	@RequestMapping(value = "/getCensusesToRegister", method = RequestMethod.GET)
+	public ModelAndView getCensusesToRegister(@RequestParam String username) {
+		ModelAndView result = new ModelAndView("census/censosARegistrar");
+		Collection<Census> censuses = new ArrayList<Census>();
+		censuses = censusService.findCensusesToRegisterByUser(userService.findByUsername(username).getUserAccount().getUsername());
+		result.addObject("censuses", censuses);
+		result.addObject("misVotaciones", false);
+		result.addObject("requestURI", "API/getCensusesToRegister.do?username=" + username);
+
+		return result;
+	}
 	
 }
