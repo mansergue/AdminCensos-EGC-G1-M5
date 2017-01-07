@@ -35,11 +35,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.lowagie.text.Paragraph;
+
 import domain.Census;
 import domain.User;
 import services.CensusService;
 import services.UserService;
 import utilities.RESTClient;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.pdf.PdfWriter;
+import java.io.FileOutputStream;
 
 @Controller
 @RequestMapping("/census")
@@ -62,7 +68,7 @@ public class CensusController extends AbstractController {
 	 ******/
 
 	// Create census ----------------------------------------------------------
-	// Recibe parametros de votacion y crea un censo por votaciÛn
+	// Recibe parametros de votacion y crea un censo por votaci√≥n
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Census create(@RequestParam int idVotacion, @RequestParam String fechaInicio,
@@ -79,8 +85,8 @@ public class CensusController extends AbstractController {
 		return result;
 	}
 
-	// Devuelve JSon a a votaciones para saber si pueden borrar una votaciÛn
-	// En caso afirmativo, el censo se borrar· autom·ticamente al dar una
+	// Devuelve JSon a a votaciones para saber si pueden borrar una votaci√≥n
+	// En caso afirmativo, el censo se borrar√° autom√°ticamente al dar una
 	// respuesta positiva -----------------------------------------------------
 
 	@RequestMapping(value = "/canDelete", method = RequestMethod.GET, produces = "application/json")
@@ -95,7 +101,7 @@ public class CensusController extends AbstractController {
 		return censusService.canVote(idVotacion, username);
 	}
 
-	// Actualiza el estado de un usuario en una votaciÛn por cabina -----------
+	// Actualiza el estado de un usuario en una votaci√≥n por cabina -----------
 
 	@RequestMapping(value = "/updateUser", method = RequestMethod.GET)
 	public @ResponseBody String updateUser(@RequestParam int idVotacion, @RequestParam String tipoVotacion,
@@ -114,7 +120,7 @@ public class CensusController extends AbstractController {
 	}
 
 	// Devuelve un censo con sus usuarios para deliberaciones al preguntar por
-	// una votaciÛn ------------
+	// una votaci√≥n ------------
 
 	@RequestMapping(value = "/findCensusByVote", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Census findCensusByVote(@RequestParam int idVotacion) {
@@ -122,10 +128,10 @@ public class CensusController extends AbstractController {
 	}
 
 	/*****
-	 * MÈtodos internos
+	 * M√©todos internos
 	 ******/
 
-	// MÈtodo para la vista de votaciones por usuario -------------------------
+	// M√©todo para la vista de votaciones por usuario -------------------------
 
 		@RequestMapping(value = "/votesByUser", method = RequestMethod.GET)
 		public ModelAndView getVotesByUser() {
@@ -153,7 +159,7 @@ public class CensusController extends AbstractController {
 		return result;
 	}
 
-	// AÒadir usuarios a un censo cerrado, como administrador del censo -------
+	// A√±adir usuarios a un censo cerrado, como administrador del censo -------
 
 	@RequestMapping(value = "/addUser", method = RequestMethod.GET)
 	public ModelAndView addUser(@RequestParam int censusId, @CookieValue("user") String username,
@@ -244,23 +250,24 @@ public class CensusController extends AbstractController {
 		return result;
 	}
 
-	// Detalles del censo -----------------------------------------------------
+	// Detalles del censo ‚Äî---------------------------------------------------
 
-	@RequestMapping(value = "/details", method = RequestMethod.GET)
-	public ModelAndView details(@RequestParam int censusId, @CookieValue("user") String username) {
-		ModelAndView result;
-		Date now = new Date();
-		Census census = censusService.findOne(censusId);
-		result = createEditModelAndView(census);
-		Boolean editable;
-		editable = census.getTipoCenso().equals("cerrado") && census.getUsername().equals(username)
-				&& census.getFechaFinVotacion().after(now);
+	
 
-		result.addObject("editable", editable);
-		return result;
-	}
+	  @RequestMapping(value = "/details", method = RequestMethod.GET)
+	  public ModelAndView details(@RequestParam int censusId) {
+	    ModelAndView result;
+	    Date now = new Date();
+	    Census census = censusService.findOne(censusId);
+	    result = createEditModelAndView(census);
+	    Boolean editable;
+	    editable = census.getTipoCenso().equals("cerrado") && census.getUsername().equals( userService.findByPrincipal().getUserAccount().getUsername())&& census.getFechaFinVotacion().after(now);
 
-	// Editar un censo para aÒadir o quitar usuarios y buscarlos --------------
+	    result.addObject("editable", editable);
+	    return result;
+	  }
+
+	// Editar un censo para a√±adir o quitar usuarios y buscarlos --------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam int censusId, @CookieValue("user") String username) {
@@ -296,7 +303,7 @@ public class CensusController extends AbstractController {
 		String userHomeDir = System.getProperty("user.home");
 		File file = null;
 
-		// Hacemos un cambio en el directorio donde se guardar· el fichero .txt
+		// Hacemos un cambio en el directorio donde se guardar√° el fichero .txt
 		// dependiendo de si estamos trabajando sobre Windows o sobre Linux
 
 		if (typeOS.contains("Windows")) {
@@ -316,7 +323,7 @@ public class CensusController extends AbstractController {
 			file.createNewFile();
 		}
 
-		// AquÌ estamos dando el formato que queremos que tenga nuestro .txt
+		// Aqu√≠ estamos dando el formato que queremos que tenga nuestro .txt
 
 		FileWriter fileWriter = new FileWriter(file);
 		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -350,8 +357,8 @@ public class CensusController extends AbstractController {
 		Collection<String> userList = census.getVotoPorUsuario().keySet();
 		if (usernames.size() != 0) {
 
-			// AquÌ compruebo que de todos los usuarios disponibles en el
-			// sistema, cu·l de
+			// Aqu√≠ compruebo que de todos los usuarios disponibles en el
+			// sistema, cu√°l de
 			// ellos ha votado ya en el censo
 
 			for (String aux : usernames) {
@@ -367,13 +374,13 @@ public class CensusController extends AbstractController {
 
 						HashMap<String, Boolean> map = census.getVotoPorUsuario();
 
-						// AÒadimos este usuario que ya ha votado al text
+						// A√±adimos este usuario que ya ha votado al text
 
 						User user = RESTClient.getCertainUserByJsonAuthentication(voter);
 						bufferedWriter.newLine();
-						bufferedWriter.write("User_Id: " + user.getId());
-						bufferedWriter.newLine();
-						bufferedWriter.write("Username: " + user.getUserAccount().getUsername());
+//						bufferedWriter.write("User_Id: " + user.getId());
+//						bufferedWriter.newLine();
+//						bufferedWriter.write("Username: " + user.getUserAccount().getUsername());
 						bufferedWriter.newLine();
 						bufferedWriter.write("Email: " + user.getEmail());
 						bufferedWriter.newLine();
@@ -459,5 +466,91 @@ public class CensusController extends AbstractController {
 		return result;
 
 	}
+	
+	// Exportar un censo a .pdf ‚Äî---------------------------------------------
+
+    @RequestMapping(value = "/exportPDF", method = RequestMethod.GET)
+    public ModelAndView exportPDF(@RequestParam int censusId) throws IOException, DocumentException {
+      ModelAndView result;
+      Census census = censusService.findOne(censusId);
+      String typeOS = System.getProperty("os.name");
+      String userHomeDir = System.getProperty("user.home");
+      FileOutputStream archivo= null;
+
+      // Hacemos un cambio en el directorio donde se guardar√° el fichero .pdf
+      // dependiendo de si estamos trabajando sobre Windows o sobre Linux
+
+      if (typeOS.contains("Windows")) {
+        archivo = new FileOutputStream(userHomeDir +"/Desktop/filename" + censusId + ".pdf");
+      } else if (typeOS.contains("Linux")) {
+        archivo = new FileOutputStream(userHomeDir + "/Escritorio/filename" + censusId + ".pdf");
+      } else if (typeOS.contains("Mac")) {
+        archivo = new FileOutputStream(userHomeDir + "/Desktop/filename" + censusId + ".pdf");
+      }
+
+      
+      Document documento = new Document();
+        PdfWriter.getInstance(documento, archivo);
+        documento.open();
+      // Aqu√≠ estamos dando el formato que queremos que tenga nuestro .pdf
+        
+        documento.add(new Paragraph("Details of the census"+"\n"+"\n"));
+        documento.add(new Paragraph("Owner: " + census.getUsername()+"\n"));
+        documento.add(new Paragraph("Name of vote: " + census.getTituloVotacion()+"\n"));
+        documento.add(new Paragraph("Vote number: " + census.getIdVotacion()+"\n"));
+        documento.add(new Paragraph("Start date: " + census.getFechaInicioVotacion()+"\n"));
+        documento.add(new Paragraph("Finish date: " + census.getFechaFinVotacion()+"\n"+"---------------------"+"\n"+"\n"));
+        documento.add(new Paragraph("Voters: "+"\n"));
+      // Todos los usuarios del sistema
+
+      Map<String, String> mapUsers = RESTClient.getMapUSernameAndEmailByJsonAutentication();
+      Collection<String> usernames = mapUsers.keySet();
+
+      // Todos los que han votado en un censo
+
+      Collection<String> userList = census.getVotoPorUsuario().keySet();
+      if (usernames.size() != 0) {
+
+        // Aqu√≠ compruebo que de todos los usuarios disponibles en el
+        // sistema, cu√°l de
+        // ellos ha votado ya en el censo
+
+        for (String aux : usernames) {
+          for (String voter : userList) {
+
+            // Uno de los usuarios del sistema ya ha votado en dicho
+            // censo
+
+            if (aux.equals(voter)) {
+
+              // Obtenemos el mapa del censo, para saber si el usuario
+              // ha votado o no
+
+              HashMap<String, Boolean> map = census.getVotoPorUsuario();
+
+              // A√±adimos este usuario que ya ha votado al text
+
+              User user = RESTClient.getCertainUserByJsonAuthentication(voter);
+              
+              documento.add(new Paragraph("\n"+"User_Id: " + user.getId()+"\n"));
+                documento.add(new Paragraph("Username: " + user.getUserAccount().getUsername()+"\n"));
+                documento.add(new Paragraph("Email: " + user.getEmail()+"\n"));
+                documento.add(new Paragraph("Genre: " + user.getGenre()+"\n"));
+                documento.add(new Paragraph("Autonomous community: " + user.getAutonomousCommunity()+"\n"));
+                documento.add(new Paragraph("Age: " + user.getAge()+"\n"));
+                documento.add(new Paragraph("Has voted?: " + map.get(voter)+"\n"+"*****************"+"\n"));
+                System.out.println("fin de escritura del PDF");
+              break;
+            }
+          }
+        }
+      } else {
+        documento.add(new Paragraph("Nothing to display because there isn't any voters"));
+      }
+
+      documento.close();
+      result = new ModelAndView("redirect:getAllCensusByCreador.do");
+      return result;
+    }
 
 }
