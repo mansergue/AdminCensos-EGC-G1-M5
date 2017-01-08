@@ -13,13 +13,13 @@
 
 		<!-- Votes -->
 	
-	<bean id="vote1" class="domain.Vote">
+	<!-- <bean id="vote1" class="domain.Vote">
 		<property name="idVotacion" value="23" />
 		<property name="titulo" value="Elecciones" />
 		<property name="fechaCreacion" value="10/01/2015 00:00" />
 		<property name="fechaCierre" value="12/02/2018 00:00" />
 		<property name="cp" value="12345" />
-	</bean>
+	</bean> -->
 
 
 	<!-- Other domain beans come here -->
@@ -43,7 +43,7 @@
 	</bean>
 	
 	<bean id="census2" class="domain.Census">
-		<property name="idVotacion" value="3" />
+		<property name="idVotacion" value="43" />
 		<property name="versionVotacion" value="0" />
 		<property name="title" value="Censo cerrado VACIO, ACTIVO" />
 		<property name="description" value="Elecciones" />
