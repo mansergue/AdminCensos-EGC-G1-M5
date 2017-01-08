@@ -1,5 +1,6 @@
 package domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Access;
@@ -15,13 +16,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Access(AccessType.PROPERTY)
-public class Vote extends DomainEntity {
-//	implements Serializable
-//	private static final long serialVersionUID = 749544364605664829L;
-	private int id_votacion;
+public class Vote extends DomainEntity implements Serializable{
+
+	// Puede que también haga falta meter la clase de dominio Question
+	private static final long serialVersionUID = 749544364605664829L;
+	private int idVotacion;
 	private String titulo;
-	private Date fecha_creacion;
-	private Date fecha_cierre;
+	private Date fechaCreacion;
+	private Date fechaCierre;
 	private String cp;
 
 	public Vote() {
@@ -30,11 +32,11 @@ public class Vote extends DomainEntity {
 
 	@Column(unique = true)
 	public int getIdVotacion() {
-		return id_votacion;
+		return idVotacion;
 	}
 
-	public void setIdVotacion(int id_votacion) {
-		this.id_votacion = id_votacion;
+	public void setIdVotacion(int idVotacion) {
+		this.idVotacion = idVotacion;
 	}
 
 	@NotBlank
@@ -48,29 +50,29 @@ public class Vote extends DomainEntity {
 	}
 
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	public Date getFecha_creacion() {
-		return fecha_creacion;
+	public Date getFechaCreacion() {
+		return fechaCreacion;
 	}
 
-	public void setFecha_creacion(Date fecha_creacion) {
-		this.fecha_creacion = fecha_creacion;
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
 	}
 
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	public Date getFecha_cierre() {
-		return fecha_cierre;
+	public Date getFechaCierre() {
+		return fechaCierre;
 	}
 
 
-	public void setFecha_cierre(Date fecha_cierre) {
-		this.fecha_cierre = fecha_cierre;
+	public void setFechaCierre(Date fechaCierre) {
+		this.fechaCierre = fechaCierre;
 	}
 
-	public String getCP() {
+	public String getCp() {
 		return cp;
 	}
 
-	public void setCP(String cp) {
+	public void setCp(String cp) {
 		this.cp = cp;
 	}
 }
