@@ -63,6 +63,8 @@ public class VoteService {
 	
 	//Método que mete en nuestra base de datos todas las votaciones del grupo de recuento
 	public void popularVotaciones() {
+		// Leer la siguiente uri y mapearla en la clase Vote:
+		// https://recuento.agoraus1.egc.duckdns.org/api/verVotaciones
 		RestTemplate restTemplate = new RestTemplate();
 		String result = restTemplate.getForObject("https://recuento.agoraus1.egc.duckdns.org/api/verVotaciones",
 				String.class);
@@ -71,7 +73,6 @@ public class VoteService {
 		System.out.println(aux);
 		String[] lista = aux.split("},");
 		String[] lista2 = aux.split(",");
-		
 		Vote vote=new Vote();
 		
 		for (@SuppressWarnings("unused")String voto : lista) {
@@ -84,10 +85,6 @@ public class VoteService {
 					String[] id_list = id_votacion.split("}");
 					String finalId = id_list[0];
 					int idConverted = Integer.parseInt(finalId);
-					
-					if(findVoteByVote(idConverted)!=null){
-						break;
-					}
 					
 					vote.setIdVotacion(idConverted);
 					vote.setId(idConverted);
@@ -107,7 +104,6 @@ public class VoteService {
 					Date fechaConvertida=null;
 					try {
 						fechaConvertida = formatoDelTexto.parse(fecha_creacion);
-						System.out.println("//////////////////////////////////////////"+fechaConvertida);
 					} catch (ParseException e) {
 						e.printStackTrace();
 					}
@@ -122,7 +118,6 @@ public class VoteService {
 					Date fechaConvertida=null;
 					try {
 						fechaConvertida = formatoDelTexto.parse(fecha_cierre);
-						System.out.println("//////////////////////////////////////////"+fechaConvertida);
 					} catch (ParseException e) {
 						e.printStackTrace();
 					}
@@ -137,11 +132,29 @@ public class VoteService {
 					cp=cp.replaceAll("]", "");
 					vote.setCp(cp);
 				}
-				System.out.println(vote.getIdVotacion()+vote.getTitulo()+vote.getFechaCreacion()+vote.getFechaCierre()+vote.getCp());
-				save(vote);
+				Collection<Vote> votes=new ArrayList<Vote>();
+				Collection<Integer> ids=new ArrayList<Integer>();
+				try{
+					votes.addAll(findAll());
+					for(Vote v:votes){
+						ids.add(v.getIdVotacion());
+					}
+				}
+				catch(Exception e){
+					System.out.println(e);
+				}
+				System.out.println(ids.isEmpty());
+				if(!ids.contains(vote.getIdVotacion())||ids.isEmpty()==true){
+					System.out.println("entra");
+					save(vote);
+					System.out.println("y lo pasa");
+				}
+//				save(vote);
 			}
+			
+			System.out.println(vote.getIdVotacion()+vote.getTitulo()+vote.getFechaCreacion()+vote.getFechaCierre()+vote.getCp());
 		}
-
+		System.out.println("y llega al final");
 	}
 	
 	
