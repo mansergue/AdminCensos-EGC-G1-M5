@@ -39,8 +39,8 @@ public class Vote extends DomainEntity implements Serializable{
 		this.idVotacion = idVotacion;
 	}
 
-	@NotBlank
-	@Length(min = 5, max = 100, message = "The field must be between 5 and 10 characters")
+//	@NotBlank
+//	@Length(min = 5, max = 100, message = "The field must be between 5 and 10 characters")
 	public String getTitulo() {
 		return titulo;
 	}
