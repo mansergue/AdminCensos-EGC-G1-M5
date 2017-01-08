@@ -13,6 +13,7 @@
 		<value>/views/welcome/tiles.xml</value>
 		
 		<value>/views/census/tiles.xml</value>
+		<value>/views/user/tiles.xml</value>
 	</util:list>
 
 </beans>

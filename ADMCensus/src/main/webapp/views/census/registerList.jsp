@@ -16,23 +16,23 @@
 
 
 	<!-- Attributes -->
-	<spring:message code="census.token_propietario" var="username" />
-	<display:column property="username" title="${username}" sortable="true" />
+	<spring:message code="census.token_propietario" var="usernameCreator" />
+	<display:column property="usernameCreator" title="${usernameCreator}" sortable="true" />
 
-	<spring:message code="census.votacio.name" var="tituloVotacion" />
-	<display:column property="tituloVotacion" title="${tituloVotacion}"
+	<spring:message code="census.votacio.name" var="title" />
+	<display:column property="title" title="${title}"
 		sortable="true" />
 
-	<spring:message code="census.fecha.inicio" var="fechaInicioVotacion" />
-	<display:column title="${fechaInicioVotacion}" sortable="true">
-		<fmt:formatDate value="${row.fechaInicioVotacion}"
+	<spring:message code="census.fecha.inicio" var="startDate" />
+	<display:column title="${startDate}" sortable="true">
+		<fmt:formatDate value="${row.startDate}"
 			pattern="dd/MM/yyyy" />
 		<br />
 	</display:column>
 
-	<spring:message code="census.fecha.fin" var="fechaFinVotacion" />
-	<display:column title="${fechaFinVotacion}" sortable="true">
-		<fmt:formatDate value="${row.fechaFinVotacion}" pattern="dd/MM/yyyy" />
+	<spring:message code="census.fecha.fin" var="endDate" />
+	<display:column title="${endDate}" sortable="true">
+		<fmt:formatDate value="${row.endDate}" pattern="dd/MM/yyyy" />
 		<br />
 	</display:column>
 

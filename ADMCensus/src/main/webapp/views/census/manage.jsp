@@ -13,25 +13,25 @@
 
 <!-- Search -->
 		<spring:message code="census.token_propietario" />:
-		<jstl:out value="${census.username}"/><br/>
+		<jstl:out value="${census.usernameCreator}"/><br/>
 		
 		<spring:message code="census.tipo" />:
-		<jstl:if test="${census.tipoCenso == 'abierto' }">
+		<jstl:if test="${census.tipo == 'abierto' }">
 			<spring:message code="census.abierto" /><br />
 		</jstl:if>
 		
-		<jstl:if test="${census.tipoCenso == 'cerrado' }">
+		<jstl:if test="${census.tipo == 'cerrado' }">
 			<spring:message code="census.cerrado" /><br />
 		</jstl:if>
 		
 		<spring:message code="census.votacio.name" />:
-		<jstl:out value="${census.tituloVotacion}"/><br />
+		<jstl:out value="${census.title}"/><br />
 		
 		<spring:message code="census.fecha.inicio" />:
-		<fmt:formatDate value="${census.fechaInicioVotacion}" pattern="dd/MM/yyyy"/><br/>		
+		<fmt:formatDate value="${census.startDate}" pattern="dd/MM/yyyy"/><br/>		
 		
 		<spring:message code="census.fecha.fin" />:
-		<fmt:formatDate value="${census.fechaFinVotacion}" pattern="dd/MM/yyyy"/><br/>
+		<fmt:formatDate value="${census.endDate}" pattern="dd/MM/yyyy"/><br/>
 	
 <br/>
 <input type="text" value="" id="textSearch" />

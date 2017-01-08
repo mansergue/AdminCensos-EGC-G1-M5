@@ -1,30 +1,28 @@
 package domain;
 
-public class User {
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
+
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.hibernate.validator.constraints.Email;
+
+import security.UserAccount;
+
+@Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
+@Access(AccessType.PROPERTY)
+public class User extends DomainEntity{
 	
-	private int uId;
-	private String username;
 	private String email;
 	private String genre;
 	private String autonomousCommunity;
 	private int age;
-
-	public int getUId() {
-		return uId;
-	}
-
-	public void setUId(int uId) {
-		this.uId = uId;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
+        
+	@Email
 	public String getEmail() {
 		return email;
 	}
@@ -55,5 +53,19 @@ public class User {
 
 	public void setAge(int age) {
 		this.age = age;
+	}
+	
+	
+	//Realationships
+	UserAccount userAccount;
+	
+	@NotNull
+	@OneToOne(cascade = CascadeType.ALL, optional = false)
+	public UserAccount getUserAccount() {
+		return userAccount;
+	}
+
+	public void setUserAccount(UserAccount userAccount) {
+		this.userAccount = userAccount;
 	}
 }

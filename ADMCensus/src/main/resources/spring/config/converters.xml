@@ -24,6 +24,10 @@
 		
 		<bean class="converters.CensusToStringConverter" />
 		<bean class="converters.StringToCensusConverter" />
+		<bean class="converters.UserToStringConverter"/>
+		<bean class="converters.StringToUserConverter" />
+		<bean class="converters.VoteToStringConverter"/>
+		<bean class="converters.StringToVoteConverter" />
 		
 		
 	</util:list>

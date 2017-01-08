@@ -21,35 +21,35 @@
 
 <spring:message code="census.token_propietario" />
 :
-<jstl:out value="${census.username}" />
+<jstl:out value="${census.usernameCreator}" />
 <br />
 
 <spring:message code="census.tipo" />
 :
-<jstl:if test="${census.tipoCenso == 'abierto' }">
+<jstl:if test="${census.tipo == 'abierto' }">
 	<spring:message code="census.abierto" />
 	<br />
 </jstl:if>
 
-<jstl:if test="${census.tipoCenso == 'cerrado' }">
+<jstl:if test="${census.tipo == 'cerrado' }">
 	<spring:message code="census.cerrado" />
 	<br />
 </jstl:if>
 
 <spring:message code="census.votacio.name" />
 :
-<jstl:out value="${census.tituloVotacion}" />
+<jstl:out value="${census.title}" />
 <br />
 
 <spring:message code="census.fecha.inicio" />
 :
-<fmt:formatDate value="${census.fechaInicioVotacion}"
+<fmt:formatDate value="${census.startDate}"
 	pattern="dd/MM/yyyy" />
 <br />
 
 <spring:message code="census.fecha.fin" />
 :
-<fmt:formatDate value="${census.fechaFinVotacion}" pattern="dd/MM/yyyy" />
+<fmt:formatDate value="${census.endDate}" pattern="dd/MM/yyyy" />
 <br />
 
 <jstl:if test="${editable}">
@@ -59,7 +59,9 @@
 
 <acme:cancel url="census/export.do?censusId=${census.id}"
 	code="census.export" />
+	
+<acme:cancel url="census/exportPDF.do?censusId=${census.id}"
+	code="census.exportPDF" />
 
 
 <acme:cancel url="census/getAllCensusByCreador.do" code="census.back" />
-

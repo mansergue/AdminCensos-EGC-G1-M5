@@ -1,5 +1,4 @@
 package domain;
-
 import java.util.Date;
 import java.util.HashMap;
 
@@ -23,58 +22,45 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Census extends DomainEntity {
 
-	// Username del usuario que crea la votación
-	private String username;
-	
+	//Nos lo pasa creación y administración de votaciones
 	// Id que identifica de forma únia a la votación
 	private int idVotacion;
 	
+	//Versión de la votación
+	private int versionVotacion;
+	
 	// Título de la votación
-	private String tituloVotacion;
+	private String title;
 	
-	// Indica si el censo es "abierto" o "cerrado"
-	private String tipoCenso;
-	
-	// Mapa encargado de asignar un true o false (ha votado o no) a un token
-	// único de un usuario
-	private HashMap<String, Boolean> votoPorUsuario = new HashMap<String, Boolean>();
+	// Descripción de la votación
+	private String description;
 	
 	// Fecha en la que se inicia la votacion
-	private Date fechaInicioVotacion;
-	
+	private Date startDate;
+		
 	// Fecha en la que finaliza la votación
-	private Date fechaFinVotacion;
+	private Date endDate;
+	
+	// Indica si el censo es "abierto" o "cerrado"
+	private String tipo;
+	
+	//Indica el código postal de la votación
+	private String postalCode;
+	
+	// Username del usuario que crea la votación
+	private String usernameCreator;
 
+	//Lo trabajamos nosotros
+	// Mapa encargado de asignar un true o false (ha votado o no) a un token  único de un usuario
+	private HashMap<String, Boolean> votoPorUsuario = new HashMap<String, Boolean>();
+	
+
+	//Mirar qué hacer con census y con questions
+	
 	public Census() {
 		
 	}
 	
-	
-
-	@MapKeyColumn(name = "token")
-	@Column(name = "valor")
-	@CollectionTable(name = "value", joinColumns = @JoinColumn(name = "token") )
-	public HashMap<String, Boolean> getVotoPorUsuario() {
-		return votoPorUsuario;
-	}
-	
-
-	public void setVotoPorUsuario(HashMap<String, Boolean> votoPorUsuario) {
-		this.votoPorUsuario = votoPorUsuario;
-	}
-	
-
-	@NotBlank
-	public String getUsername() {
-		return username;
-	}
-	
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	
-
 	@Column(unique = true)
 	public int getIdVotacion() {
 		return idVotacion;
@@ -85,49 +71,98 @@ public class Census extends DomainEntity {
 		this.idVotacion = idVotacion;
 	}
 	
-
-	@NotBlank
-	public String getTituloVotacion() {
-		return tituloVotacion;
+	public int getVersionVotacion() {
+		return versionVotacion;
 	}
 	
 
-	public void setTituloVotacion(String tituloVotacion) {
-		this.tituloVotacion = tituloVotacion;
+	public void setVersionVotacion(int versionVotacion) {
+		this.versionVotacion = versionVotacion;
 	}
 	
 
 	@NotBlank
-	public String getTipoCenso() {
-		return tipoCenso;
+	public String getTitle() {
+		return title;
 	}
+	
 
-	public void setTipoCenso(String tipoCenso) {
-		this.tipoCenso = tipoCenso;
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	@NotBlank
+	public String getDescription() {
+		return description;
+	}
+	
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	@NotNull
-	public Date getFechaInicioVotacion() {
-		return fechaInicioVotacion;
+	public Date getStartDate() {
+		return startDate;
 	}
 	
 
-	public void setFechaInicioVotacion(Date fechaInicioVotacion) {
-		this.fechaInicioVotacion = fechaInicioVotacion;
+	public void setStartDate(Date startDate) {
+		this.startDate=startDate;
 	}
 	
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	@NotNull
-	public Date getFechaFinVotacion() {
-		return fechaFinVotacion;
+	public Date getEndDate() {
+		return endDate;
 	}
 
-	public void setFechaFinVotacion(Date fechaFinVotacion) {
-		this.fechaFinVotacion = fechaFinVotacion;
+	public void setEndDate(Date endDate) {
+		this.endDate=endDate;
+	}
+	
+	@NotBlank
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	
+	@NotBlank
+	public String getPostalCode() {
+		return postalCode;
+	}
+	
+
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+	
+	@NotBlank
+	public String getUsernameCreator() {
+		return usernameCreator;
+	}
+	
+
+	public void setUsernameCreator(String usernameCreator) {
+		this.usernameCreator = usernameCreator;
+	}
+	
+	@MapKeyColumn(name = "token")
+	@Column(name = "valor")
+	@CollectionTable(name = "value", joinColumns = @JoinColumn(name = "token") )
+	public HashMap<String, Boolean> getVotoPorUsuario() {
+		return votoPorUsuario;
+	}
+	
+	public void setVotoPorUsuario(HashMap<String, Boolean> votoPorUsuario) {
+		this.votoPorUsuario = votoPorUsuario;
 	}
 
 }
