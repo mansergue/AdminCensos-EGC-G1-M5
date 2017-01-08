@@ -5,24 +5,24 @@ create user 'acme-user'@'%' identified by password '*4F10007AADA9EE3DBB2CC36575D
 
 create user 'acme-manager'@'%' identified by password '*FDB8CD304EB2317D10C95D797A4BD7492560F55F';
 
-drop database if exists admcensus;
-create database admcensus;
+ grant select, insert, update, delete 
+ 	on `ADMCensus`.* to 'acme-user'@'%';
+ 
+ grant select, insert, update, delete, create, drop, references, index, alter, 
+         create temporary tables, lock tables, create view, create routine, 
+         alter routine, execute, trigger, show view
+    on `ADMCensus`.* to 'acme-manager'@'%';
 
-grant select, insert, update, delete 
-  on admcensus.* to 'acme-user'@'%';
-
-grant select, insert, update, delete, create, drop, references, index, alter, 
-        create temporary tables, lock tables, create view, create routine, 
-        alter routine, execute, trigger, show view
-    on admcensus.* to 'acme-manager'@'%';
-USE `admcensus`;
+ drop database if exists `ADMCensus`;
+ create database `ADMCensus`;
+ USE `ADMCensus`;
 
 SET NAMES utf8;
 
 
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: localhost    Database: admcensus
+-- Host: localhost    Database: ADMCensus
 -- ------------------------------------------------------
 -- Server version	5.7.17-log
 
