@@ -20,7 +20,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,6 +35,7 @@ import domain.Census;
 import domain.User;
 import services.CensusService;
 import services.UserService;
+import services.VoteService;
 import utilities.RESTClient;
 
 @Controller
@@ -47,6 +47,9 @@ public class CensusController extends AbstractController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private VoteService voteService;
 
 	// Constructors -----------------------------------------------------------
 
@@ -68,6 +71,7 @@ public class CensusController extends AbstractController {
 		Census result = null;
 
 		Census c = censusService.create(idVotacion, versionVotacion, title, description, startDate, endDate, tipo, postalCode, usernameCreator);
+		
 		try {
 			result = censusService.save(c);
 		} catch (Exception oops) {
@@ -76,20 +80,20 @@ public class CensusController extends AbstractController {
 		return result;
 	}
 
-	// Devuelve JSon a a votaciones para saber si pueden borrar una votación
-	// En caso afirmativo, el censo se borrará automáticamente al dar una
-	// respuesta positiva -----------------------------------------------------
-
-	@RequestMapping(value = "/canDelete", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody String canDelete(@RequestParam int idVotacion, @RequestParam String username) {
-		return censusService.canDelete(idVotacion, username);
-	}
+//	// Devuelve JSon a a votaciones para saber si pueden borrar una votación
+//	// En caso afirmativo, el censo se borrará automáticamente al dar una
+//	// respuesta positiva -----------------------------------------------------
+//
+//	@RequestMapping(value = "/canDelete", method = RequestMethod.GET, produces = "application/json")
+//	public @ResponseBody String canDelete(@RequestParam int idVotacion, @RequestParam String username) {
+//		return censusService.canDelete(idVotacion, username);
+//	}
 
 	// Devuelve JSon a cabina para saber si un usuario puede votar ------------
 
 	@RequestMapping(value = "/canVote", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody String canVote(@RequestParam int idVotacion, @RequestParam String username) {
-		//Llamar a todas las votaciones de recuento y las que falten meterlas en nuestra base de datos
+		voteService.popularVotaciones();
 		return censusService.canVote(idVotacion, username);
 	}
 
@@ -97,7 +101,7 @@ public class CensusController extends AbstractController {
 
 	@RequestMapping(value = "/updateUser", method = RequestMethod.GET)
 	public @ResponseBody String updateUser(@RequestParam int idVotacion, @RequestParam String tipoVotacion,@RequestParam String username) {
-		//Llamar a todas las votaciones de recuento y las que falten meterlas en nuestra base de datos
+		voteService.popularVotaciones();
 		try {
 			if (censusService.updateUser(idVotacion, tipoVotacion, username)) {
 				return new String("{\"result\":\"yes\"}");
