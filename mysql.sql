@@ -1,9 +1,5 @@
+
 start transaction;
-
-
-create user 'acme-user'@'%' identified by password '*4F10007AADA9EE3DBB2CC36575DFC6F4FDE27577';
-
-create user 'acme-manager'@'%' identified by password '*FDB8CD304EB2317D10C95D797A4BD7492560F55F';
 
  grant select, insert, update, delete 
  	on `ADMCensus`.* to 'acme-user'@'%';
@@ -68,7 +64,7 @@ CREATE TABLE `census` (
 
 LOCK TABLES `census` WRITE;
 /*!40000 ALTER TABLE `census` DISABLE KEYS */;
-INSERT INTO `census` VALUES (1,0,'Elecciones','2018-12-02 00:00:00',23,'12345','2015-10-01 00:00:00','cerrado','Elecciones','admin1',0,'¬¨\√≠\0sr\0java.util.LinkedHashMap4√ÄN\\l√Ä√ª\0Z\0accessOrderxr\0java.util.HashMap\√ö√Å\√É`\√ë\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0test1sr\0java.lang.Boolean\√ç r‚Ç¨√ï≈ì√∫\√Æ\0Z\0valuexpt\0test2sq\0~\0\0x\0'),(2,0,'Elecciones','2018-02-28 00:00:00',3,'12345','2015-10-01 00:00:00','cerrado','Censo cerrado VACIO, ACTIVO','admin1',0,'¬¨\√≠\0sr\0java.util.LinkedHashMap4√ÄN\\l√Ä√ª\0Z\0accessOrderxr\0java.util.HashMap\√ö√Å\√É`\√ë\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0test0sr\0java.lang.Boolean\√ç r‚Ç¨√ï≈ì√∫\√Æ\0Z\0valuexpt\0test1q\0~\0x\0'),(3,0,'Elecciones','2018-12-02 00:00:00',25,'12345','2011-10-01 00:00:00','cerrado','Censo cerrado NO VACIO, NO ACTIVO','admin1',0,'¬¨\√≠\0sr\0java.util.LinkedHashMap4√ÄN\\l√Ä√ª\0Z\0accessOrderxr\0java.util.HashMap\√ö√Å\√É`\√ë\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0test3sr\0java.lang.Boolean\√ç r‚Ç¨√ï≈ì√∫\√Æ\0Z\0valuexpx\0'),(4,0,'Elecciones','2018-12-05 00:00:00',26,'12345','2015-10-07 00:00:00','abierto','Censo abierto NO VACIO, ACTIVO','admin1',0,'¬¨\√≠\0sr\0java.util.LinkedHashMap4√ÄN\\l√Ä√ª\0Z\0accessOrderxr\0java.util.HashMap\√ö√Å\√É`\√ë\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0test2sr\0java.lang.Boolean\√ç r‚Ç¨√ï≈ì√∫\√Æ\0Z\0valuexp\0t\0test3sq\0~\0x\0'),(5,0,'Elecciones','2018-12-03 00:00:00',27,'12345','2010-10-11 00:00:00','abierto','Censo abierto NO VACIO, NO ACTIVO','admin1',0,'¬¨\√≠\0sr\0java.util.LinkedHashMap4√ÄN\\l√Ä√ª\0Z\0accessOrderxr\0java.util.HashMap\√ö√Å\√É`\√ë\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0test3sr\0java.lang.Boolean\√ç r‚Ç¨√ï≈ì√∫\√Æ\0Z\0valuexpx\0'),(6,0,'Elecciones','2018-12-03 00:00:00',28,'12345','2010-10-11 00:00:00','abierto','Censo abierto vacio NO ACTIVO','admin1',0,'¬¨\√≠\0sr\0java.util.LinkedHashMap4√ÄN\\l√Ä√ª\0Z\0accessOrderxr\0java.util.HashMap\√ö√Å\√É`\√ë\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0\0w\0\0\0\0\0\0\0x\0'),(7,0,'Elecciones','2018-12-03 00:00:00',29,'12345','2015-10-11 00:00:00','abierto','Censo abierto vacio activo','admin1',0,'¬¨\√≠\0sr\0java.util.LinkedHashMap4√ÄN\\l√Ä√ª\0Z\0accessOrderxr\0java.util.HashMap\√ö√Å\√É`\√ë\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0\0w\0\0\0\0\0\0\0x\0'),(8,0,'Elecciones','2018-12-03 00:00:00',30,'12345','2016-10-11 00:00:00','cerrado','Censo cerrado vacio activo','admin1',0,'¬¨\√≠\0sr\0java.util.LinkedHashMap4√ÄN\\l√Ä√ª\0Z\0accessOrderxr\0java.util.HashMap\√ö√Å\√É`\√ë\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0\0w\0\0\0\0\0\0\0x\0'),(9,0,'Elecciones','2018-12-03 00:00:00',31,'12345','2011-10-11 00:00:00','cerrado','Censo cerrado vacio NO activo','admin1',0,'¬¨\√≠\0sr\0java.util.LinkedHashMap4√ÄN\\l√Ä√ª\0Z\0accessOrderxr\0java.util.HashMap\√ö√Å\√É`\√ë\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0\0w\0\0\0\0\0\0\0x\0'),(10,0,'Elecciones','2018-12-03 00:00:00',32,'12345','2015-10-11 00:00:00','abierto','Censo abierto vacio activo','pabcargar2',0,'¬¨\√≠\0sr\0java.util.LinkedHashMap4√ÄN\\l√Ä√ª\0Z\0accessOrderxr\0java.util.HashMap\√ö√Å\√É`\√ë\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0\npabcargar2sr\0java.lang.Boolean\√ç r‚Ç¨√ï≈ì√∫\√Æ\0Z\0valuexpt\0admin1q\0~\0x\0'),(11,0,'Elecciones','2018-12-03 00:00:00',33,'12345','2015-10-11 00:00:00','abierto','Censo abierto vacio activo','pabcargar2',0,'¬¨\√≠\0sr\0java.util.LinkedHashMap4√ÄN\\l√Ä√ª\0Z\0accessOrderxr\0java.util.HashMap\√ö√Å\√É`\√ë\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0\npabcargar2sr\0java.lang.Boolean\√ç r‚Ç¨√ï≈ì√∫\√Æ\0Z\0valuexpt\0admin1q\0~\0t\0joseaq\0~\0x\0');
+INSERT INTO `census` VALUES (1,0,'Elecciones','2018-12-02 00:00:00',23,'12345','2015-10-01 00:00:00','cerrado','Elecciones','admin1',0,'¨\Ì\0sr\0java.util.LinkedHashMap4¿N\\l¿˚\0Z\0accessOrderxr\0java.util.HashMap\⁄¡\√`\—\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0test1sr\0java.lang.Boolean\Õ rÄ’ú˙\Ó\0Z\0valuexpt\0test2sq\0~\0\0x\0'),(2,0,'Elecciones','2018-02-28 00:00:00',3,'12345','2015-10-01 00:00:00','cerrado','Censo cerrado VACIO, ACTIVO','admin1',0,'¨\Ì\0sr\0java.util.LinkedHashMap4¿N\\l¿˚\0Z\0accessOrderxr\0java.util.HashMap\⁄¡\√`\—\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0test0sr\0java.lang.Boolean\Õ rÄ’ú˙\Ó\0Z\0valuexpt\0test1q\0~\0x\0'),(3,0,'Elecciones','2018-12-02 00:00:00',25,'12345','2011-10-01 00:00:00','cerrado','Censo cerrado NO VACIO, NO ACTIVO','admin1',0,'¨\Ì\0sr\0java.util.LinkedHashMap4¿N\\l¿˚\0Z\0accessOrderxr\0java.util.HashMap\⁄¡\√`\—\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0test3sr\0java.lang.Boolean\Õ rÄ’ú˙\Ó\0Z\0valuexpx\0'),(4,0,'Elecciones','2018-12-05 00:00:00',26,'12345','2015-10-07 00:00:00','abierto','Censo abierto NO VACIO, ACTIVO','admin1',0,'¨\Ì\0sr\0java.util.LinkedHashMap4¿N\\l¿˚\0Z\0accessOrderxr\0java.util.HashMap\⁄¡\√`\—\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0test2sr\0java.lang.Boolean\Õ rÄ’ú˙\Ó\0Z\0valuexp\0t\0test3sq\0~\0x\0'),(5,0,'Elecciones','2018-12-03 00:00:00',27,'12345','2010-10-11 00:00:00','abierto','Censo abierto NO VACIO, NO ACTIVO','admin1',0,'¨\Ì\0sr\0java.util.LinkedHashMap4¿N\\l¿˚\0Z\0accessOrderxr\0java.util.HashMap\⁄¡\√`\—\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0test3sr\0java.lang.Boolean\Õ rÄ’ú˙\Ó\0Z\0valuexpx\0'),(6,0,'Elecciones','2018-12-03 00:00:00',28,'12345','2010-10-11 00:00:00','abierto','Censo abierto vacio NO ACTIVO','admin1',0,'¨\Ì\0sr\0java.util.LinkedHashMap4¿N\\l¿˚\0Z\0accessOrderxr\0java.util.HashMap\⁄¡\√`\—\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0\0w\0\0\0\0\0\0\0x\0'),(7,0,'Elecciones','2018-12-03 00:00:00',29,'12345','2015-10-11 00:00:00','abierto','Censo abierto vacio activo','admin1',0,'¨\Ì\0sr\0java.util.LinkedHashMap4¿N\\l¿˚\0Z\0accessOrderxr\0java.util.HashMap\⁄¡\√`\—\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0\0w\0\0\0\0\0\0\0x\0'),(8,0,'Elecciones','2018-12-03 00:00:00',30,'12345','2016-10-11 00:00:00','cerrado','Censo cerrado vacio activo','admin1',0,'¨\Ì\0sr\0java.util.LinkedHashMap4¿N\\l¿˚\0Z\0accessOrderxr\0java.util.HashMap\⁄¡\√`\—\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0\0w\0\0\0\0\0\0\0x\0'),(9,0,'Elecciones','2018-12-03 00:00:00',31,'12345','2011-10-11 00:00:00','cerrado','Censo cerrado vacio NO activo','admin1',0,'¨\Ì\0sr\0java.util.LinkedHashMap4¿N\\l¿˚\0Z\0accessOrderxr\0java.util.HashMap\⁄¡\√`\—\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0\0w\0\0\0\0\0\0\0x\0'),(10,0,'Elecciones','2018-12-03 00:00:00',32,'12345','2015-10-11 00:00:00','abierto','Censo abierto vacio activo','pabcargar2',0,'¨\Ì\0sr\0java.util.LinkedHashMap4¿N\\l¿˚\0Z\0accessOrderxr\0java.util.HashMap\⁄¡\√`\—\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0\npabcargar2sr\0java.lang.Boolean\Õ rÄ’ú˙\Ó\0Z\0valuexpt\0admin1q\0~\0x\0'),(11,0,'Elecciones','2018-12-03 00:00:00',33,'12345','2015-10-11 00:00:00','abierto','Censo abierto vacio activo','pabcargar2',0,'¨\Ì\0sr\0java.util.LinkedHashMap4¿N\\l¿˚\0Z\0accessOrderxr\0java.util.HashMap\⁄¡\√`\—\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0\npabcargar2sr\0java.lang.Boolean\Õ rÄ’ú˙\Ó\0Z\0valuexpt\0admin1q\0~\0t\0joseaq\0~\0x\0');
 /*!40000 ALTER TABLE `census` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,7 +87,7 @@ CREATE TABLE `hibernate_sequences` (
 
 LOCK TABLES `hibernate_sequences` WRITE;
 /*!40000 ALTER TABLE `hibernate_sequences` DISABLE KEYS */;
-INSERT INTO `hibernate_sequences` VALUES ('domain_entity',2);
+INSERT INTO `hibernate_sequences` VALUES ('domain_entity',3);
 /*!40000 ALTER TABLE `hibernate_sequences` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,6 +118,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (65537,0,22,NULL,'pabcargar2@alum.us.es','Masculino',65536);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,6 +145,7 @@ CREATE TABLE `user_account` (
 
 LOCK TABLES `user_account` WRITE;
 /*!40000 ALTER TABLE `user_account` DISABLE KEYS */;
+INSERT INTO `user_account` VALUES (65536,1,'6d722561cf386015cb1d7c1937806bb5','pabcargar2');
 /*!40000 ALTER TABLE `user_account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -172,6 +170,7 @@ CREATE TABLE `user_account_authorities` (
 
 LOCK TABLES `user_account_authorities` WRITE;
 /*!40000 ALTER TABLE `user_account_authorities` DISABLE KEYS */;
+INSERT INTO `user_account_authorities` VALUES (65536,'USER');
 /*!40000 ALTER TABLE `user_account_authorities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,7 +200,7 @@ CREATE TABLE `vote` (
 
 LOCK TABLES `vote` WRITE;
 /*!40000 ALTER TABLE `vote` DISABLE KEYS */;
-INSERT INTO `vote` VALUES (32768,0,NULL,NULL,NULL,1,NULL),(32769,0,'41008','2017-01-14 00:00:00','2016-12-15 00:00:00',2,'Votaci√É¬≥n definitiva sobre la tortilla de patatas'),(32770,0,'01337','2017-01-14 00:00:00','2016-12-15 00:00:00',3,'Encuesta sobre intenci√É¬≥n de voto');
+INSERT INTO `vote` VALUES (32768,0,NULL,NULL,NULL,1,NULL),(32769,0,'41008','2017-01-14 00:00:00','2016-12-15 00:00:00',2,'Votaci√≥n definitiva sobre la tortilla de patatas'),(32770,0,'01337','2017-01-14 00:00:00','2016-12-15 00:00:00',3,'Encuesta sobre intenci√≥n de voto');
 /*!40000 ALTER TABLE `vote` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -214,10 +213,6 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-08 14:26:37
-
-
+-- Dump completed on 2017-01-09 13:29:38
 
 commit; 
-
--- Dump completed on 2017-01-08 12:47:28
