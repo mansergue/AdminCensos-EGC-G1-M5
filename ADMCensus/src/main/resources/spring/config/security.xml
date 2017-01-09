@@ -30,6 +30,7 @@
 		<security:intercept-url pattern="/user/login.do" access="permitAll" /> 
 		<security:intercept-url pattern="/user/entry.do" access="permitAll" /> 
 		<security:intercept-url pattern="/dashboard/**" access="permitAll" /> 
+		<security:intercept-url pattern="/api/**" access="permitAll" /> 
 		
 		<security:intercept-url pattern="/census/**" access="permitAll" />
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
