@@ -21,12 +21,14 @@
 			<security:authorize access="isAuthenticated()">
 			<li class='has-sub'><a><spring:message code="master.page.listar" /></a>
 				<ul>
+					
 					<li><a href="census/votesByUser.do"><spring:message code="master.page.census.activeVotes" /></a></li>
 					<li><a href="census/getAllCensusByCreador.do"><spring:message code="master.page.census.byCreator" /></a></li> 
 					<li><a href="census/getCensusesToRegister.do"><spring:message code="master.page.census.listRegister" /></a></li>
 				</ul>
 			</li>
-			<li class='has-sub'><a href="https://cavotacion.agoraus1.egc.duckdns.org/"><spring:message code="master.page.votaciones" /></a></li>
+			<li><a href="https://recuento.agoraus1.egc.duckdns.org/views/crearVotacion.html"><spring:message code="master.page.votaciones" /></a></li>
+			<li><a href="api/methods.do"><spring:message code="master.page.api" /></a></li>
 			<li><a class="fNiv" href="dashboard/list.do"><spring:message code="master.page.dashboard" /></a></li>
 			<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /></a></li>
 			</security:authorize>
