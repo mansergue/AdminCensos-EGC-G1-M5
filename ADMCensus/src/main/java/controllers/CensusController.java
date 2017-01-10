@@ -314,11 +314,13 @@ public class CensusController extends AbstractController {
 		bufferedWriter.newLine();
 		bufferedWriter.write("Name of vote: " + census.getTitle());
 		bufferedWriter.newLine();
-		bufferedWriter.write("Vote number: " + census.getId());
+		bufferedWriter.write("Vote number: " + census.getIdVotacion());
 		bufferedWriter.newLine();
 		bufferedWriter.write("Start date: " + census.getStartDate());
 		bufferedWriter.newLine();
 		bufferedWriter.write("Finish date: " + census.getEndDate());
+		bufferedWriter.newLine();
+		bufferedWriter.write("Postal code: " + census.getPostalCode());
 		bufferedWriter.newLine();
 		bufferedWriter.write("---------------------");
 		bufferedWriter.newLine();
@@ -359,13 +361,17 @@ public class CensusController extends AbstractController {
 						bufferedWriter.newLine();
 						bufferedWriter.write("User_Id: " + user.getId());
 						bufferedWriter.newLine();
+						bufferedWriter.write("Name: " + user.getName());
+						bufferedWriter.newLine();
+						bufferedWriter.write("Surname: " + user.getSurname());
+						bufferedWriter.newLine();
 						bufferedWriter.write("Username: " + user.getUserAccount().getUsername());
 						bufferedWriter.newLine();
 						bufferedWriter.write("Email: " + user.getEmail());
 						bufferedWriter.newLine();
 						bufferedWriter.write("Genre: " + user.getGenre());
 						bufferedWriter.newLine();
-						bufferedWriter.write("Autonomous community: " + user.getAutonomousCommunity());
+						bufferedWriter.write("Autonomous community: " + user.getAutonomous_community());
 						bufferedWriter.newLine();
 						bufferedWriter.write("Age: " + user.getAge());
 						bufferedWriter.newLine();
@@ -418,7 +424,8 @@ public class CensusController extends AbstractController {
 		    documento.add(new Paragraph("Name of vote: " + census.getTitle()+"\n"));
 		    documento.add(new Paragraph("Vote number: " + census.getId()+"\n"));
 		    documento.add(new Paragraph("Start date: " + census.getStartDate()+"\n"));
-		    documento.add(new Paragraph("Finish date: " + census.getEndDate()+"\n"+"---------------------"+"\n"+"\n"));
+		    documento.add(new Paragraph("Finish date: " + census.getEndDate()));
+		    documento.add(new Paragraph("Postal code: " + census.getPostalCode()+"\n"+"---------------------"+"\n"+"\n"));
 		    documento.add(new Paragraph("Voters: "+"\n"));
 
 			// Todos los usuarios del sistema
@@ -454,9 +461,11 @@ public class CensusController extends AbstractController {
 							
 							documento.add(new Paragraph("\n"+"User_Id: " + user.getId()+"\n"));
 						    documento.add(new Paragraph("Username: " + user.getUserAccount().getUsername()+"\n"));
+						    documento.add(new Paragraph("Name: " + user.getName()+"\n"));
+						    documento.add(new Paragraph("Surname: " + user.getSurname()+"\n"));
 						    documento.add(new Paragraph("Email: " + user.getEmail()+"\n"));
 						    documento.add(new Paragraph("Genre: " + user.getGenre()+"\n"));
-						    documento.add(new Paragraph("Autonomous community: " + user.getAutonomousCommunity()+"\n"));
+						    documento.add(new Paragraph("Autonomous community: " + user.getAutonomous_community()+"\n"));
 						    documento.add(new Paragraph("Age: " + user.getAge()+"\n"));
 						    documento.add(new Paragraph("Has voted?: " + map.get(voter)+"\n"+"*****************"+"\n"));
 						    System.out.println("fin de escritura del PDF");
