@@ -19,7 +19,7 @@
 	<ul>
 			<security:authorize access="isAnonymous()">
 			<li><a href="user/login.do"><spring:message code="master.page.login" /></a></li>
-			<li><a href="https://autha.agoraus1.egc.duckdns.org/register.php"><spring:message code="master.page.register" /></a></li>
+			<li><a href="https://authb.agoraus1.egc.duckdns.org/register.php"><spring:message code="master.page.register" /></a></li>
 			
 			</security:authorize>
 			<security:authorize access="isAuthenticated()">

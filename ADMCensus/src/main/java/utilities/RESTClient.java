@@ -1,9 +1,13 @@
 package utilities;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+
 import org.springframework.web.client.RestTemplate;
 import domain.User;
 import security.UserAccount;
@@ -19,10 +23,9 @@ public class RESTClient {
 	public static Map<String, String> getMapUSernameAndEmailByJsonAutentication() {
 
 		RestTemplate restTemplate = new RestTemplate();
-		String result = restTemplate.getForObject("https://autha.agoraus1.egc.duckdns.org/api/index.php?method=getUsers", String.class);
-//		System.out.println(result);
+		String result = restTemplate.getForObject("https://authb.agoraus1.egc.duckdns.org/api/index.php?method=getUsers", String.class);
+
 		String[] lista = result.split("},");
-//		System.out.println(lista);
 
 		Map<String, String> mapUsernamesEmails = new HashMap<String, String>();
 		String username = null;
@@ -55,28 +58,35 @@ public class RESTClient {
 	 * MÃ©todo que lee nos devuelve el Json con la informaciÃ³n de un usuario en
 	 * concreto pasÃ¡ndole un username, el Json obtenido de autenticaciÃ³n se
 	 * leerÃ¡ para formar un tipo User que serÃ¡ lo que se devuelva.
+	 * @throws UnsupportedEncodingException 
 	 */
 
-	public static User getCertainUserByJsonAuthentication(String username) {
+	public static User getCertainUserByJsonAuthentication(String username){
 		RestTemplate restTemplate = new RestTemplate();
-		String result = restTemplate.getForObject("https://autha.agoraus1.egc.duckdns.org/api/index.php?method=getUser&user=" + username,
-				String.class);
-//		System.out.println(result);
+		String result = restTemplate.getForObject("https://authb.agoraus1.egc.duckdns.org/api/index.php?method=getUser&user=" + username,String.class);
 		String[] lista = result.split(",");
 		User user = new User();
 		UserAccount userAccount=new UserAccount();
 		for (String field : lista) {
+			System.out.println("FIELD:------------"+field);
 			if (field.contains("username")) {
 				String[] auxList = field.split(":");
 				String usernameUser = auxList[1];
 				usernameUser = usernameUser.replaceAll("\"", "");
 				userAccount.setUsername(usernameUser);
 			}
-			if (field.contains("password")) {
+			if (field.contains("name")&&!field.contains("surname")&&!field.contains("username")) {
 				String[] auxList = field.split(":");
-				String password = auxList[1];
-				password = password.replaceAll("\"", "");
-				userAccount.setPassword(password);
+				String nameUser = auxList[1];
+				nameUser = nameUser.replaceAll("\"", "");
+				user.setName(nameUser);
+				
+			}
+			if (field.contains("surname")) {
+				String[] auxList = field.split(":");
+				String surnameUser = auxList[1];
+				surnameUser = surnameUser.replaceAll("\"", "");
+				user.setSurname(surnameUser);
 			}
 			if (field.contains("email")) {
 				String[] auxList = field.split(":");
@@ -94,7 +104,7 @@ public class RESTClient {
 				String[] auxList = field.split(":");
 				String autonomousCommunity = auxList[1];
 				autonomousCommunity = autonomousCommunity.replaceAll("\"", "");
-				user.setAutonomousCommunity(autonomousCommunity);
+				user.setAutonomous_community(autonomousCommunity);
 			}
 			if (field.contains("age")) {
 				String[] auxList = field.split(":");
@@ -102,20 +112,23 @@ public class RESTClient {
 				String[] age_list = age.split("}");
 				String finalAge = age_list[0];
 				String[] s=finalAge.split("\"");
-				for(String x:s){
-					System.out.println(x);
-				}
 				int ageConverted = Integer.parseInt(s[1]);
 				user.setAge(ageConverted);
 			}
+			if (field.contains("role")) {
+				String[] auxList = field.split(":");
+				String roleUser = auxList[1];
+				roleUser = roleUser.replaceAll("\"", "");
+				user.setRole(roleUser);
+			}
 		}
-//		System.out.println(user);
 		user.setUserAccount(userAccount);
+		
 		return user;
 
 	}
 	
-		public static void main(String[] args) throws IOException{
+		public static void main(String[] args) throws IOException, ParseException{
 		Map<String, String> usernamesAndEmails = getMapUSernameAndEmailByJsonAutentication();
 		System.out.println(usernamesAndEmails);
 		Set<String> aux= usernamesAndEmails.keySet();
@@ -124,11 +137,13 @@ public class RESTClient {
 			System.out.println(s);
 			User user =getCertainUserByJsonAuthentication(s);
 			System.out.println(user.getUserAccount().getUsername());
-			System.out.println(user.getUserAccount().getPassword());
+			System.out.println(user.getName());
+			System.out.println(user.getSurname());
 			System.out.println(user.getEmail());
 			System.out.println(user.getGenre());
-			System.out.println(user.getAutonomousCommunity());
-			System.out.println(user.getAge()+"\n"+"////////////////////////////////"+"\n");
+			System.out.println(user.getAutonomous_community());
+			System.out.println(user.getAge());
+			System.out.println(user.getRole()+"\n"+"////////////////////////////////"+"\n");
 		}
 	}
 }
