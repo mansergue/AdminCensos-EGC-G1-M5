@@ -70,9 +70,7 @@ public class CensusService {
 		result.setStartDate(fechaComienzo);
 
 		result.setIdVotacion(idVotacion);
-		result.setVersionVotacion(versionVotacion);
 		result.setTitle(tituloVotacion);
-		result.setDescription(description);
 		if (tipoVotacion.equals("abierta")) {
 			result.setTipo("abierto");
 		} else {
@@ -305,14 +303,14 @@ public class CensusService {
 		Map<String, String> usernamesAndEmails = RESTClient.getMapUSernameAndEmailByJsonAutentication();
 		dirEmail = usernamesAndEmails.get(usernameAdd);
 		cuerpoEmail = currentMoment.toString() + "-> Se ha incorporado al censo de " + census.getTitle();
-		try {
-
-			// Se procede al envÃ­o del correo con el resultado de la inclusiÃ³n
-			// en el censo
-			Gmail.send(cuerpoEmail, dirEmail);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//
+//			// Se procede al envÃ­o del correo con el resultado de la inclusiÃ³n
+//			// en el censo
+//			Gmail.send(cuerpoEmail, dirEmail);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	/**
@@ -346,14 +344,14 @@ public class CensusService {
 		Map<String, String> usernamesAndEmails = RESTClient.getMapUSernameAndEmailByJsonAutentication();
 		dirEmail = usernamesAndEmails.get(usernameAdd);
 		cuerpoEmail = currentMoment.toString() + "-> Se ha incorporado al censo de " + census.getTitle();
-		try {
-
-			// Se procede al envio del correo con el resultado de la inclusiÃ³n
-			// en el censo
-			Gmail.send(cuerpoEmail, dirEmail);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//
+//			// Se procede al envio del correo con el resultado de la inclusiÃ³n
+//			// en el censo
+//			Gmail.send(cuerpoEmail, dirEmail);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	/**
@@ -394,11 +392,11 @@ public class CensusService {
 
 		// Se procede al envio del correo con el resultado de la exclusiÃ³n del
 		// usuario del censo
-		try {
-			Gmail.send(cuerpoEmail, dirEmail);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			Gmail.send(cuerpoEmail, dirEmail);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	/**
