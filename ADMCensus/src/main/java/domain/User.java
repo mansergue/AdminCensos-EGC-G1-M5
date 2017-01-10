@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 import security.UserAccount;
 
@@ -17,10 +18,29 @@ import security.UserAccount;
 @Access(AccessType.PROPERTY)
 public class User extends DomainEntity{
 	
+	private String name;
+	private String surname;
 	private String email;
 	private String genre;
-	private String autonomousCommunity;
+	private String autonomous_community;
 	private int age;
+	private String role;
+	
+	@NotBlank
+	public String getName(){
+		return name;
+	}
+	public void setName(String name){
+		this.name=name;
+	}
+	
+	@NotBlank
+	public String getSurname(){
+		return surname;
+	}
+	public void setSurname(String surname){
+		this.surname=surname;
+	}
         
 	@Email
 	public String getEmail() {
@@ -39,12 +59,12 @@ public class User extends DomainEntity{
 		this.genre = genre;
 	}
 
-	public String getAutonomousCommunity() {
-		return autonomousCommunity;
+	public String getAutonomous_community() {
+		return autonomous_community;
 	}
 
-	public void setAutonomousCommunity(String autonomousCommunity) {
-		this.autonomousCommunity = autonomousCommunity;
+	public void setAutonomous_community(String autonomous_community) {
+		this.autonomous_community = autonomous_community;
 	}
 
 	public int getAge() {
@@ -53,6 +73,13 @@ public class User extends DomainEntity{
 
 	public void setAge(int age) {
 		this.age = age;
+	}
+	
+	public String getRole(){
+		return role;
+	}
+	public void setRole(String role){
+		this.role=role;
 	}
 	
 	
