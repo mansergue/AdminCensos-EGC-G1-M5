@@ -26,9 +26,7 @@
 
 	<bean id="census1" class="domain.Census">
 		<property name="idVotacion" value="23" />
-		<property name="versionVotacion" value="0" />
 		<property name="title" value="Elecciones" />
-		<property name="description" value="Elecciones" />
 		<property name="startDate" value="10/01/2015 00:00" />
 		<property name="endDate" value="12/02/2018 00:00" />
 		<property name="tipo" value="cerrado" />
@@ -44,9 +42,7 @@
 	
 	<bean id="census2" class="domain.Census">
 		<property name="idVotacion" value="43" />
-		<property name="versionVotacion" value="0" />
 		<property name="title" value="Censo cerrado VACIO, ACTIVO" />
-		<property name="description" value="Elecciones" />
 		<property name="startDate" value="10/01/2015 00:00" />
 		<property name="endDate" value="02/28/2018 00:00" />
 		<property name="tipo" value="cerrado" />
@@ -63,9 +59,7 @@
 
 	<bean id="census3" class="domain.Census">
 		<property name="idVotacion" value="25" />
-		<property name="versionVotacion" value="0" />
 		<property name="title" value="Censo cerrado NO VACIO, NO ACTIVO" />
-		<property name="description" value="Elecciones" />
 		<property name="startDate" value="10/01/2011 00:00" />
 		<property name="endDate" value="12/02/2018 00:00" />
 		<property name="tipo" value="cerrado" />
@@ -80,9 +74,7 @@
 	
 	<bean id="census4" class="domain.Census">
 		<property name="idVotacion" value="26" />
-		<property name="versionVotacion" value="0" />
 		<property name="title" value="Censo abierto NO VACIO, ACTIVO" />
-		<property name="description" value="Elecciones" />
 		<property name="startDate" value="10/07/2015 00:00" />
 		<property name="endDate" value="12/05/2018 00:00" />
 		<property name="tipo" value="abierto" />
@@ -99,9 +91,7 @@
 
 	<bean id="census5" class="domain.Census">
 		<property name="idVotacion" value="27" />
-		<property name="versionVotacion" value="0" />
 		<property name="title" value="Censo abierto NO VACIO, NO ACTIVO" />
-		<property name="description" value="Elecciones" />
 		<property name="startDate" value="10/11/2010 00:00" />
 		<property name="endDate" value="12/03/2018 00:00" />
 		<property name="tipo" value="abierto" />
@@ -116,9 +106,7 @@
 	
 	<bean id="census6" class="domain.Census">
 		<property name="idVotacion" value="28" />
-		<property name="versionVotacion" value="0" />
 		<property name="title" value="Censo abierto vacio NO ACTIVO" />
-		<property name="description" value="Elecciones" />
 		<property name="startDate" value="10/11/2010 00:00" />
 		<property name="endDate" value="12/03/2018 00:00" />
 		<property name="tipo" value="abierto" />
@@ -132,9 +120,7 @@
 	
 	<bean id="census7" class="domain.Census">
 		<property name="idVotacion" value="29" />
-		<property name="versionVotacion" value="0" />
 		<property name="title" value="Censo abierto vacio activo" />
-		<property name="description" value="Elecciones" />
 		<property name="startDate" value="10/11/2015 00:00" />
 		<property name="endDate" value="12/03/2018 00:00" />
 		<property name="tipo" value="abierto" />
@@ -148,14 +134,12 @@
 	
 	<bean id="census8" class="domain.Census">
 		<property name="idVotacion" value="30" />
-		<property name="versionVotacion" value="0" />
 		<property name="title" value="Censo cerrado vacio activo" />
-		<property name="description" value="Elecciones" />
 		<property name="startDate" value="10/11/2016 00:00" />
 		<property name="endDate" value="12/03/2018 00:00" />
 		<property name="tipo" value="cerrado" />
 		<property name="postalCode" value="12345" />
-		<property name="usernameCreator" value="admin1" />
+		<property name="usernameCreator" value="carcamcue" />
 		<property name="votoPorUsuario">
 			<map>
 			</map>
@@ -164,14 +148,12 @@
 	
 	<bean id="census9" class="domain.Census">
 		<property name="idVotacion" value="31" />
-		<property name="versionVotacion" value="0" />
 		<property name="title" value="Censo cerrado vacio NO activo" />
-		<property name="description" value="Elecciones" />
 		<property name="startDate" value="10/11/2011 00:00" />
 		<property name="endDate" value="12/03/2018 00:00" />
 		<property name="tipo" value="cerrado" />
 		<property name="postalCode" value="12345" />
-		<property name="usernameCreator" value="admin1" />
+		<property name="usernameCreator" value="carcamcue" />
 		<property name="votoPorUsuario">
 			<map>
 			</map>
@@ -180,17 +162,16 @@
 
 	<bean id="census10" class="domain.Census">
 		<property name="idVotacion" value="32" />
-		<property name="versionVotacion" value="0" />
 		<property name="title" value="Censo abierto vacio activo" />
-		<property name="description" value="Elecciones" />
 		<property name="startDate" value="10/11/2015 00:00" />
 		<property name="endDate" value="12/03/2018 00:00" />
 		<property name="tipo" value="abierto" />
 		<property name="postalCode" value="12345" />
-		<property name="usernameCreator" value="pabcargar2" />
+		<property name="usernameCreator" value="carcamcue" />
 		<property name="votoPorUsuario">
 			<map>
 				<entry key="pabcargar2" value="true" />
+				<entry key="carcamcue" value="true" />
 				<entry key="admin1" value="true" />
 			</map>
 		</property>
@@ -198,18 +179,16 @@
 
 	<bean id="census11" class="domain.Census">
 		<property name="idVotacion" value="33" />
-		<property name="versionVotacion" value="0" />
 		<property name="title" value="Censo abierto vacio activo" />
-		<property name="description" value="Elecciones" />
 		<property name="startDate" value="10/11/2015 00:00" />
 		<property name="endDate" value="12/03/2018 00:00" />
 		<property name="tipo" value="abierto" />
 		<property name="postalCode" value="12345" />
-		<property name="usernameCreator" value="pabcargar2" />
+		<property name="usernameCreator" value="carcamcue" />
 		<property name="votoPorUsuario">
 			<map>
 				<entry key="pabcargar2" value="true" />
-				<entry key="admin1" value="true" />
+				<entry key="carcamcue" value="true" />
 				<entry key="josea" value="true" />
 			</map>
 		</property>
