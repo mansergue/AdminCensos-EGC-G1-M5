@@ -89,18 +89,18 @@ public class CensusController extends AbstractController {
 //		return censusService.canDelete(idVotacion, username);
 //	}
 
-	// Devuelve JSon a cabina para saber si un usuario puede votar ------------
+// Devuelve JSon a cabina para saber si un usuario puede votar ------------
 
 	@RequestMapping(value = "/canVote", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody String canVote(@RequestParam int idVotacion, @RequestParam String username) {
+	public @ResponseBody String canVote(@RequestParam int idVotacion, @RequestParam String username) throws ParseException {
 		voteService.popularVotaciones();
 		return censusService.canVote(idVotacion, username);
 	}
 
-	// Actualiza el estado de un usuario en una votación por cabina -----------
+	// Actualiza el estado de un usuario en una votaciÃ³n por cabina -----------
 
 	@RequestMapping(value = "/updateUser", method = RequestMethod.GET)
-	public @ResponseBody String updateUser(@RequestParam int idVotacion, @RequestParam String tipoVotacion,@RequestParam String username) {
+	public @ResponseBody String updateUser(@RequestParam int idVotacion, @RequestParam String tipoVotacion,@RequestParam String username) throws ParseException {
 		voteService.popularVotaciones();
 		try {
 			if (censusService.updateUser(idVotacion, tipoVotacion, username)) {

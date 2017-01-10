@@ -1,3 +1,25 @@
+create user 'acme-user'@'%' identified by password '*4F10007AADA9EE3DBB2CC36575DFC6F4FDE27577';
+
+create user 'acme-manager'@'%' identified by password '*FDB8CD304EB2317D10C95D797A4BD7492560F55F';
+
+
+start transaction;
+
+ grant select, insert, update, delete 
+ 	on `ADMCensus`.* to 'acme-user'@'%';
+ 
+ grant select, insert, update, delete, create, drop, references, index, alter, 
+         create temporary tables, lock tables, create view, create routine, 
+         alter routine, execute, trigger, show view
+    on `ADMCensus`.* to 'acme-manager'@'%';
+
+ drop database if exists `ADMCensus`;
+ create database `ADMCensus`;
+ USE `ADMCensus`;
+
+SET NAMES utf8;
+
+
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: admcensus
@@ -26,17 +48,17 @@ CREATE TABLE `census` (
   `id` int(11) NOT NULL,
   `version` int(11) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
-  `endDate` datetime DEFAULT NULL,
-  `idVotacion` int(11) DEFAULT NULL,
-  `postalCode` varchar(255) DEFAULT NULL,
-  `startDate` datetime DEFAULT NULL,
+  `end_date` datetime DEFAULT NULL,
+  `id_votacion` int(11) DEFAULT NULL,
+  `postal_code` varchar(255) DEFAULT NULL,
+  `start_date` datetime DEFAULT NULL,
   `tipo` varchar(255) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
-  `usernameCreator` varchar(255) DEFAULT NULL,
-  `versionVotacion` int(11) NOT NULL,
+  `username_creator` varchar(255) DEFAULT NULL,
+  `version_votacion` int(11) NOT NULL,
   `valor` tinyblob,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UK_qx9ataj93wny5sbrfxx6maweq` (`idVotacion`)
+  UNIQUE KEY `UK_b1gix6fwe2tdtuui079sk633` (`id_votacion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -69,7 +91,7 @@ CREATE TABLE `hibernate_sequences` (
 
 LOCK TABLES `hibernate_sequences` WRITE;
 /*!40000 ALTER TABLE `hibernate_sequences` DISABLE KEYS */;
-INSERT INTO `hibernate_sequences` VALUES ('DomainEntity',3);
+INSERT INTO `hibernate_sequences` VALUES ('domain_entity',3);
 /*!40000 ALTER TABLE `hibernate_sequences` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -84,13 +106,13 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `version` int(11) NOT NULL,
   `age` int(11) NOT NULL,
-  `autonomousCommunity` varchar(255) DEFAULT NULL,
+  `autonomous_community` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `genre` varchar(255) DEFAULT NULL,
-  `userAccount_id` int(11) NOT NULL,
+  `user_account` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UK_o6s94d43co03sx067ili5760c` (`userAccount_id`),
-  CONSTRAINT `FK_o6s94d43co03sx067ili5760c` FOREIGN KEY (`userAccount_id`) REFERENCES `useraccount` (`id`)
+  UNIQUE KEY `UK_cjn1wn3ecn1kacgqxryr6a5c6` (`user_account`),
+  CONSTRAINT `FK_cjn1wn3ecn1kacgqxryr6a5c6` FOREIGN KEY (`user_account`) REFERENCES `user_account` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -105,55 +127,55 @@ INSERT INTO `user` VALUES (65537,0,22,NULL,'pabcargar2@alum.us.es','Masculino',6
 UNLOCK TABLES;
 
 --
--- Table structure for table `useraccount`
+-- Table structure for table `user_account`
 --
 
-DROP TABLE IF EXISTS `useraccount`;
+DROP TABLE IF EXISTS `user_account`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `useraccount` (
+CREATE TABLE `user_account` (
   `id` int(11) NOT NULL,
   `version` int(11) NOT NULL,
   `password` varchar(255) DEFAULT NULL,
   `username` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UK_csivo9yqa08nrbkog71ycilh5` (`username`)
+  UNIQUE KEY `UK_castjbvpeeus0r8lbpehiu0e4` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `useraccount`
+-- Dumping data for table `user_account`
 --
 
-LOCK TABLES `useraccount` WRITE;
-/*!40000 ALTER TABLE `useraccount` DISABLE KEYS */;
-INSERT INTO `useraccount` VALUES (65536,1,'6d722561cf386015cb1d7c1937806bb5','pabcargar2');
-/*!40000 ALTER TABLE `useraccount` ENABLE KEYS */;
+LOCK TABLES `user_account` WRITE;
+/*!40000 ALTER TABLE `user_account` DISABLE KEYS */;
+INSERT INTO `user_account` VALUES (65536,1,'6d722561cf386015cb1d7c1937806bb5','pabcargar2');
+/*!40000 ALTER TABLE `user_account` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `useraccount_authorities`
+-- Table structure for table `user_account_authorities`
 --
 
-DROP TABLE IF EXISTS `useraccount_authorities`;
+DROP TABLE IF EXISTS `user_account_authorities`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `useraccount_authorities` (
-  `UserAccount_id` int(11) NOT NULL,
+CREATE TABLE `user_account_authorities` (
+  `user_account` int(11) NOT NULL,
   `authority` varchar(255) DEFAULT NULL,
-  KEY `FK_b63ua47r0u1m7ccc9lte2ui4r` (`UserAccount_id`),
-  CONSTRAINT `FK_b63ua47r0u1m7ccc9lte2ui4r` FOREIGN KEY (`UserAccount_id`) REFERENCES `useraccount` (`id`)
+  KEY `FK_pao8cwh93fpccb0bx6ilq6gsl` (`user_account`),
+  CONSTRAINT `FK_pao8cwh93fpccb0bx6ilq6gsl` FOREIGN KEY (`user_account`) REFERENCES `user_account` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `useraccount_authorities`
+-- Dumping data for table `user_account_authorities`
 --
 
-LOCK TABLES `useraccount_authorities` WRITE;
-/*!40000 ALTER TABLE `useraccount_authorities` DISABLE KEYS */;
-INSERT INTO `useraccount_authorities` VALUES (65536,'USER');
-/*!40000 ALTER TABLE `useraccount_authorities` ENABLE KEYS */;
+LOCK TABLES `user_account_authorities` WRITE;
+/*!40000 ALTER TABLE `user_account_authorities` DISABLE KEYS */;
+INSERT INTO `user_account_authorities` VALUES (65536,'USER');
+/*!40000 ALTER TABLE `user_account_authorities` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -167,12 +189,12 @@ CREATE TABLE `vote` (
   `id` int(11) NOT NULL,
   `version` int(11) NOT NULL,
   `cp` varchar(255) DEFAULT NULL,
-  `fechaCierre` datetime DEFAULT NULL,
-  `fechaCreacion` datetime DEFAULT NULL,
-  `idVotacion` int(11) DEFAULT NULL,
+  `fecha_cierre` datetime DEFAULT NULL,
+  `fecha_creacion` datetime DEFAULT NULL,
+  `id_votacion` int(11) DEFAULT NULL,
   `titulo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UK_skxoi481n3j9r557eodnbgwrq` (`idVotacion`)
+  UNIQUE KEY `UK_kskusi3k8xljp2vfwo8fkoihn` (`id_votacion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -195,4 +217,6 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-08 12:47:28
+-- Dump completed on 2017-01-09 13:29:38
+
+commit; 
