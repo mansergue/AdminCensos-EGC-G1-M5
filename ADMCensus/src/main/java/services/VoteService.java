@@ -85,11 +85,6 @@ public class VoteService {
 		return vote;
 	}
 	
-	public Vote findVoteByVote(int idVotacion){
-		Vote vote=voteRepository.findVoteByVote(idVotacion);
-		return vote;
-	}
-	
 	public void delete(int idVotacion) {
 		Vote vote = findVoteByVote(idVotacion);
 
