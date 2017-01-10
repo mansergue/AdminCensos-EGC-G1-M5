@@ -1,25 +1,3 @@
-create user 'acme-user'@'%' identified by password '*4F10007AADA9EE3DBB2CC36575DFC6F4FDE27577';
-
-create user 'acme-manager'@'%' identified by password '*FDB8CD304EB2317D10C95D797A4BD7492560F55F';
-
-
-start transaction;
-
- grant select, insert, update, delete 
- 	on `ADMCensus`.* to 'acme-user'@'%';
- 
- grant select, insert, update, delete, create, drop, references, index, alter, 
-         create temporary tables, lock tables, create view, create routine, 
-         alter routine, execute, trigger, show view
-    on `ADMCensus`.* to 'acme-manager'@'%';
-
- drop database if exists `ADMCensus`;
- create database `ADMCensus`;
- USE `ADMCensus`;
-
-SET NAMES utf8;
-
-
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: admcensus
@@ -89,7 +67,7 @@ CREATE TABLE `hibernate_sequences` (
 
 LOCK TABLES `hibernate_sequences` WRITE;
 /*!40000 ALTER TABLE `hibernate_sequences` DISABLE KEYS */;
-INSERT INTO `hibernate_sequences` VALUES ('domain_entity',3);
+INSERT INTO `hibernate_sequences` VALUES ('domain_entity',2);
 /*!40000 ALTER TABLE `hibernate_sequences` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -205,7 +183,7 @@ CREATE TABLE `vote` (
 
 LOCK TABLES `vote` WRITE;
 /*!40000 ALTER TABLE `vote` DISABLE KEYS */;
-INSERT INTO `vote` VALUES (65536,0,'41008','2017-01-14 00:00:00','2016-12-15 00:00:00',1,'Votación definitiva sobre la tortilla de patatas'),(65537,0,'01337','2017-01-14 00:00:00','2016-12-15 00:00:00',2,'Encuesta sobre intención de voto'),(65538,0,'41300','2017-01-10 00:00:00','2017-01-10 00:00:00',3,'Ejemplo para recontar');
+INSERT INTO `vote` VALUES (32778,0,'41008','2017-01-14 00:00:00','2016-12-15 00:00:00',1,'Votación definitiva sobre la tortilla de patatas'),(32779,0,'01337','2017-01-14 00:00:00','2016-12-15 00:00:00',2,'Encuesta sobre intención de voto'),(32780,0,'41300','2017-01-10 00:00:00','2017-01-10 00:00:00',3,'Ejemplo para recontar'),(32781,0,'41300','2017-01-10 00:00:00','2017-01-10 00:00:00',4,'Ejemplo para recontar 2');
 /*!40000 ALTER TABLE `vote` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -218,7 +196,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-10 18:20:40
-
-
-commit; 
+-- Dump completed on 2017-01-10 19:01:30
