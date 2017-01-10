@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+
 import javax.transaction.Transactional;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -94,99 +97,36 @@ public class VoteService {
 	}
 	
 	//Método que mete en nuestra base de datos todas las votaciones del grupo de recuento
-	public void popularVotaciones() {
-		// Leer la siguiente uri y mapearla en la clase Vote:
-		// https://recuento.agoraus1.egc.duckdns.org/api/verVotaciones
+	public void popularVotaciones() throws ParseException{
 		RestTemplate restTemplate = new RestTemplate();
-		String result = restTemplate.getForObject("https://recuento.agoraus1.egc.duckdns.org/api/verVotaciones",
-				String.class);
-		System.out.println(result);
-		String aux = result.replace("{\"estado\":200,\"votaciones\":", "");
-		System.out.println(aux);
-		String[] lista = aux.split("},");
-		String[] lista2 = aux.split(",");
-		Vote vote=new Vote();
-		
-		for (@SuppressWarnings("unused")String voto : lista) {
-			for (String field : lista2) {
-				
-				System.out.println("field: "+field);
-				if (field.contains("id_votacion")) {
-					String[] auxList = field.split(":");
-					String id_votacion = auxList[1];
-					String[] id_list = id_votacion.split("}");
-					String finalId = id_list[0];
-					int idConverted = Integer.parseInt(finalId);
-					
-					vote.setIdVotacion(idConverted);
-					vote.setId(idConverted);
-				}
-				if (field.contains("titulo")) {
-					String[] auxList = field.split(":");
-					String titulo = auxList[1];
-					titulo = titulo.replaceAll("\"", "");
-					System.out.println("titulo: "+titulo);
-					vote.setTitulo(titulo);
-				}
-				if (field.contains("fecha_creacion")) {
-					String[] auxList = field.split(":");
-					String fecha_creacion = auxList[1];
-					fecha_creacion = fecha_creacion.replaceAll("\"", "");
-					SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
-					Date fechaConvertida=null;
-					try {
-						fechaConvertida = formatoDelTexto.parse(fecha_creacion);
-					} catch (ParseException e) {
-						e.printStackTrace();
-					}
-	
-					vote.setFechaCreacion(fechaConvertida);
-				}
-				if (field.contains("fecha_cierre")) {
-					String[] auxList = field.split(":");
-					String fecha_cierre = auxList[1];
-					fecha_cierre = fecha_cierre.replaceAll("\"", "");
-					SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
-					Date fechaConvertida=null;
-					try {
-						fechaConvertida = formatoDelTexto.parse(fecha_cierre);
-					} catch (ParseException e) {
-						e.printStackTrace();
-					}
-	
-					vote.setFechaCierre(fechaConvertida);
-				}
-				if (field.contains("cp")) {
-					String[] auxList = field.split(":");
-					String cp = auxList[1];
-					cp = cp.replaceAll("\"", "");
-					cp=cp.replaceAll("}", "");
-					cp=cp.replaceAll("]", "");
-					vote.setCp(cp);
-				}
-				Collection<Vote> votes=new ArrayList<Vote>();
-				Collection<Integer> ids=new ArrayList<Integer>();
-				try{
-					votes.addAll(findAll());
-					for(Vote v:votes){
-						ids.add(v.getIdVotacion());
-					}
-				}
-				catch(Exception e){
-					System.out.println(e);
-				}
-				System.out.println(ids.isEmpty());
-				if(!ids.contains(vote.getIdVotacion())||ids.isEmpty()==true){
-					System.out.println("entra");
+		String JSON = restTemplate.getForObject("https://recuento.agoraus1.egc.duckdns.org/api/verVotaciones",String.class);
+
+		JSONObject jsonObject = new JSONObject(JSON);
+		JSONArray votaciones = jsonObject.getJSONArray("votaciones");
+		Collection<Vote> nuestrosVotos=voteRepository.findAll();
+		for (int i = 0; i < votaciones.length(); i++){
+		    int idVotacion=votaciones.getJSONObject(i).getInt("id_votacion");
+		    String titulo=votaciones.getJSONObject(i).getString("titulo");
+		    String fechaCreacion=votaciones.getJSONObject(i).getString("fecha_creacion");
+		    String fechaCierre=votaciones.getJSONObject(i).getString("fecha_cierre");
+		    String cp=votaciones.getJSONObject(i).getString("cp");
+		    
+		    Vote vote=create(idVotacion,titulo,fechaCreacion,fechaCierre,cp);
+		    if(nuestrosVotos.isEmpty()){//añade el primero
+		    	save(vote);
+		    }
+			else {
+				if(findVoteByVote(vote.getIdVotacion())!=null){//si existe lo borra
+					System.out.println("entró");
+					delete(vote.getIdVotacion());
+					System.out.println(findAll());
 					save(vote);
-					System.out.println("y lo pasa");
 				}
-//				save(vote);
+				else if(findVoteByVote(vote.getIdVotacion())==null){//si no existe lo añade
+					save(vote);
+				}
 			}
-			
-			System.out.println(vote.getIdVotacion()+vote.getTitulo()+vote.getFechaCreacion()+vote.getFechaCierre()+vote.getCp());
 		}
-		System.out.println("y llega al final");
 	}
 	
 	
