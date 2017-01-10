@@ -33,7 +33,30 @@ public class VoteService {
 	}
 
 	// Methods ----------------------------------------------------------------
-
+	public Vote create(int idVotacion, String titulo, String fechaCreacion, String fechaCierre, String cp) throws ParseException{
+		Vote result=new Vote();
+		
+		result.setIdVotacion(idVotacion);
+		result.setTitulo(titulo);
+		
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
+		Date fechaCreacionConvertida=null;
+		Date fechaCierreConvertida=null;
+		try {
+			fechaCreacionConvertida = formatoDelTexto.parse(fechaCreacion);
+			fechaCierreConvertida = formatoDelTexto.parse(fechaCierre);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		result.setFechaCreacion(fechaCreacionConvertida);
+		result.setFechaCierre(fechaCierreConvertida);
+		
+		result.setCp(cp);
+		
+		return result;
+		
+	}
+	
 	public Vote findOne(int voteId) {
 		Vote c = voteRepository.findOne(voteId);
 		Assert.notNull(c);
@@ -42,9 +65,7 @@ public class VoteService {
 
 	public Collection<Vote> findAll() {
 		Collection<Vote> result=new ArrayList<Vote>();
-//		System.out.println(result);
 		result=voteRepository.findAll();
-//		System.out.println(result);
 		Assert.notNull(result);
 		return result;
 	}
@@ -59,6 +80,17 @@ public class VoteService {
 		Vote vote=voteRepository.findVoteByVote(idVotacion);
 		Assert.notNull(vote);
 		return vote;
+	}
+	
+	public Vote findVoteByVote(int idVotacion){
+		Vote vote=voteRepository.findVoteByVote(idVotacion);
+		return vote;
+	}
+	
+	public void delete(int idVotacion) {
+		Vote vote = findVoteByVote(idVotacion);
+
+		voteRepository.delete(vote);
 	}
 	
 	//Método que mete en nuestra base de datos todas las votaciones del grupo de recuento
