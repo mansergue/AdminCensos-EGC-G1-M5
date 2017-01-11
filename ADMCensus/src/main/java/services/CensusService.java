@@ -179,15 +179,10 @@ public class CensusService {
 
 		for (Census c : allCensuses) {
 
-			// Comprobamos si la votacion esta activa
+			
 
 			if (votacionActiva(c.getStartDate(), c.getEndDate())) {
-				// System.out.println(votacionActiva(c.getFechaInicioVotacion(),
-				// c.getFechaFinVotacion())+"\n");
-				// System.out.println("primera"+c.getVotoPorUsuario().containsKey(username)+"
-				// ");
-				// System.out.println("segunda"+c.getVotoPorUsuario().get(username)+"\n");
-				if (c.getVotoPorUsuario().containsKey(username) && c.getVotoPorUsuario().get(username)) {
+				if (c.getVotoPorUsuario().containsKey(username) && !c.getVotoPorUsuario().get(username)) {
 
 					result.add(c);
 				}
