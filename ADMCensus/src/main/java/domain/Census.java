@@ -129,8 +129,9 @@ public class Census extends DomainEntity {
 		this.usernameCreator = usernameCreator;
 	}
 	
+	
 	@MapKeyColumn(name = "token")
-	@Column(name = "valor")
+	@Column(name = "valor", columnDefinition = "LONGBLOB")
 	@CollectionTable(name = "value", joinColumns = @JoinColumn(name = "token") )
 	public HashMap<String, Boolean> getVotoPorUsuario() {
 		return votoPorUsuario;
