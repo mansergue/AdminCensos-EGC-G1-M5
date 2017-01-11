@@ -59,3 +59,23 @@
 		{"result":"no"} o {"result":"si"}</p>
 </body>
 </html>
+
+<strong>Dictamina si se puede borrar una votación:</strong>
+	</p>
+
+	<p>
+		<big><big>/census/canDelete.do?idVotacion="param1"
+				&username= "param2" </big></big>
+	</p>
+
+	<p>param1: Id de la votación a consultar. Por ejemplo "23".</p>
+	<p>
+		param2:  Nombre del usuario sobre el que se efectua la comprobación..<br>
+		
+	</p>
+	
+
+	<p>Se obtendrá una respuesta en formato JSON de tipo
+		{"result":"no"} o {"result":"si"}</p>
+</body>
+</html>
