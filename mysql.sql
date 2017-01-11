@@ -1,3 +1,25 @@
+create user 'acme-user'@'%' identified by password '*4F10007AADA9EE3DBB2CC36575DFC6F4FDE27577';
+
+create user 'acme-manager'@'%' identified by password '*FDB8CD304EB2317D10C95D797A4BD7492560F55F';
+
+
+start transaction;
+
+ grant select, insert, update, delete 
+ 	on `ADMCensus`.* to 'acme-user'@'%';
+ 
+ grant select, insert, update, delete, create, drop, references, index, alter, 
+         create temporary tables, lock tables, create view, create routine, 
+         alter routine, execute, trigger, show view
+    on `ADMCensus`.* to 'acme-manager'@'%';
+
+ drop database if exists `ADMCensus`;
+ create database `ADMCensus`;
+ USE `ADMCensus`;
+
+
+SET NAMES utf8;
+
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: admcensus
@@ -193,3 +215,5 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2017-01-11  1:59:45
+
+commit; 
