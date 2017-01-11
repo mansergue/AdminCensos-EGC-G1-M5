@@ -32,7 +32,7 @@ public class CensusServiceTest {
 		
 		// Inicializamos un censo, inicializando los valores de los atributos -
 		
-		Census c_1 = censusService.create(1,0,"title","description", "201220150800", "201220152000", "cerrada","12345","pabcargar2");
+		Census c_1 = censusService.create();
 		
 		// Inicializamos HashMap donde especificaremos quién ha votado y quién no, introducimos usuarios 
 		// y estos los introducimos en el censo creado ------------------------
