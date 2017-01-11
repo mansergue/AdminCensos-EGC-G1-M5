@@ -1,17 +1,16 @@
 package services;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import repositories.CensusRepository;
-import utilities.Gmail;
 import utilities.RESTClient;
 import domain.Census;
 
@@ -35,12 +34,11 @@ public class CensusService {
 
 	// Methods ----------------------------------------------------------------
 
-
-	public Census create(){
+	public Census create() {
 		Census result = new Census();
 		HashMap<String, Boolean> vpo = new HashMap<String, Boolean>();
 		result.setVotoPorUsuario(vpo);
-	
+
 		return result;
 	}
 
@@ -57,15 +55,14 @@ public class CensusService {
 		Collection<Census> result = new ArrayList<Census>();
 		Collection<Census> openedCensuses = new ArrayList<Census>();
 		openedCensuses = censusRepository.findAllOpenedCensuses();
-		System.out.println("abiertos: "+openedCensuses);
+		System.out.println("abiertos: " + openedCensuses);
 
 		for (Census c : openedCensuses) {
-			if (!c.getVotoPorUsuario().containsKey(username)
-					&& votacionActiva(c.getStartDate(),c.getEndDate())) {
+			if (!c.getVotoPorUsuario().containsKey(username) && votacionActiva(c.getStartDate(), c.getEndDate())) {
 				result.add(c);
 			}
 		}
-		System.out.println("todos: "+result);
+		System.out.println("todos: " + result);
 		return result;
 	}
 
@@ -77,7 +74,7 @@ public class CensusService {
 	}
 
 	/**
-	 * MÃ©todo usado por cabina que actualiza a true el estado de voto de un user
+	 * Metodo usado por cabina que actualiza a true el estado de voto de un user
 	 * 
 	 * @param idVotacion
 	 *            = Identificador de la votaciÃ³n
@@ -106,7 +103,7 @@ public class CensusService {
 	}
 
 	/**
-	 * Devuelve un json para saber si se puede borrar o no una votaciÃ³n
+	 * Devuelve un json para saber si se puede borrar o no una votacion
 	 * 
 	 * @param idVotacion
 	 *            = Identificador de la votaciÃ³n
@@ -134,7 +131,7 @@ public class CensusService {
 
 	/**
 	 * Devuelve un json indicando si un usuario puede votar en una determinada
-	 * votaciÃ³n
+	 * votacion
 	 * 
 	 * @param idVotacion
 	 *            = Identificador de la votaciÃ³n
@@ -165,7 +162,7 @@ public class CensusService {
 	}
 
 	/**
-	 * MÃ©todo que devuelve todos los censos de las votaciones en las que un
+	 * Metodo que devuelve todos los censos de las votaciones en las que un
 	 * usuario puede votar.
 	 * 
 	 * @param username
@@ -175,21 +172,23 @@ public class CensusService {
 
 	public Collection<Census> findPossibleCensusesByUser(String username) {
 		Assert.isTrue(username != "");
-		System.out.println(username+"\n");
+		System.out.println(username + "\n");
 		Collection<Census> allCensuses = findAll();
-		System.out.println(allCensuses+"\n");
+		System.out.println(allCensuses + "\n");
 		Collection<Census> result = new ArrayList<Census>();
 
 		for (Census c : allCensuses) {
 
-			// Comprobamos si la votaciÃ³n estÃ¡ activa
+			// Comprobamos si la votacion esta activa
 
 			if (votacionActiva(c.getStartDate(), c.getEndDate())) {
-//				System.out.println(votacionActiva(c.getFechaInicioVotacion(), c.getFechaFinVotacion())+"\n");
-//				System.out.println("primera"+c.getVotoPorUsuario().containsKey(username)+"  ");
-//				System.out.println("segunda"+c.getVotoPorUsuario().get(username)+"\n");
+				// System.out.println(votacionActiva(c.getFechaInicioVotacion(),
+				// c.getFechaFinVotacion())+"\n");
+				// System.out.println("primera"+c.getVotoPorUsuario().containsKey(username)+"
+				// ");
+				// System.out.println("segunda"+c.getVotoPorUsuario().get(username)+"\n");
 				if (c.getVotoPorUsuario().containsKey(username) && c.getVotoPorUsuario().get(username)) {
-					
+
 					result.add(c);
 				}
 			}
@@ -232,7 +231,7 @@ public class CensusService {
 
 	/**
 	 * 
-	 * AÃ±ade un usuario con un username determidado a un censo CERRADO
+	 * Aniade un usuario con un username determidado a un censo CERRADO
 	 *
 	 * @param censusId
 	 *            = Identificador del censo al que aÃ±adir el usuario
@@ -254,29 +253,30 @@ public class CensusService {
 		census.setVotoPorUsuario(vpo);
 		save(census);
 
-		// EnvÃ­o de correo
+		// Envio de correo
 
 		String dirEmail;
 
-		// Fecha para controlar cuÃ¡ndo se produce un cambio en el censo
+		// Fecha para controlar cuando se produce un cambio en el censo
 
 		Date currentMoment = new Date();
 		Map<String, String> usernamesAndEmails = RESTClient.getMapUSernameAndEmailByJsonAutentication();
 		dirEmail = usernamesAndEmails.get(usernameAdd);
 		cuerpoEmail = currentMoment.toString() + "-> Se ha incorporado al censo de " + census.getTitle();
-//		try {
-//
-//			// Se procede al envÃ­o del correo con el resultado de la inclusiÃ³n
-//			// en el censo
-//			Gmail.send(cuerpoEmail, dirEmail);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		// try {
+		//
+		// // Se procede al envio del correo con el resultado de la
+		// inclusion
+		// // en el censo
+		// Gmail.send(cuerpoEmail, dirEmail);
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
 	}
 
 	/**
 	 * 
-	 * AÃ±ade un usuario a un censo ABIERTO (registrarse en un censo abierto)
+	 * A�ade un usuario a un censo ABIERTO (registrarse en un censo abierto)
 	 *
 	 * @param censusId
 	 *            Identificador del censo al que aÃ±adir el usuario
@@ -294,7 +294,7 @@ public class CensusService {
 		census.setVotoPorUsuario(vpo);
 		save(census);
 
-		// EnvÃ­o de correo
+		// Envio de correo
 
 		String dirEmail;
 		// Fecha para controlar cuando se
@@ -305,14 +305,14 @@ public class CensusService {
 		Map<String, String> usernamesAndEmails = RESTClient.getMapUSernameAndEmailByJsonAutentication();
 		dirEmail = usernamesAndEmails.get(usernameAdd);
 		cuerpoEmail = currentMoment.toString() + "-> Se ha incorporado al censo de " + census.getTitle();
-//		try {
-//
-//			// Se procede al envio del correo con el resultado de la inclusiÃ³n
-//			// en el censo
-//			Gmail.send(cuerpoEmail, dirEmail);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		// try {
+		//
+		// // Se procede al envio del correo con el resultado de la inclusiÃ³n
+		// // en el censo
+		// Gmail.send(cuerpoEmail, dirEmail);
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
 	}
 
 	/**
@@ -339,7 +339,7 @@ public class CensusService {
 		census.setVotoPorUsuario(vpo);
 		save(census);
 
-		// EnvÃ­o de correo
+		// Envio de correo
 
 		String dirEmail;
 
@@ -351,13 +351,14 @@ public class CensusService {
 		dirEmail = usernamesAndEmails.get(username_remove);
 		cuerpoEmail = currentMoment.toString() + "-> Se ha eliminado del censo de " + census.getTitle();
 
-		// Se procede al envio del correo con el resultado de la exclusiÃ³n del
+		// Se procede al envio del correo con el resultado de la exclusiÃ³n
+		// del
 		// usuario del censo
-//		try {
-//			Gmail.send(cuerpoEmail, dirEmail);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		// try {
+		// Gmail.send(cuerpoEmail, dirEmail);
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
 	}
 
 	/**
@@ -441,7 +442,7 @@ public class CensusService {
 	}
 
 	/**
-	 * Metodo para buscar el censo de una votaciÃ³n
+	 * Metodo para buscar el censo de una votacion
 	 * 
 	 * @param idVotacion
 	 *            = Id de la votacion sobre la que se busca un censo
@@ -456,7 +457,7 @@ public class CensusService {
 
 	/**
 	 *
-	 * MÃ©todo creado para saber si existe una votacion activa en el rango de
+	 * Metodo creado para saber si existe una votacion activa en el rango de
 	 * fechas. Una votacion sera activa si su fecha de fin es posterior a la
 	 * fecha actual.
 	 * 
@@ -481,13 +482,13 @@ public class CensusService {
 	// NUEVA FUNCIONALIDAD 2015/2016
 
 	/**
-	 * MÃ©todo para filtrar usuarios de un censo
+	 * Metodo para filtrar usuarios de un censo
 	 * 
 	 * @param username
 	 *            = Username del usuario que buscamos
 	 * @param censusId
-	 *            = Id del censo sobre el que vamos a realizar la bÃºsqueda
-	 * @return el filtro de bÃºsqueda
+	 *            = Id del censo sobre el que vamos a realizar la busqueda
+	 * @return el filtro de busqueda
 	 */
 
 	public Collection<String> findByUsername(String username, int censusId) {
@@ -502,7 +503,7 @@ public class CensusService {
 		for (String user : usernames) {
 			if (user.contains(username)) {
 
-				// AÃ±adimos al resultado los votantes que pasan el filtro
+				// Aniadimos al resultado los votantes que pasan el filtro
 
 				result.add(user);
 			}
@@ -510,44 +511,62 @@ public class CensusService {
 		return result;
 	}
 	// NUEVAS FUNCIONALIDADES 2016/2017
-	
-	//Número de censos abiertos
-	public int openCensuses(){
-		int result=censusRepository.openCensuses();
+
+	// Numero de censos abiertos
+	public int openCensuses() {
+		int result = censusRepository.openCensuses();
 		return result;
 	}
-	
-	//Censo con más votaciones
-	public Census censusMoreVotes(){
-		Collection<Census> censuses=findAll();
-		System.out.println();
-		Census aux=new Census();
-		Map<String, Boolean> votos=new HashMap<String,Boolean>();
-		int i=0;
-		int j=0;
-		
-		
-		for(Census c:censuses){
-			votos=c.getVotoPorUsuario();
-			for(Map.Entry<String, Boolean> entry : votos.entrySet()) {
-				if(entry.getValue()==true){
-					i++;
-				}	
-				
-			}
-			if(i>j||j==0){
-				aux=c;
-			}
-			if(j==0){
-				j=i;
-			}	
-			
-		}
-		return aux;
-	}
-	
-	
-	//Censo con menos votaciones
 
+	// Censo con mas votaciones
+	public String censusMoreVotes() {
+		Collection<Census> censuses = findAll();
+
+		Census result = new Census();
+		Integer votosMaximos = 0;
+
+		Collection<Boolean> f = new ArrayList<Boolean>();
+		f.add(false);
+
+		for (Census c : censuses) {
+
+			Collection<Boolean> votos = c.getVotoPorUsuario().values();
+			votos.removeAll(f);
+			if (votos.size() > votosMaximos) {
+				votosMaximos = votos.size();
+				result = c;
+			}
+
+		}
+
+		return result.getTitle();
+	}
+
+	// Censo con menos votaciones
+
+	public String censusLessVotes() {
+		Collection<Census> censuses = findAll();
+		System.out.println(censuses.toString());
+		Collection<Boolean> f = new ArrayList<Boolean>();
+		f.add(false);
+		Assert.isTrue(!censuses.isEmpty());
+
+		Census result = new Census();
+		Integer votosMinimos = 288;
+
+		for (Census c : censuses) {
+
+			Collection<Boolean> votos = c.getVotoPorUsuario().values();
+			votos.removeAll(f);
+			if (votos.size() < votosMinimos) {
+				votosMinimos = votos.size();
+				result = c;
+			}
+
+		}
+		System.out.println(result.getTitle());
+		return result.getTitle();
+
+	}
 
 }

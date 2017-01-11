@@ -110,14 +110,14 @@ public class CensusController extends AbstractController {
 		return result;
 	}
 
-//	// Devuelve JSon a a votaciones para saber si pueden borrar una votación
-//	// En caso afirmativo, el censo se borrará automáticamente al dar una
-//	// respuesta positiva -----------------------------------------------------
-//
-//	@RequestMapping(value = "/canDelete", method = RequestMethod.GET, produces = "application/json")
-//	public @ResponseBody String canDelete(@RequestParam int idVotacion, @RequestParam String username) {
-//		return censusService.canDelete(idVotacion, username);
-//	}
+	// Devuelve JSon a a votaciones para saber si pueden borrar una votación
+	// En caso afirmativo, el censo se borrará automáticamente al dar una
+	// respuesta positiva -----------------------------------------------------
+
+	@RequestMapping(value = "/canDelete", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody String canDelete(@RequestParam int idVotacion, @RequestParam String username) {
+		return censusService.canDelete(idVotacion, username);
+	}
 
 // Devuelve JSon a cabina para saber si un usuario puede votar ------------
 

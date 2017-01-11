@@ -42,7 +42,7 @@
 
 	<input type="submit" name="save"
 		value="<spring:message code="census.save" />"  /> 
- 		 />&nbsp; 
+ 		 &nbsp; 
 	<input type="button" name="cancel"
 		value="<spring:message code="census.cancel" />"
 		onclick="javascript: relativeRedir('welcome/index.do');" />

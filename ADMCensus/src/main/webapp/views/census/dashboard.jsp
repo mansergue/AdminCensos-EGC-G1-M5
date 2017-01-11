@@ -28,3 +28,31 @@
 	</display:column>
 	</display:table>
 </div>
+
+<!-- Censo con más votos-->
+<spring:message var="action2Header" code="dashboard.2" />
+<jstl:out value="${action2Header}"></jstl:out>
+
+<div id="censusMoreVotes">
+<display:table name="censusMoreVotes" id="row"
+	requestURI="/dashboard.do">
+	<spring:message var="censusMoreVotesHeader" code="dashboard.censusMoreVotes" />
+	<display:column title="${censusMoreVotesHeader}">
+		<jstl:out value="${row}" />
+	</display:column>
+	</display:table>
+</div>
+
+<!-- Censo con menos votos-->
+<spring:message var="action3Header" code="dashboard.3" />
+<jstl:out value="${action3Header}"></jstl:out>
+
+<div id="censusLessVotes">
+<display:table name="censusLessVotes" id="row"
+	requestURI="/dashboard.do">
+	<spring:message var="censusLessVotesHeader" code="dashboard.censusLessVotes" />
+	<display:column title="${censusLessVotesHeader}">
+		<jstl:out value="${row}" />
+	</display:column>
+	</display:table>
+</div>
