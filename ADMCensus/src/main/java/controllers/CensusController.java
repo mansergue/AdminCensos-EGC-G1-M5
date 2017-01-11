@@ -33,6 +33,7 @@ import com.lowagie.text.pdf.PdfWriter;
 
 import domain.Census;
 import domain.User;
+import domain.Vote;
 import services.CensusService;
 import services.UserService;
 import services.VoteService;
@@ -64,18 +65,47 @@ public class CensusController extends AbstractController {
 	// Create census ----------------------------------------------------------
 	// Recibe parametros de votacion y crea un censo por votación
 
-	@RequestMapping(value = "/create", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody Census create(@RequestParam int idVotacion, @RequestParam int versionVotacion,  @RequestParam String title,  @RequestParam String description, 
-			@RequestParam String startDate, @RequestParam String endDate, @RequestParam String tipo, @RequestParam String postalCode, 
-			@RequestParam String usernameCreator) throws ParseException {
-		Census result = null;
+	@RequestMapping(value = "/create", method = RequestMethod.GET,produces = "application/json")
+	public ModelAndView create() throws ParseException{
+		System.out.println("el create");
+		ModelAndView result = new ModelAndView("census/edit");
+		voteService.popularVotaciones();
+		Collection <Vote> votes= voteService.findAll();
+		Census census = censusService.create();
 
-		Census c = censusService.create(idVotacion, versionVotacion, title, description, startDate, endDate, tipo, postalCode, usernameCreator);
 		
-		try {
-			result = censusService.save(c);
-		} catch (Exception oops) {
-			oops.getCause();
+		result.addObject("census", census);
+		result.addObject("votes", votes);
+		
+		
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save",produces = "application/json")
+	public ModelAndView create(@Valid Census census, BindingResult binding){
+		System.out.println("asasasasas");
+		ModelAndView result;
+
+		if (binding.hasErrors()) {
+			System.out.println(binding);
+			result = createModelAndView(census);
+		} else {
+			try {
+				System.out.println("entra al try");
+				User user = userService.findByPrincipal();
+				Vote vote = voteService.findVoteByTitle(census.getTitle());
+				System.out.println(vote.getFechaCierre());
+				census.setEndDate(vote.getFechaCierre());
+				census.setIdVotacion(vote.getIdVotacion());
+				census.setPostalCode(vote.getCp());
+				census.setStartDate(vote.getFechaCreacion());
+				census.setUsernameCreator(user.getUserAccount().getUsername());
+				censusService.save(census);				
+				result = new ModelAndView("redirect:getAllCensusByCreador.do");
+			} catch (Throwable oops) {
+				result = createModelAndView(census, "census.commit.error");				
+			}
 		}
 		return result;
 	}
@@ -538,6 +568,22 @@ public class CensusController extends AbstractController {
 		result.addObject("mapa", mapa);
 		result.addObject("message", message);
 
+		return result;
+
+	}
+	
+	protected ModelAndView createModelAndView(Census census){
+		ModelAndView result;
+		result = createModelAndView(census, null);
+		return result;
+	}
+	
+	protected ModelAndView createModelAndView(Census census, String message) {
+		ModelAndView result = new ModelAndView("census/edit");
+		Collection <Vote> votes= voteService.findAll();
+		result.addObject("census", census);
+		result.addObject("message", message);
+		result.addObject("votes", votes);
 		return result;
 
 	}

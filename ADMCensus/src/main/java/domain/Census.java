@@ -77,8 +77,7 @@ public class Census extends DomainEntity {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	@NotNull
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -90,8 +89,7 @@ public class Census extends DomainEntity {
 	
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	@NotNull
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
 	public Date getEndDate() {
 		return endDate;
 	}
@@ -109,7 +107,6 @@ public class Census extends DomainEntity {
 		this.tipo = tipo;
 	}
 	
-	@NotBlank
 	public String getPostalCode() {
 		return postalCode;
 	}
@@ -119,7 +116,6 @@ public class Census extends DomainEntity {
 		this.postalCode = postalCode;
 	}
 	
-	@NotBlank
 	public String getUsernameCreator() {
 		return usernameCreator;
 	}

@@ -35,51 +35,12 @@ public class CensusService {
 
 	// Methods ----------------------------------------------------------------
 
-	/**
-	 * Crea un censo a partir de una votaciÃ³n
-	 * 
-	 * @param idVotacion
-	 *            = Identificador de la votaciÃ³n
-	 * @param username
-	 *            = Nombre de usuario que ha creado la votacion
-	 * @param fechaInicio
-	 *            = Fecha de inicio de la votacion
-	 * @param fechaFin
-	 *            = Fecha de fin de la votacion
-	 * @param tituloVotacion
-	 *            Cadena de texto con el titulo de la votacion
-	 * @param tipoVotacion
-	 *            Cadena de texto con el tipo de la votacion (abierta o cerrada)
-	 * @return census
-	 * @throws ParseException
-	 */
 
-	public Census create(int idVotacion, int versionVotacion, String tituloVotacion, String description,String fechaInicio, String fechaFin, 
-			String tipoVotacion, String postalCode, String username) throws ParseException {
-		Assert.isTrue(!username.equals(""));
-		Assert.isTrue(tipoVotacion.equals("abierta") || tipoVotacion.equals("cerrada"));
+	public Census create(){
 		Census result = new Census();
-		long startDate = Long.parseLong(fechaInicio);
-		long finishDate = Long.parseLong(fechaFin);
-
-		Date fechaComienzo = new Date(startDate);
-		Date fechaFinal = new Date(finishDate);
-		Assert.isTrue(fechaComienzo.before(fechaFinal));
-
-		result.setEndDate(fechaFinal);
-		result.setStartDate(fechaComienzo);
-
-		result.setIdVotacion(idVotacion);
-		result.setTitle(tituloVotacion);
-		if (tipoVotacion.equals("abierta")) {
-			result.setTipo("abierto");
-		} else {
-			result.setTipo("cerrado");
-		}
-		result.setPostalCode(postalCode);
-		result.setUsernameCreator(username);
 		HashMap<String, Boolean> vpo = new HashMap<String, Boolean>();
 		result.setVotoPorUsuario(vpo);
+	
 		return result;
 	}
 
