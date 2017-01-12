@@ -13,11 +13,13 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
+<!--  <link rel="stylesheet" href="styles/style.css"> -->
+
 <div id="cssmenu">
 	<ul>
 			<security:authorize access="isAnonymous()">
 			<li><a href="user/login.do"><spring:message code="master.page.login" /></a></li>
-			<li><a href="https://autha.agoraus1.egc.duckdns.org/register.php"><spring:message code="master.page.register" /></a></li>
+			<li><a href="https://authb.agoraus1.egc.duckdns.org/register.php"><spring:message code="master.page.register" /></a></li>
 			
 			</security:authorize>
 			<security:authorize access="isAuthenticated()">
@@ -30,6 +32,7 @@
 				</ul>
 			</li>
 			<li><a href="https://recuento.agoraus1.egc.duckdns.org/views/crearVotacion.html"><spring:message code="master.page.votaciones" /></a></li>
+			<li><a href="census/create.do"><spring:message code="master.page.census.create" /></a></li>
 			<li><a href="api/methods.do"><spring:message code="master.page.api" /></a></li>
 			<li><a class="fNiv" href="dashboard/list.do"><spring:message code="master.page.dashboard" /></a></li>
 			<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /></a></li>

@@ -28,8 +28,13 @@ public class DashboardController extends AbstractController{
 		
 		
 		int openCensuses=censusService.openCensuses();
+		String censusMoreVotes = censusService.censusMoreVotes();
+		String censusLessVotes = censusService.censusLessVotes();
+		
 		
 		result.addObject("openCensuses", openCensuses);	
+		result.addObject("censusMoreVotes", censusMoreVotes);	
+		result.addObject("censusLessVotes", censusLessVotes);	
 		
 		return result;
 	}

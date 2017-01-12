@@ -15,4 +15,7 @@ public interface VoteRepository extends JpaRepository<Vote, Integer> {
 		@Query("select v from Vote v where v.idVotacion = ?1")
 		public Vote findVoteByVote(int idVotacion);
 
+		//Busca voto por titulo
+		@Query("select v from Vote v where v.titulo = ?1")
+		public Vote findVoteByTitle(String titulo);
 }

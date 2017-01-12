@@ -124,6 +124,9 @@ public class VoteService {
 		}
 	}
 	
+	public Vote findVoteByTitle(String titulo){
+		return voteRepository.findVoteByTitle(titulo);
+	}
 	
 }
 

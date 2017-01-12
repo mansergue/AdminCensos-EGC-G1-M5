@@ -33,6 +33,7 @@ import com.lowagie.text.pdf.PdfWriter;
 
 import domain.Census;
 import domain.User;
+import domain.Vote;
 import services.CensusService;
 import services.UserService;
 import services.VoteService;
@@ -64,30 +65,59 @@ public class CensusController extends AbstractController {
 	// Create census ----------------------------------------------------------
 	// Recibe parametros de votacion y crea un censo por votación
 
-	@RequestMapping(value = "/create", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody Census create(@RequestParam int idVotacion, @RequestParam int versionVotacion,  @RequestParam String title,  @RequestParam String description, 
-			@RequestParam String startDate, @RequestParam String endDate, @RequestParam String tipo, @RequestParam String postalCode, 
-			@RequestParam String usernameCreator) throws ParseException {
-		Census result = null;
+	@RequestMapping(value = "/create", method = RequestMethod.GET,produces = "application/json")
+	public ModelAndView create() throws ParseException{
+		System.out.println("el create");
+		ModelAndView result = new ModelAndView("census/edit");
+		voteService.popularVotaciones();
+		Collection <Vote> votes= voteService.findAll();
+		Census census = censusService.create();
 
-		Census c = censusService.create(idVotacion, versionVotacion, title, description, startDate, endDate, tipo, postalCode, usernameCreator);
 		
-		try {
-			result = censusService.save(c);
-		} catch (Exception oops) {
-			oops.getCause();
+		result.addObject("census", census);
+		result.addObject("votes", votes);
+		
+		
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save",produces = "application/json")
+	public ModelAndView create(@Valid Census census, BindingResult binding){
+		System.out.println("asasasasas");
+		ModelAndView result;
+
+		if (binding.hasErrors()) {
+			System.out.println(binding);
+			result = createModelAndView(census);
+		} else {
+			try {
+				System.out.println("entra al try");
+				User user = userService.findByPrincipal();
+				Vote vote = voteService.findVoteByTitle(census.getTitle());
+				System.out.println(vote.getFechaCierre());
+				census.setEndDate(vote.getFechaCierre());
+				census.setIdVotacion(vote.getIdVotacion());
+				census.setPostalCode(vote.getCp());
+				census.setStartDate(vote.getFechaCreacion());
+				census.setUsernameCreator(user.getUserAccount().getUsername());
+				censusService.save(census);				
+				result = new ModelAndView("redirect:getAllCensusByCreador.do");
+			} catch (Throwable oops) {
+				result = createModelAndView(census, "census.commit.error");				
+			}
 		}
 		return result;
 	}
 
-//	// Devuelve JSon a a votaciones para saber si pueden borrar una votación
-//	// En caso afirmativo, el censo se borrará automáticamente al dar una
-//	// respuesta positiva -----------------------------------------------------
-//
-//	@RequestMapping(value = "/canDelete", method = RequestMethod.GET, produces = "application/json")
-//	public @ResponseBody String canDelete(@RequestParam int idVotacion, @RequestParam String username) {
-//		return censusService.canDelete(idVotacion, username);
-//	}
+	// Devuelve JSon a a votaciones para saber si pueden borrar una votación
+	// En caso afirmativo, el censo se borrará automáticamente al dar una
+	// respuesta positiva -----------------------------------------------------
+
+	@RequestMapping(value = "/canDelete", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody String canDelete(@RequestParam int idVotacion, @RequestParam String username) {
+		return censusService.canDelete(idVotacion, username);
+	}
 
 // Devuelve JSon a cabina para saber si un usuario puede votar ------------
 
@@ -314,11 +344,13 @@ public class CensusController extends AbstractController {
 		bufferedWriter.newLine();
 		bufferedWriter.write("Name of vote: " + census.getTitle());
 		bufferedWriter.newLine();
-		bufferedWriter.write("Vote number: " + census.getId());
+		bufferedWriter.write("Vote number: " + census.getIdVotacion());
 		bufferedWriter.newLine();
 		bufferedWriter.write("Start date: " + census.getStartDate());
 		bufferedWriter.newLine();
 		bufferedWriter.write("Finish date: " + census.getEndDate());
+		bufferedWriter.newLine();
+		bufferedWriter.write("Postal code: " + census.getPostalCode());
 		bufferedWriter.newLine();
 		bufferedWriter.write("---------------------");
 		bufferedWriter.newLine();
@@ -359,13 +391,17 @@ public class CensusController extends AbstractController {
 						bufferedWriter.newLine();
 						bufferedWriter.write("User_Id: " + user.getId());
 						bufferedWriter.newLine();
+						bufferedWriter.write("Name: " + user.getName());
+						bufferedWriter.newLine();
+						bufferedWriter.write("Surname: " + user.getSurname());
+						bufferedWriter.newLine();
 						bufferedWriter.write("Username: " + user.getUserAccount().getUsername());
 						bufferedWriter.newLine();
 						bufferedWriter.write("Email: " + user.getEmail());
 						bufferedWriter.newLine();
 						bufferedWriter.write("Genre: " + user.getGenre());
 						bufferedWriter.newLine();
-						bufferedWriter.write("Autonomous community: " + user.getAutonomousCommunity());
+						bufferedWriter.write("Autonomous community: " + user.getAutonomous_community());
 						bufferedWriter.newLine();
 						bufferedWriter.write("Age: " + user.getAge());
 						bufferedWriter.newLine();
@@ -418,7 +454,8 @@ public class CensusController extends AbstractController {
 		    documento.add(new Paragraph("Name of vote: " + census.getTitle()+"\n"));
 		    documento.add(new Paragraph("Vote number: " + census.getId()+"\n"));
 		    documento.add(new Paragraph("Start date: " + census.getStartDate()+"\n"));
-		    documento.add(new Paragraph("Finish date: " + census.getEndDate()+"\n"+"---------------------"+"\n"+"\n"));
+		    documento.add(new Paragraph("Finish date: " + census.getEndDate()));
+		    documento.add(new Paragraph("Postal code: " + census.getPostalCode()+"\n"+"---------------------"+"\n"+"\n"));
 		    documento.add(new Paragraph("Voters: "+"\n"));
 
 			// Todos los usuarios del sistema
@@ -454,9 +491,11 @@ public class CensusController extends AbstractController {
 							
 							documento.add(new Paragraph("\n"+"User_Id: " + user.getId()+"\n"));
 						    documento.add(new Paragraph("Username: " + user.getUserAccount().getUsername()+"\n"));
+						    documento.add(new Paragraph("Name: " + user.getName()+"\n"));
+						    documento.add(new Paragraph("Surname: " + user.getSurname()+"\n"));
 						    documento.add(new Paragraph("Email: " + user.getEmail()+"\n"));
 						    documento.add(new Paragraph("Genre: " + user.getGenre()+"\n"));
-						    documento.add(new Paragraph("Autonomous community: " + user.getAutonomousCommunity()+"\n"));
+						    documento.add(new Paragraph("Autonomous community: " + user.getAutonomous_community()+"\n"));
 						    documento.add(new Paragraph("Age: " + user.getAge()+"\n"));
 						    documento.add(new Paragraph("Has voted?: " + map.get(voter)+"\n"+"*****************"+"\n"));
 						    System.out.println("fin de escritura del PDF");
@@ -529,6 +568,22 @@ public class CensusController extends AbstractController {
 		result.addObject("mapa", mapa);
 		result.addObject("message", message);
 
+		return result;
+
+	}
+	
+	protected ModelAndView createModelAndView(Census census){
+		ModelAndView result;
+		result = createModelAndView(census, null);
+		return result;
+	}
+	
+	protected ModelAndView createModelAndView(Census census, String message) {
+		ModelAndView result = new ModelAndView("census/edit");
+		Collection <Vote> votes= voteService.findAll();
+		result.addObject("census", census);
+		result.addObject("message", message);
+		result.addObject("votes", votes);
 		return result;
 
 	}

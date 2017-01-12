@@ -22,18 +22,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Census extends DomainEntity {
 
-	//Nos lo pasa creación y administración de votaciones
+	//Nos lo pasa recuento
 	// Id que identifica de forma únia a la votación
 	private int idVotacion;
 	
-	//Versión de la votación
-	private int versionVotacion;
-	
 	// Título de la votación
 	private String title;
-	
-	// Descripción de la votación
-	private String description;
 	
 	// Fecha en la que se inicia la votacion
 	private Date startDate;
@@ -71,15 +65,6 @@ public class Census extends DomainEntity {
 		this.idVotacion = idVotacion;
 	}
 	
-	public int getVersionVotacion() {
-		return versionVotacion;
-	}
-	
-
-	public void setVersionVotacion(int versionVotacion) {
-		this.versionVotacion = versionVotacion;
-	}
-	
 
 	@NotBlank
 	public String getTitle() {
@@ -90,20 +75,9 @@ public class Census extends DomainEntity {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
-	@NotBlank
-	public String getDescription() {
-		return description;
-	}
-	
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	@NotNull
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -115,8 +89,7 @@ public class Census extends DomainEntity {
 	
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	@NotNull
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
 	public Date getEndDate() {
 		return endDate;
 	}
@@ -134,7 +107,6 @@ public class Census extends DomainEntity {
 		this.tipo = tipo;
 	}
 	
-	@NotBlank
 	public String getPostalCode() {
 		return postalCode;
 	}
@@ -144,7 +116,6 @@ public class Census extends DomainEntity {
 		this.postalCode = postalCode;
 	}
 	
-	@NotBlank
 	public String getUsernameCreator() {
 		return usernameCreator;
 	}
@@ -154,8 +125,9 @@ public class Census extends DomainEntity {
 		this.usernameCreator = usernameCreator;
 	}
 	
+	
 	@MapKeyColumn(name = "token")
-	@Column(name = "valor")
+	@Column(name = "valor", columnDefinition = "LONGBLOB")
 	@CollectionTable(name = "value", joinColumns = @JoinColumn(name = "token") )
 	public HashMap<String, Boolean> getVotoPorUsuario() {
 		return votoPorUsuario;

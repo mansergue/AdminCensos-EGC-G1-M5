@@ -26,16 +26,6 @@
 		</display:column>
 	</jstl:if>
 
-	<jstl:if test="${misVotaciones}">
-		<display:column>
-			<a href="http://cabina-egc.jeparca.com/cabinaus/${row.idVotacion}"> <img
-				alt="<spring:message	code="census.details" />"
-				src="images/votar.gif" style="height: 25px; width: 25px;">
-
-			</a>
-		</display:column>
-	</jstl:if>
-
 	<jstl:if test="">
 
 	</jstl:if>

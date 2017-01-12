@@ -85,7 +85,7 @@ public class UserController extends AbstractController {
 
 		} else {
 			token = loginService.contructToken(userAccount);
-			validator = objectMapper.readValue(new URL("https://autha.agoraus1.egc.duckdns.org/api/index.php?method=checkToken&token=" + token),Validator.class);
+			validator = objectMapper.readValue(new URL("https://authb.agoraus1.egc.duckdns.org/api/index.php?method=checkToken&token=" + token),Validator.class);
 
 			if (validator.isValid()) {
 				System.out.println("Válida");
@@ -103,7 +103,7 @@ public class UserController extends AbstractController {
 					SecurityContextHolder.getContext().setAuthentication(authentication);
 
 				} catch (Exception e) {
-					User user = objectMapper.readValue(new URL("https://autha.agoraus1.egc.duckdns.org/api/index.php?method=getUser&user="+ userAccount.getUsername()),User.class);
+					User user = objectMapper.readValue(new URL("https://authb.agoraus1.egc.duckdns.org/api/index.php?method=getUser&user="+ userAccount.getUsername()),User.class);
 
 					DaoAuthenticationProvider authenticator = new DaoAuthenticationProvider();
 					authenticator.setUserDetailsService(userDetailsService);
