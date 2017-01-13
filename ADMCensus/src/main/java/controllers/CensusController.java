@@ -164,16 +164,18 @@ public class CensusController extends AbstractController {
 		}
 
 	// Metodo para la vista de censos por creador -----------------------------
-
+		//Defensa
 	@RequestMapping(value = "/getAllCensusByCreador", method = RequestMethod.GET)
 	public ModelAndView getAllCensusByCreador() {
 		ModelAndView result = new ModelAndView("census/misCensos");
 		Collection<Census> cs;
+		
 		cs = censusService.findCensusByCreator(userService.findByPrincipal().getUserAccount().getUsername());
+		
 		result.addObject("censuses", cs);
 		result.addObject("misVotaciones", false);
 		result.addObject("requestURI", "census/getAllCensusByCreador.do");
-
+		
 		return result;
 	}
 

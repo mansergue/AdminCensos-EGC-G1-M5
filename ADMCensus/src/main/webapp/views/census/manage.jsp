@@ -41,7 +41,7 @@
 
 <jstl:if test="${editable}">
 
-	<display:table pagesize="5" class="displaytag" name="usernames"
+	<display:table pagesize="15" class="displaytag" name="usernames"
 		requestURI="${requestURI}" id="row">
 
 		<!-- Action links -->
