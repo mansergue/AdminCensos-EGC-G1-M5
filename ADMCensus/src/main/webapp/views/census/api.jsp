@@ -4,78 +4,66 @@
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>API</title>
-</head>
-<body>
-
-
+<div>
 	<p>
-		<strong>Consultar si un usuario puede votar en una
-			determinada votacion:</strong>
-	</p>
-	<br>
-
-	<p>
-		<big><big>/census/canVote.do?idVotacion="param1"
-				&username= "param2" </big></big>
-	</p>
-
-	<p>param1: Id de la votación a consultar. Por ejemplo "23".</p>
-	<p>
-		param2: Nombre del usuario sobre el que se efectua la comprobación.<br>
-		Por ejemplo "user1".
-	</p>
-
-	<p>Se obtendrá una respuesta en formato JSON de tipo
-		{"result":"no"} o {"result":"si"}</p>
-	<br><br>
-	<p>
-		<strong>Actualiza el estado de una votacion:</strong>
-	</p>
-
-	<p>
-		<big><big>/census/updateUser.do?idVotacion="param1"
-				&tipoVotacion= "param2" &username= "param3" </big></big>
-	</p>
-
-	<p>param1: Id de la votación a consultar. Por ejemplo "23".</p>
-	<p>
-		param2: Tipo de votacion. Admite dos valores "abierto" o "cerrado".<br>
-		
+		<strong>Consultar si un usuario puede votar en una determinada votaci&oacute;n:</strong>
 	</p>
 	<p>
-		param3: Nombre del usuario sobre el que se efectua la comprobación.<br>
-		Por ejemplo "user1".
+		<font size="5">
+			/census/canVote.do?idVotacion=&quot;param1&quot; &amp;username=&quot;param2&quot;
+		</font>
 	</p>
-
-	<p>Se obtendrá una respuesta en formato JSON de tipo
-		{"result":"no"} o {"result":"si"}</p>
-</body>
-</html>
-
-<strong>Dictamina si se puede borrar una votación:</strong>
-	</p>
-
+	<p>param1: Id de la votaci&oacute;n a consultar. Por ejemplo "23".</p>
 	<p>
-		<big><big>/census/canDelete.do?idVotacion="param1"
-				&username= "param2" </big></big>
+		param2: Nombre del usuario sobre el que se efectua la comprobaci&oacute;n.<br>
+		Por ejemplo &quot;user1&quot;.
 	</p>
-
-	<p>param1: Id de la votación a consultar. Por ejemplo "23".</p>
+	<p>Se obtendr&aacute; una respuesta en formato JSON de tipo {&quot;result&quot;:&quot;no&quot;} o {&quot;result&quot;:&quot;si&quot;}</p>
+</div>
+<br><br>
+<div>
 	<p>
-		param2:  Nombre del usuario sobre el que se efectua la comprobación..<br>
-		
+		<strong>Actualiza el estado de una votaci&oacute;n:</strong>
 	</p>
-	
-
-	<p>Se obtendrá una respuesta en formato JSON de tipo
-		{"result":"no"} o {"result":"si"}</p>
-</body>
-</html>
+	<p>
+		<font size="5">
+			/census/updateUser.do?idVotacion=&quot;param1&quot; &amp;tipoVotacion=&quot;param2&quot; &amp;username=&quot;param3&quot;
+		</font>
+	</p>
+	<p>
+		param1: Id de la votaci&oacute;n a consultar. Por ejemplo &quot;23&quot;.
+	</p>
+	<p>
+		param2: Tipo de votaci&oacute;n. Admite dos valores &quot;abierto&quot; o &quot;cerrado&quot;.
+	</p>
+	<p>
+		param3: Nombre del usuario sobre el que se efectua la comprobaci&oacute;n.<br>
+		Por ejemplo &quot;user1&quot;.
+	</p>
+	<p>
+		Se obtendr&aacute; una respuesta en formato JSON de tipo {&quot;result&quot;:&quot;no&quot;} o {&quot;result:&quot;si&quot;}
+	</p>
+</div>
+<br><br>
+<div>
+	<p>
+		<strong>Dictamina si se puede borrar una votaci&oacute;n:</strong>
+	</p>
+	<p>
+		<font size="5">
+			/census/canDelete.do?idVotacion="param1" &amp;username= &quot;param2&quot;
+		</font>
+	</p>
+	<p>
+		param1: Id de la votaci&oacute;n a consultar. Por ejemplo &quot;23&quot;.
+	</p>
+	<p>
+		param2:  Nombre del usuario sobre el que se efectua la comprobaci&oacute;n.
+	</p>
+	<p>
+		Se obtendr&aacute; una respuesta en formato JSON de tipo {&quot;result&quot;:&quot;no&quot;} o {&quot;result&quot;:&quot;si&quot;}
+	</p>
+</div>
