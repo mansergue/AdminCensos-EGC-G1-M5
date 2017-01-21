@@ -8,20 +8,16 @@
  * http://www.tdg-seville.info/License.html
  --%>
 
-<%@page language="java" contentType="text/html; charset=ISO-8859-1"	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%-- <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%> --%>
 <%-- <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%> --%>
 
 <jsp:useBean id="date" class="java.util.Date" />
 
-
 <div id="copyright" class="container">
 	<p>
-		Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> | Agora@US Co., Inc. 
-		
+		Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> | Agora@US Co., Inc.
 	</p>
 </div>
