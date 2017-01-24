@@ -26,15 +26,10 @@
 		
 		<script type="text/javascript" src="scripts/jquery.js"></script>
 		<script type="text/javascript" src="scripts/jquery-ui.js"></script>
-		<script type="text/javascript" src="scripts/js/bootstrap.js"></script>
-		<script type="text/javascript" src="scripts/js/npm.js"></script>
-		<link rel="stylesheet" href="styles/default.css">
-		<link rel="stylesheet" href="styles/displaytag.css">
-		<link rel="stylesheet" href="styles/jmenu.css">
-		<link rel="stylesheet" href="styles/bootstrap/bootstrap.css">
-		<link rel="stylesheet" href="styles/bootstrap/bootstrap-theme.css">
 		
-		<link href="styles/default.css" rel="stylesheet" type="text/css" media="all" />
+		
+		
+		<link href="styles/default.css" rel="stylesheet" type="text/css" />
 		
 		<title>
 			<tiles:insertAttribute name="title" ignore="true" />
@@ -54,6 +49,11 @@
 					window.location.replace(loc);
 				}
 		</script>
+		
+		<script type="text/javascript" src="scripts/js/bootstrap.js"></script>
+		<script type="text/javascript" src="scripts/js/npm.js"></script>
+		<link type="text/css"  rel="stylesheet" href="styles/bootstrap/bootstrap.css">
+		<link type="text/css"  rel="stylesheet" href="styles/bootstrap/bootstrap-theme.css">
 	</head>
 	
 	<body>

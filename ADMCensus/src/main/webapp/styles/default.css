@@ -329,7 +329,6 @@ tr.tableRowEven,tr.even {
 		text-align: center;
 	}
 	
-	
 	button {
 	   background: #2c3e4a;
 	   background: -webkit-gradient(linear, left top, left bottom, from(#919496), to(#2c3e4a));
@@ -346,6 +345,7 @@ tr.tableRowEven,tr.even {
 	   text-decoration: none;
 	   vertical-align: middle;
 	}
+
 	
 	button:hover {
 	   background: #3d4b54;
