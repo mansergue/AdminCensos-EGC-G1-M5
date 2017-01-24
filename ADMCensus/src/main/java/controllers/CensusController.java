@@ -67,7 +67,6 @@ public class CensusController extends AbstractController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET,produces = "application/json")
 	public ModelAndView create() throws ParseException{
-		System.out.println("el create");
 		ModelAndView result = new ModelAndView("census/edit");
 		voteService.popularVotaciones();
 		Collection <Vote> votes= voteService.findAll();
