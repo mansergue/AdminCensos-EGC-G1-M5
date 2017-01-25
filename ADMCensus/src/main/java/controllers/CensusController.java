@@ -66,17 +66,15 @@ public class CensusController extends AbstractController {
 	// Recibe parametros de votacion y crea un censo por votación
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET,produces = "application/json")
-	public ModelAndView create() throws ParseException{
+	public ModelAndView create() throws ParseException {
+		
 		ModelAndView result = new ModelAndView("census/edit");
 		voteService.popularVotaciones();
-		Collection <Vote> votes= voteService.findAll();
+		Collection<Vote> votes= voteService.findAll();
 		Census census = censusService.create();
-
 		
 		result.addObject("census", census);
 		result.addObject("votes", votes);
-		
-		
 		
 		return result;
 	}

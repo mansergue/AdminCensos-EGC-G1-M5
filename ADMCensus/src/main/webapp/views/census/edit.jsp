@@ -18,8 +18,6 @@
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 
-
-
 	<form:label path="title">
 		<spring:message code="census.votes" />:
 	</form:label>
@@ -27,6 +25,15 @@
 	<form:select path="title">
 		<form:option label="-----" value="0" />
 		<form:options items="${votes}" itemLabel="titulo" itemValue="titulo" />
+	</form:select>
+	<br />
+	
+	<form:label path="comunidadAutonoma">
+		<spring:message code="census.comunidadAutonoma" />:
+	</form:label>
+	<form:select path="comunidadAutonoma">
+		<form:option label="Anadalucía" value="Anadalucía" />
+		<form:option label="Extremadura" value="Extremadura" />
 	</form:select>
 	<br />
 
