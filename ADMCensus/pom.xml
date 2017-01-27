@@ -50,6 +50,8 @@
 					<compilerArguments>
 						<Xlint />
 					</compilerArguments>
+					<meminitial>1024m</meminitial>
+					<maxmem>2024m</maxmem>
 				</configuration>
 			</plugin>
 
@@ -319,6 +321,12 @@
 		    <groupId>org.aspectj</groupId>
 		    <artifactId>aspectjweaver</artifactId>
 		    <version>1.7.4</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.6.1</version>
 		</dependency>
 		
 		<!-- Dependencias para email -->

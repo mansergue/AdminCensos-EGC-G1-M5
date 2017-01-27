@@ -30,7 +30,7 @@ deploy:
     file:
         - target/CensoEGC-4.0.war
         - populate.sql
-
+    
     skip_cleanup: true
     on:
         repo: AgoraUS-G1-1617/CensoEGC
@@ -45,6 +45,5 @@ dist:
 
 sudo:
     - false
-
 notifications:
     - email: false  # Desactivamos las notificaciones por email para evitar spam
