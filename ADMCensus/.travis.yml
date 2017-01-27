@@ -1,0 +1,50 @@
+language:
+    - java
+
+services:
+    - mysql
+
+jdk:
+    - oraclejdk8
+    - openjdk7
+
+before_install:
+    - mysql -u root < initialize.sql
+
+script:
+    - mvn clean test
+    - ls -lah
+
+before_deploy:
+    - mvn clean compile war:war
+    - cp initialize.sql populate.sql
+    - sed -i".bak" '/commit;/d' populate.sql
+    - mysqldump -u root deliberations >> populate.sql
+    - echo "commit;" >> populate.sql
+    - ls -lah
+
+deploy:
+    provider: releases
+    api_key:
+        secure: CSCizP1XrVRcs+zspL2p5fxK3h0pPythntTlCuQNxfrKX3s2M7hclh/ZcbTnEyRq5nqucV/cnlDo0doQiMvzn5K2p7EfvLi6sbX5HIY68N1x26NqmEO4c7lGoP6jc0UFQcWwZuMurJrUF32WOEsAO/MsWxgcBgbqtPQiH7dELSKqRgC8SrsS1O+nzm2pXxjJVCM5OwsPcqirUztR58vAXdor9vpbdkhTFbZA4HI1BTUIPmQBeIiptZuTxIXvXMOz1lJM7AUQRmazdAn4Qoh/o+c/zDkXnfA37Bx7BwzI41gdXvb8Fas6YNCXi8L3flQB7SXxpYx8FsOUCk/XMzx+sUgUgLC4qo9oZSL19TJ5/zQHXN1oJV944iwBRD/Vn8oerDvkmFT45UI0ERjK3Orw8Bed1XVHg2llcs1FMDVWVCar2ktINrIo3Uujj+BO9sYV8hIe03xiidxqqeiBIoErd7HEQia17Lv9PTZujH7QgZRql0y77wleLuZZxlpqoOANbhGNrsMa0hephudvO/pW4hfrfrHD7Za/xKqLy+vYPU9boo3tUAjj8qwJ90pPrNqpjNAOX1RpK29K44mhn4Sa1cUDv09Ctpt7KuC8MpwSGF8BdrWaYpTGSnofSmWVU3tvJ8whGV4TqpG2fRWU2o0hXNVheL4qNZyiIGMFvtE5GbY=
+    file:
+        - target/Deliberations-2.0.war
+        - populate.sql
+
+    skip_cleanup: true
+    on:
+        repo: AgoraUS-G1-1617/Deliberations
+        tags: true
+
+cache:
+    directories:
+        - $HOME/.m2   # Cache para las dependencias de maven
+
+dist:
+    - trusty
+
+sudo:
+    - false
+
+notifications:
+    - email: false  # Desactivamos las notificaciones por email para evitar spam
