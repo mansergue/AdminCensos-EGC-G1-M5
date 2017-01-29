@@ -41,6 +41,11 @@
 <jstl:out value="${census.title}" />
 <br />
 
+<spring:message code="census.comunidadAutonoma" />
+:
+<jstl:out value="${census.comunidadAutonoma}" />
+<br />
+
 <spring:message code="census.fecha.inicio" />
 :
 <fmt:formatDate value="${census.startDate}"

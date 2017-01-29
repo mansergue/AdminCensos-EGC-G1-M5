@@ -21,6 +21,7 @@
 		<property name="endDate" value="2016/06/10 20:38:02" />
 		<property name="tipo" value="cerrado" />
 		<property name="postalCode" value="12345" />
+		<property name="comunidadAutonoma" value="Andalucía" />
 		<property name="usernameCreator" value="aletormar" />
 		<property name="votoPorUsuario">
 			<map>
@@ -37,6 +38,7 @@
 		<property name="endDate" value="2018/04/09 20:38:02" />
 		<property name="tipo" value="cerrado" />
 		<property name="postalCode" value="12345" />
+		<property name="comunidadAutonoma" value="Andalucía" />
 		<property name="usernameCreator" value="alerodrom" />
 		<property name="votoPorUsuario">
 			<map>
@@ -55,6 +57,7 @@
 		<property name="endDate" value="2018/02/23 20:38:02" />
 		<property name="tipo" value="cerrado" />
 		<property name="postalCode" value="12345" />
+		<property name="comunidadAutonoma" value="Andalucía" />
 		<property name="usernameCreator" value="carruivar" />
 		<property name="votoPorUsuario">
 			<map>
@@ -73,6 +76,7 @@
 		<property name="endDate" value="2017/03/09 20:38:02" />
 		<property name="tipo" value="abierto" />
 		<property name="postalCode" value="12345" />
+		<property name="comunidadAutonoma" value="Andalucía" />
 		<property name="usernameCreator" value="carcamcue" />
 		<property name="votoPorUsuario">
 			<map>
@@ -91,6 +95,7 @@
 		<property name="endDate" value="2017/04/09 20:38:02" />
 		<property name="tipo" value="abierto" />
 		<property name="postalCode" value="12345" />
+		<property name="comunidadAutonoma" value="Andalucía" />
 		<property name="usernameCreator" value="fuerte94" />
 		<property name="votoPorUsuario">
 			<map>
@@ -107,6 +112,7 @@
 		<property name="endDate" value="2017/04/09 20:38:02" />
 		<property name="tipo" value="abierto" />
 		<property name="postalCode" value="12345" />
+		<property name="comunidadAutonoma" value="Andalucía" />
 		<property name="usernameCreator" value="admin1" />
 		<property name="votoPorUsuario">
 			<map>
@@ -123,6 +129,7 @@
 		<property name="endDate" value="2017/04/09 20:38:02" />
 		<property name="tipo" value="abierto" />
 		<property name="postalCode" value="12345" />
+		<property name="comunidadAutonoma" value="Andalucía" />
 		<property name="usernameCreator" value="agubordia" />
 		<property name="votoPorUsuario">
 			<map>
@@ -139,6 +146,7 @@
 		<property name="endDate" value="2017/03/09 20:38:02" />
 		<property name="tipo" value="cerrado" />
 		<property name="postalCode" value="12345" />
+		<property name="comunidadAutonoma" value="Andalucía" />
 		<property name="usernameCreator" value="carcamcue" />
 		<property name="votoPorUsuario">
 			<map>
@@ -157,6 +165,7 @@
 		<property name="endDate" value="2017/05/09 20:38:02" />
 		<property name="tipo" value="cerrado" />
 		<property name="postalCode" value="12345" />
+		<property name="comunidadAutonoma" value="Andalucía" />
 		<property name="usernameCreator" value="rusuarez95" />
 		<property name="votoPorUsuario">
 			<map>
@@ -172,6 +181,7 @@
 		<property name="endDate" value="2018/05/09 20:38:02" />
 		<property name="tipo" value="cerrado" />
 		<property name="postalCode" value="99999" />
+		<property name="comunidadAutonoma" value="Andalucía" />
 		<property name="usernameCreator" value="carcamcue" />
 		<property name="votoPorUsuario">
 			<map>
@@ -188,6 +198,7 @@
 		<property name="endDate" value="2018/05/09 20:38:02" />
 		<property name="tipo" value="cerrado" />
 		<property name="postalCode" value="00000" />
+		<property name="comunidadAutonoma" value="Andalucía" />
 		<property name="usernameCreator" value="censo94" />
 		<property name="votoPorUsuario">
 			<map>

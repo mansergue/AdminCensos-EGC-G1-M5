@@ -41,6 +41,9 @@ public class Census extends DomainEntity {
 	//Indica el código postal de la votación
 	private String postalCode;
 	
+	//Indica el código postal de la votación
+	private String comunidadAutonoma;
+	
 	// Username del usuario que crea la votación
 	private String usernameCreator;
 
@@ -135,6 +138,14 @@ public class Census extends DomainEntity {
 	
 	public void setVotoPorUsuario(HashMap<String, Boolean> votoPorUsuario) {
 		this.votoPorUsuario = votoPorUsuario;
+	}
+
+	public String getComunidadAutonoma() {
+		return comunidadAutonoma;
+	}
+
+	public void setComunidadAutonoma(String comunidadAutonoma) {
+		this.comunidadAutonoma = comunidadAutonoma;
 	}
 
 }
