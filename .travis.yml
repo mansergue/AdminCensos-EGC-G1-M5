@@ -9,10 +9,9 @@ jdk:
     - openjdk7
 
 before_install:
-    - mysql -u root < script.sql
+    - mysql -u root < mysql.sql
 
 script:
-    - mvn clean test
     - ls -lah
 
 cache:
