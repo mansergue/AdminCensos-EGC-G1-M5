@@ -14,6 +14,9 @@
 		
 		<value>/views/census/tiles.xml</value>
 		<value>/views/user/tiles.xml</value>
+		<value>/views/folder/tiles.xml</value>
+		<value>/views/message/tiles.xml</value>
+		
 	</util:list>
 
 </beans>

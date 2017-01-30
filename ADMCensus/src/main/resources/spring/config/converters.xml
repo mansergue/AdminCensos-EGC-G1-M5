@@ -28,7 +28,10 @@
 		<bean class="converters.StringToUserConverter" />
 		<bean class="converters.VoteToStringConverter"/>
 		<bean class="converters.StringToVoteConverter" />
-		
+		<bean class="converters.FolderToStringConverter"/>
+		<bean class="converters.StringToFolderConverter" />
+		<bean class="converters.MessageToStringConverter"/>
+		<bean class="converters.StringToMessageConverter" />
 		
 	</util:list>
 	
