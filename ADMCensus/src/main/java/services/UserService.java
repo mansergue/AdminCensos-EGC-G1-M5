@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -11,6 +12,8 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import domain.Folder;
+import domain.Message;
 import domain.User;
 import repositories.UserRepository;
 import security.Authority;
@@ -25,6 +28,10 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	// Managed services -------------------------------------------------------
+	@Autowired
+	private FolderService folderService;
 
 	// Constructors -----------------------------------------------------------
 
@@ -53,13 +60,21 @@ public class UserService {
 
 
 	public User save(User user) {
-		User newUser = userRepository.save(user);
-		return newUser;
+		User result = userRepository.save(user);
+		user.setFolders(new HashSet<Folder>());
+		user.setSentMessages(new HashSet<Message>());
+		user.setReceivedMessages(new HashSet<Message>());
+		folderService.defaultFolders(result);
+		return result;
 	}
 	
 
 	public User findOne(int userId) {
 		return userRepository.findOne(userId);
+	}
+	
+	public Collection<User> findAll() {
+		return userRepository.findAll();
 	}
 
 	// Other business methods -------------------------------------------------
