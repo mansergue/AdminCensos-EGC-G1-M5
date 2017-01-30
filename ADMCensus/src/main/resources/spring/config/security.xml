@@ -25,6 +25,9 @@
 
 		<security:intercept-url pattern="/views/misc/index.jsp" access="permitAll" /> 
 		<security:intercept-url pattern="/views/census/manage.jsp" access="permitAll" /> 
+		
+		<security:intercept-url pattern="/folder/**" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/message/**" access="isAuthenticated()" />
 
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" /> 
 		<security:intercept-url pattern="/user/login.do" access="permitAll" /> 
