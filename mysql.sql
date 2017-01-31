@@ -22,7 +22,7 @@ SET NAMES utf8;
 
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: localhost    Database: admcensus
+-- Host: localhost    Database: ADMCensus
 -- ------------------------------------------------------
 -- Server version	5.7.17-log
 
@@ -281,7 +281,6 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-31  0:56:33
-
+-- Dump completed on 2017-01-31 17:59:08
 
 commit; 
