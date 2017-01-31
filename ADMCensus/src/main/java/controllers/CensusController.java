@@ -351,6 +351,8 @@ public class CensusController extends AbstractController {
 		bufferedWriter.newLine();
 		bufferedWriter.write("Postal code: " + census.getPostalCode());
 		bufferedWriter.newLine();
+		bufferedWriter.write("Autonomous community: " + census.getComunidadAutonoma());
+		bufferedWriter.newLine();
 		bufferedWriter.write("---------------------");
 		bufferedWriter.newLine();
 		bufferedWriter.newLine();
@@ -453,8 +455,9 @@ public class CensusController extends AbstractController {
 		    documento.add(new Paragraph("Name of vote: " + census.getTitle()+"\n"));
 		    documento.add(new Paragraph("Vote number: " + census.getId()+"\n"));
 		    documento.add(new Paragraph("Start date: " + census.getStartDate()+"\n"));
-		    documento.add(new Paragraph("Finish date: " + census.getEndDate()));
-		    documento.add(new Paragraph("Postal code: " + census.getPostalCode()+"\n"+"---------------------"+"\n"+"\n"));
+		    documento.add(new Paragraph("Finish date: " + census.getEndDate()+"\n"));
+		    documento.add(new Paragraph("Postal code: " + census.getPostalCode()+"\n"));
+		    documento.add(new Paragraph("Autonomous community: " + census.getComunidadAutonoma()+"\n"+"---------------------"+"\n"+"\n"));
 		    documento.add(new Paragraph("Voters: "+"\n"));
 
 			// Todos los usuarios del sistema
