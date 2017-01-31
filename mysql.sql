@@ -47,6 +47,7 @@ DROP TABLE IF EXISTS `census`;
 CREATE TABLE `census` (
   `id` int(11) NOT NULL,
   `version` int(11) NOT NULL,
+  `comunidad_autonoma` varchar(255) DEFAULT NULL,
   `end_date` datetime DEFAULT NULL,
   `id_votacion` int(11) DEFAULT NULL,
   `postal_code` varchar(255) DEFAULT NULL,
@@ -66,8 +67,36 @@ CREATE TABLE `census` (
 
 LOCK TABLES `census` WRITE;
 /*!40000 ALTER TABLE `census` DISABLE KEYS */;
-INSERT INTO `census` VALUES (1,0,'2016-06-10 20:38:02',999,'12345','2016-02-09 20:38:02','cerrado','Elecciones','aletormar','¬\í\0sr\0java.util.LinkedHashMap4ÀN\\lÀû\0Z\0accessOrderxr\0java.util.HashMap\ÚÁ\Ã`\Ñ\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0	aletormarsr\0java.lang.Boolean\Í r€Õœú\î\0Z\0valuexpt\0	alerodromsq\0~\0\0x\0'),(2,0,'2018-04-09 20:38:02',998,'12345','2016-02-09 20:38:02','cerrado','Elecciones para presidencia','alerodrom','¬\í\0sr\0java.util.LinkedHashMap4ÀN\\lÀû\0Z\0accessOrderxr\0java.util.HashMap\ÚÁ\Ã`\Ñ\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0	alerodromsr\0java.lang.Boolean\Í r€Õœú\î\0Z\0valuexp\0t\0	rubsuaalmsq\0~\0t\0teteteq\0~\0x\0'),(3,0,'2018-02-23 20:38:02',997,'12345','2016-02-09 20:38:02','cerrado','Censo nuevo','carruivar','¬\í\0sr\0java.util.LinkedHashMap4ÀN\\lÀû\0Z\0accessOrderxr\0java.util.HashMap\ÚÁ\Ã`\Ñ\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0	carruivarsr\0java.lang.Boolean\Í r€Õœú\î\0Z\0valuexpt\0lefosoq\0~\0t\0cabinaTelegramsq\0~\0\0x\0'),(4,0,'2017-03-09 20:38:02',996,'12345','2017-01-09 20:38:02','abierto','Primarias del partido XX','carcamcue','¬\í\0sr\0java.util.LinkedHashMap4ÀN\\lÀû\0Z\0accessOrderxr\0java.util.HashMap\ÚÁ\Ã`\Ñ\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0	carcamcuesr\0java.lang.Boolean\Í r€Õœú\î\0Z\0valuexp\0t\0	mancabclasq\0~\0t\0adminq\0~\0x\0'),(5,0,'2017-04-09 20:38:02',995,'12345','2016-02-09 20:38:02','abierto','Referendum local','fuerte94','¬\í\0sr\0java.util.LinkedHashMap4ÀN\\lÀû\0Z\0accessOrderxr\0java.util.HashMap\ÚÁ\Ã`\Ñ\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0fuerte94sr\0java.lang.Boolean\Í r€Õœú\î\0Z\0valuexpt\0	aletormarq\0~\0x\0'),(6,0,'2017-04-09 20:38:02',994,'12345','2016-02-09 20:38:02','abierto','Podemos S.A.','admin1','¬\í\0sr\0java.util.LinkedHashMap4ÀN\\lÀû\0Z\0accessOrderxr\0java.util.HashMap\ÚÁ\Ã`\Ñ\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0	raftrugonsr\0java.lang.Boolean\Í r€Õœú\î\0Z\0valuexpt\0adminq\0~\0x\0'),(7,0,'2017-04-09 20:38:02',993,'12345','2017-01-01 20:38:02','abierto','Mejor coche del mercado','agubordia','¬\í\0sr\0java.util.LinkedHashMap4ÀN\\lÀû\0Z\0accessOrderxr\0java.util.HashMap\ÚÁ\Ã`\Ñ\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0	agubordiasr\0java.lang.Boolean\Í r€Õœú\î\0Z\0valuexpt\0cabinaTelegramq\0~\0x\0'),(8,0,'2017-03-09 20:38:02',992,'12345','2017-01-01 20:38:02','cerrado','Censo seguro','carcamcue','¬\í\0sr\0java.util.LinkedHashMap4ÀN\\lÀû\0Z\0accessOrderxr\0java.util.HashMap\ÚÁ\Ã`\Ñ\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0\nrusuarez95sr\0java.lang.Boolean\Í r€Õœú\î\0Z\0valuexpt\0teteteq\0~\0t\0	agubordiaq\0~\0t\0cabinaTelegramq\0~\0x\0'),(9,0,'2017-05-09 20:38:02',991,'12345','2017-02-09 20:38:02','cerrado','El mejor estudiante de la clase','rusuarez95','¬\í\0sr\0java.util.LinkedHashMap4ÀN\\lÀû\0Z\0accessOrderxr\0java.util.HashMap\ÚÁ\Ã`\Ñ\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0lefososr\0java.lang.Boolean\Í r€Õœú\î\0Z\0valuexp\0x\0'),(10,0,'2018-05-09 20:38:02',990,'99999','2017-01-09 20:38:02','cerrado','El censo de carcamcue','carcamcue','¬\í\0sr\0java.util.LinkedHashMap4ÀN\\lÀû\0Z\0accessOrderxr\0java.util.HashMap\ÚÁ\Ã`\Ñ\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0	carcamcuesr\0java.lang.Boolean\Í r€Õœú\î\0Z\0valuexpt\0lefosoq\0~\0x\0'),(11,0,'2018-05-09 20:38:02',989,'00000','2017-01-09 20:38:02','cerrado','El mejor censo','censo94','¬\í\0sr\0java.util.LinkedHashMap4ÀN\\lÀû\0Z\0accessOrderxr\0java.util.HashMap\ÚÁ\Ã`\Ñ\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0	carcamcuesr\0java.lang.Boolean\Í r€Õœú\î\0Z\0valuexpt\0censo94q\0~\0x\0');
+INSERT INTO `census` VALUES (6,0,'AndalucÃ­a','2016-06-10 20:38:02',999,'12345','2016-02-09 20:38:02','cerrado','Elecciones','aletormar','¬\í\0sr\0java.util.LinkedHashMap4ÀN\\lÀû\0Z\0accessOrderxr\0java.util.HashMap\ÚÁ\Ã`\Ñ\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0	aletormarsr\0java.lang.Boolean\Í r€Õœú\î\0Z\0valuexpt\0	alerodromsq\0~\0\0x\0'),(7,0,'AndalucÃ­a','2018-04-09 20:38:02',998,'12345','2016-02-09 20:38:02','cerrado','Elecciones para presidencia','alerodrom','¬\í\0sr\0java.util.LinkedHashMap4ÀN\\lÀû\0Z\0accessOrderxr\0java.util.HashMap\ÚÁ\Ã`\Ñ\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0	alerodromsr\0java.lang.Boolean\Í r€Õœú\î\0Z\0valuexp\0t\0	rubsuaalmsq\0~\0t\0teteteq\0~\0x\0'),(8,0,'AndalucÃ­a','2018-02-23 20:38:02',997,'12345','2016-02-09 20:38:02','cerrado','Censo nuevo','carruivar','¬\í\0sr\0java.util.LinkedHashMap4ÀN\\lÀû\0Z\0accessOrderxr\0java.util.HashMap\ÚÁ\Ã`\Ñ\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0	carruivarsr\0java.lang.Boolean\Í r€Õœú\î\0Z\0valuexpt\0lefosoq\0~\0t\0cabinaTelegramsq\0~\0\0x\0'),(9,0,'AndalucÃ­a','2017-03-09 20:38:02',996,'12345','2017-01-09 20:38:02','abierto','Primarias del partido XX','carcamcue','¬\í\0sr\0java.util.LinkedHashMap4ÀN\\lÀû\0Z\0accessOrderxr\0java.util.HashMap\ÚÁ\Ã`\Ñ\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0	carcamcuesr\0java.lang.Boolean\Í r€Õœú\î\0Z\0valuexp\0t\0	mancabclasq\0~\0t\0adminq\0~\0x\0'),(10,0,'AndalucÃ­a','2017-04-09 20:38:02',995,'12345','2016-02-09 20:38:02','abierto','Referendum local','fuerte94','¬\í\0sr\0java.util.LinkedHashMap4ÀN\\lÀû\0Z\0accessOrderxr\0java.util.HashMap\ÚÁ\Ã`\Ñ\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0fuerte94sr\0java.lang.Boolean\Í r€Õœú\î\0Z\0valuexpt\0	aletormarq\0~\0x\0'),(11,0,'AndalucÃ­a','2017-04-09 20:38:02',994,'12345','2016-02-09 20:38:02','abierto','Podemos S.A.','admin1','¬\í\0sr\0java.util.LinkedHashMap4ÀN\\lÀû\0Z\0accessOrderxr\0java.util.HashMap\ÚÁ\Ã`\Ñ\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0	raftrugonsr\0java.lang.Boolean\Í r€Õœú\î\0Z\0valuexpt\0adminq\0~\0x\0'),(12,0,'AndalucÃ­a','2017-04-09 20:38:02',993,'12345','2017-01-01 20:38:02','abierto','Mejor coche del mercado','agubordia','¬\í\0sr\0java.util.LinkedHashMap4ÀN\\lÀû\0Z\0accessOrderxr\0java.util.HashMap\ÚÁ\Ã`\Ñ\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0	agubordiasr\0java.lang.Boolean\Í r€Õœú\î\0Z\0valuexpt\0cabinaTelegramq\0~\0x\0'),(13,0,'AndalucÃ­a','2017-03-09 20:38:02',992,'12345','2017-01-01 20:38:02','cerrado','Censo seguro','carcamcue','¬\í\0sr\0java.util.LinkedHashMap4ÀN\\lÀû\0Z\0accessOrderxr\0java.util.HashMap\ÚÁ\Ã`\Ñ\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0\nrusuarez95sr\0java.lang.Boolean\Í r€Õœú\î\0Z\0valuexpt\0teteteq\0~\0t\0	agubordiaq\0~\0t\0cabinaTelegramq\0~\0x\0'),(14,0,'AndalucÃ­a','2017-05-09 20:38:02',991,'12345','2017-02-09 20:38:02','cerrado','El mejor estudiante de la clase','rusuarez95','¬\í\0sr\0java.util.LinkedHashMap4ÀN\\lÀû\0Z\0accessOrderxr\0java.util.HashMap\ÚÁ\Ã`\Ñ\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0lefososr\0java.lang.Boolean\Í r€Õœú\î\0Z\0valuexp\0x\0'),(15,0,'AndalucÃ­a','2018-05-09 20:38:02',990,'99999','2017-01-09 20:38:02','cerrado','El censo de carcamcue','carcamcue','¬\í\0sr\0java.util.LinkedHashMap4ÀN\\lÀû\0Z\0accessOrderxr\0java.util.HashMap\ÚÁ\Ã`\Ñ\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0	carcamcuesr\0java.lang.Boolean\Í r€Õœú\î\0Z\0valuexpt\0lefosoq\0~\0x\0'),(16,0,'AndalucÃ­a','2018-05-09 20:38:02',989,'00000','2017-01-09 20:38:02','cerrado','El mejor censo','censo94','¬\í\0sr\0java.util.LinkedHashMap4ÀN\\lÀû\0Z\0accessOrderxr\0java.util.HashMap\ÚÁ\Ã`\Ñ\0F\0\nloadFactorI\0	thresholdxp?@\0\0\0\0\0w\0\0\0\0\0\0t\0	carcamcuesr\0java.lang.Boolean\Í r€Õœú\î\0Z\0valuexpt\0censo94q\0~\0x\0');
 /*!40000 ALTER TABLE `census` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `folder`
+--
+
+DROP TABLE IF EXISTS `folder`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `folder` (
+  `id` int(11) NOT NULL,
+  `version` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `user` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_6xm638e3ua7glqs2p53vyk3g0` (`user`),
+  CONSTRAINT `FK_6xm638e3ua7glqs2p53vyk3g0` FOREIGN KEY (`user`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `folder`
+--
+
+LOCK TABLES `folder` WRITE;
+/*!40000 ALTER TABLE `folder` DISABLE KEYS */;
+INSERT INTO `folder` VALUES (3,0,'Issues Received',2),(4,0,'Issues Sent',2),(5,0,'Issues Trashbox',2);
+/*!40000 ALTER TABLE `folder` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -91,6 +120,41 @@ LOCK TABLES `hibernate_sequences` WRITE;
 /*!40000 ALTER TABLE `hibernate_sequences` DISABLE KEYS */;
 INSERT INTO `hibernate_sequences` VALUES ('domain_entity',1);
 /*!40000 ALTER TABLE `hibernate_sequences` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `message`
+--
+
+DROP TABLE IF EXISTS `message`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `message` (
+  `id` int(11) NOT NULL,
+  `version` int(11) NOT NULL,
+  `body` varchar(255) DEFAULT NULL,
+  `moment` datetime DEFAULT NULL,
+  `subject` varchar(255) DEFAULT NULL,
+  `folder` int(11) NOT NULL,
+  `recipient` int(11) NOT NULL,
+  `sender` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_1c4esr6oh9r3yrpx7asdluc5g` (`folder`),
+  KEY `FK_hn9roqyj131hnul5fuwgwlv9e` (`recipient`),
+  KEY `FK_a3km2kv42i1xu571ta911f9dc` (`sender`),
+  CONSTRAINT `FK_1c4esr6oh9r3yrpx7asdluc5g` FOREIGN KEY (`folder`) REFERENCES `folder` (`id`),
+  CONSTRAINT `FK_a3km2kv42i1xu571ta911f9dc` FOREIGN KEY (`sender`) REFERENCES `user` (`id`),
+  CONSTRAINT `FK_hn9roqyj131hnul5fuwgwlv9e` FOREIGN KEY (`recipient`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `message`
+--
+
+LOCK TABLES `message` WRITE;
+/*!40000 ALTER TABLE `message` DISABLE KEYS */;
+/*!40000 ALTER TABLE `message` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -123,6 +187,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (2,0,30,'Andalucia','admin@censosEgc.com','Masculino','admin','ADMIN','admin',1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,6 +214,7 @@ CREATE TABLE `user_account` (
 
 LOCK TABLES `user_account` WRITE;
 /*!40000 ALTER TABLE `user_account` DISABLE KEYS */;
+INSERT INTO `user_account` VALUES (1,0,'21232f297a57a5a743894a0e4a801fc3','admin');
 /*!40000 ALTER TABLE `user_account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -173,6 +239,7 @@ CREATE TABLE `user_account_authorities` (
 
 LOCK TABLES `user_account_authorities` WRITE;
 /*!40000 ALTER TABLE `user_account_authorities` DISABLE KEYS */;
+INSERT INTO `user_account_authorities` VALUES (1,'ADMIN');
 /*!40000 ALTER TABLE `user_account_authorities` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -214,6 +281,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-13  0:03:17
+-- Dump completed on 2017-01-31  0:56:33
+
 
 commit; 
