@@ -32,6 +32,9 @@
 		
 		<spring:message code="census.fecha.fin" />:
 		<fmt:formatDate value="${census.endDate}" pattern="dd/MM/yyyy"/><br/>
+		
+		<spring:message code="census.comunidadAutonoma" />:
+		<jstl:out value="${census.comunidadAutonoma}"/><br/>
 	
 <br/>
 <input type="text" value="" id="textSearch" />
@@ -41,7 +44,7 @@
 
 <jstl:if test="${editable}">
 
-	<display:table pagesize="15" class="displaytag" name="usernames"
+	<display:table pagesize="35" class="displaytag" name="usernames"
 		requestURI="${requestURI}" id="row">
 
 		<!-- Action links -->

@@ -328,12 +328,12 @@ public class CensusService {
 		Assert.isTrue(votacionActiva(census.getStartDate(), census.getEndDate()));
 		HashMap<String, Boolean> vpo = census.getVotoPorUsuario();
 		Assert.isTrue(census.getUsernameCreator().equals(username));
-
-		Assert.isTrue(vpo.containsKey(username_remove) && !vpo.get(username_remove));
-		vpo.remove(username_remove);
+		Assert.isTrue(vpo.containsKey(username_remove));
+		if (vpo.containsKey(username_remove)) {
+			vpo.remove(username_remove);
+		}
 		census.setVotoPorUsuario(vpo);
 		save(census);
-
 		// Envio de correo
 
 		String dirEmail;
