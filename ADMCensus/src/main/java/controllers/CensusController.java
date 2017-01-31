@@ -141,6 +141,14 @@ public class CensusController extends AbstractController {
 		}
 
 	}
+	
+	// Devuelve un censo con sus usuarios para deliberaciones al preguntar por
+	// una votación
+
+	@RequestMapping(value = "/findCensusByVote", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody Census findCensusByVote(@RequestParam int idVotacion) {
+		return censusService.findCensusByVote(idVotacion);
+	}
 
 	/*****
 	 * MÃ©todos internos
