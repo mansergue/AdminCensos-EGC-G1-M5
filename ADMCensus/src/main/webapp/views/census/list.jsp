@@ -51,6 +51,10 @@
 		<br />
 	</display:column>
 
+	<spring:message code="census.comunidadAutonoma" var="comunidadAutonoma" />
+	<display:column property="comunidadAutonoma" title="${comunidadAutonoma}"
+		sortable="true" />
+	
 	<spring:message code="census.number.person" var="sizeHeader" />
 	<display:column title="${sizeHeader}" sortable="true">
 		<jstl:out value="${row.votoPorUsuario.size() }"></jstl:out>
