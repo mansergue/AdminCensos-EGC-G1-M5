@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -343,162 +344,40 @@ public class CensusController extends AbstractController {
 	// Exportar un censo a .txt -----------------------------------------------
 
 	@RequestMapping(value = "/export", method = RequestMethod.GET)
-	public ModelAndView export(@RequestParam int censusId, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public ModelAndView export(@RequestParam int censusId, HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		ModelAndView result;
-		try{
+		try {
+			Census census = censusService.findOne(censusId);
+
 			OutputStream out = response.getOutputStream();
 			String headerKey = "Content-Disposition";
-			String headerValue = String.format("attachment; filename=\"Report"+".txt\";");
-	        response.setHeader(headerKey, headerValue);
-//	        out.write("Hola Mundo!".getBytes(StandardCharsets.UTF_8));
-	        
-	        // obtains response's output stream
-	        OutputStream outStream = response.getOutputStream();
-	        outStream.close(); 
-	        
-		Census census = censusService.findOne(censusId);
-		String typeOS = System.getProperty("os.name");
-		String userHomeDir = System.getProperty("user.home");
-		File file = null;
+			String headerValue = String.format("attachment; filename=\"Report" + ".txt\";");
+			response.setHeader(headerKey, headerValue);
 
-//		// Hacemos un cambio en el directorio donde se guardará el fichero .txt
-//		// dependiendo de si estamos trabajando sobre Windows o sobre Linux
-//
-//		if (typeOS.contains("Windows")) {
-//			file = new File(userHomeDir + "/Desktop/filename" + censusId + ".txt");
-//		} else if (typeOS.contains("Linux")) {
-//			file = new File(userHomeDir + "/Escritorio/filename" + censusId + ".txt");
-//		} else if (typeOS.contains("Mac")) {
-//			file = new File(userHomeDir + "/Desktop/filename" + censusId + ".txt");
-//		}
-//
-//		// Comprobamos que el txt que vamos a crear no existe ya en este
-//		// directorio,
-//		// sino existe, creamos un txt nuevo, en caso de que exista uno, lo
-//		// sustituimos
-//
-//		if (!file.exists()) {
-//			file.createNewFile();
-//		}
+			String s0 = "\nDetails of the census\n\n";
+			String s1 = "Owner: " + census.getUsernameCreator() + "\n";
+			String s2 = "Name of vote: " + census.getTitle() + "\n";
+			String s3 = "Vote number: " + census.getIdVotacion() + "\n";
+			String s4 = "Start date: " + census.getStartDate() + "\n";
+			String s5 = "Finish date: " + census.getEndDate() + "\n";
+			String s6 = "Postal code: " + census.getPostalCode() + "\n";
+			String s7 = "Autonomous community: " + census.getComunidadAutonoma() + "\n";
+			String s8 = "---------------------" + "\n\n";
+			String s9 = "Voters: \n";
 
-		// Aquí estamos dando el formato que queremos que tenga nuestro .txt
-
-		FileWriter fileWriter = new FileWriter(file);
-		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-		bufferedWriter.newLine();
-		bufferedWriter.write("Details of the census");
-		bufferedWriter.newLine();
-		bufferedWriter.newLine();
-		bufferedWriter.write("Owner: " + census.getUsernameCreator());
-		bufferedWriter.newLine();
-		bufferedWriter.write("Name of vote: " + census.getTitle());
-		bufferedWriter.newLine();
-		bufferedWriter.write("Vote number: " + census.getIdVotacion());
-		bufferedWriter.newLine();
-		bufferedWriter.write("Start date: " + census.getStartDate());
-		bufferedWriter.newLine();
-		bufferedWriter.write("Finish date: " + census.getEndDate());
-		bufferedWriter.newLine();
-		bufferedWriter.write("Postal code: " + census.getPostalCode());
-		bufferedWriter.newLine();
-		bufferedWriter.write("Autonomous community: " + census.getComunidadAutonoma());
-		bufferedWriter.newLine();
-		bufferedWriter.write("---------------------");
-		bufferedWriter.newLine();
-		bufferedWriter.newLine();
-		bufferedWriter.write("Voters: ");
-		bufferedWriter.newLine();
-
-		// Todos los usuarios del sistema
-
-		Map<String, String> mapUsers = RESTClient.getMapUSernameAndEmailByJsonAutentication();
-		Collection<String> usernames = mapUsers.keySet();
-
-		// Todos los que han votado en un censo
-
-		Collection<String> userList = census.getVotoPorUsuario().keySet();
-		if (usernames.size() != 0) {
-
-			// Aquí compruebo que de todos los usuarios disponibles en el
-			// sistema, cuál de
-			// ellos ha votado ya en el censo
-
-			for (String aux : usernames) {
-				for (String voter : userList) {
-
-					// Uno de los usuarios del sistema ya ha votado en dicho
-					// censo
-
-					if (aux.equals(voter)) {
-
-						// Obtenemos el mapa del censo, para saber si el usuario
-						// ha votado o no
-
-						HashMap<String, Boolean> map = census.getVotoPorUsuario();
-
-						// Añadimos este usuario que ya ha votado al text
-
-						User user = RESTClient.getCertainUserByJsonAuthentication(voter);
-						bufferedWriter.newLine();
-						bufferedWriter.write("User_Id: " + user.getId());
-						bufferedWriter.newLine();
-						bufferedWriter.write("Name: " + user.getName());
-						bufferedWriter.newLine();
-						bufferedWriter.write("Surname: " + user.getSurname());
-						bufferedWriter.newLine();
-						bufferedWriter.write("Username: " + user.getUserAccount().getUsername());
-						bufferedWriter.newLine();
-						bufferedWriter.write("Email: " + user.getEmail());
-						bufferedWriter.newLine();
-						bufferedWriter.write("Genre: " + user.getGenre());
-						bufferedWriter.newLine();
-						bufferedWriter.write("Autonomous community: " + user.getAutonomous_community());
-						bufferedWriter.newLine();
-						bufferedWriter.write("Age: " + user.getAge());
-						bufferedWriter.newLine();
-						bufferedWriter.write("Has voted?: " + map.get(voter));
-						bufferedWriter.newLine();
-						bufferedWriter.write("*****************");
-						bufferedWriter.newLine();
-						break;
-					}
-				}
-			}
-		} else {
-			bufferedWriter.write("Nothing to display because there isn't any voters");
-		}
-
-		bufferedWriter.close();
-		}catch (IOException de) {
-            throw new IOException(de.getMessage());
-        }
-		result = new ModelAndView("redirect:getAllCensusByCreador.do");
-		return result;
-	}
-
-	// Exportar un censo a .pdf -----------------------------------------------
-
-		@RequestMapping(value = "/exportPDF", method = RequestMethod.GET)
-		public ModelAndView exportPDF(@RequestParam int censusId, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, DocumentException {
-			response.setContentType("application/pdf");
-			ModelAndView result;
-			try{
-			Census census = censusService.findOne(censusId);
-			
-			Document documento = new Document();
-		    PdfWriter.getInstance(documento, response.getOutputStream());
-		    documento.open();
-			// Aquí estamos dando el formato que queremos que tenga nuestro .pdf
-		    
-		    documento.add(new Paragraph("Details of the census"+"\n"+"\n"));
-		    documento.add(new Paragraph("Owner: " + census.getUsernameCreator()+"\n"));
-		    documento.add(new Paragraph("Name of vote: " + census.getTitle()+"\n"));
-		    documento.add(new Paragraph("Vote number: " + census.getId()+"\n"));
-		    documento.add(new Paragraph("Start date: " + census.getStartDate()+"\n"));
-		    documento.add(new Paragraph("Finish date: " + census.getEndDate()+"\n"));
-		    documento.add(new Paragraph("Postal code: " + census.getPostalCode()+"\n"));
-		    documento.add(new Paragraph("Autonomous community: " + census.getComunidadAutonoma()+"\n"+"---------------------"+"\n"+"\n"));
-		    documento.add(new Paragraph("Voters: "+"\n"));
+			// Aquí estamos dando el formato que queremos que tenga nuestro
+			// .txt
+			out.write(s0.getBytes(StandardCharsets.UTF_8));
+			out.write(s1.getBytes(StandardCharsets.UTF_8));
+			out.write(s2.getBytes(StandardCharsets.UTF_8));
+			out.write(s3.getBytes(StandardCharsets.UTF_8));
+			out.write(s4.getBytes(StandardCharsets.UTF_8));
+			out.write(s5.getBytes(StandardCharsets.UTF_8));
+			out.write(s6.getBytes(StandardCharsets.UTF_8));
+			out.write(s7.getBytes(StandardCharsets.UTF_8));
+			out.write(s8.getBytes(StandardCharsets.UTF_8));
+			out.write(s9.getBytes(StandardCharsets.UTF_8));
 
 			// Todos los usuarios del sistema
 
@@ -522,7 +401,108 @@ public class CensusController extends AbstractController {
 
 						if (aux.equals(voter)) {
 
-							// Obtenemos el mapa del censo, para saber si el usuario
+							// Obtenemos el mapa del censo, para saber si el
+							// usuario
+							// ha votado o no
+
+							HashMap<String, Boolean> map = census.getVotoPorUsuario();
+
+							// Añadimos este usuario que ya ha votado al text
+							User user = RESTClient.getCertainUserByJsonAuthentication(voter);
+
+							String s10 = "\nUser_Id: " + user.getId() + "\n";
+							String s11 = "Name: " + user.getName() + "\n";
+							String s12 = "Surname: " + user.getSurname() + "\n";
+							String s13 = "Username: " + user.getUserAccount().getUsername() + "\n";
+							String s14 = "Email: " + user.getEmail() + "\n";
+							String s15 = "Genre: " + user.getGenre() + "\n";
+							String s16 = "Autonomous community: " + user.getAutonomous_community() + "\n";
+							String s17 = "Age: " + user.getAge() + "\n";
+							String s18 = "Has voted?: " + map.get(voter) + "\n";
+							String s19 = "*****************\n";
+
+							out.write(s10.getBytes(StandardCharsets.UTF_8));
+							out.write(s11.getBytes(StandardCharsets.UTF_8));
+							out.write(s12.getBytes(StandardCharsets.UTF_8));
+							out.write(s13.getBytes(StandardCharsets.UTF_8));
+							out.write(s14.getBytes(StandardCharsets.UTF_8));
+							out.write(s15.getBytes(StandardCharsets.UTF_8));
+							out.write(s16.getBytes(StandardCharsets.UTF_8));
+							out.write(s17.getBytes(StandardCharsets.UTF_8));
+							out.write(s18.getBytes(StandardCharsets.UTF_8));
+							out.write(s19.getBytes(StandardCharsets.UTF_8));
+
+							break;
+						}
+					}
+				}
+			} else {
+				out.write("Nothing to display because there isn't any voters".getBytes(StandardCharsets.UTF_8));
+			}
+
+		} catch (IOException de) {
+			throw new IOException(de.getMessage());
+		}
+
+		// obtains response's output stream
+		OutputStream outStream = response.getOutputStream();
+		outStream.close();
+
+		result = new ModelAndView("redirect:getAllCensusByCreador.do");
+		return result;
+	}
+
+	// Exportar un censo a .pdf -----------------------------------------------
+
+	@RequestMapping(value = "/exportPDF", method = RequestMethod.GET)
+	public ModelAndView exportPDF(@RequestParam int censusId, HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, DocumentException {
+		response.setContentType("application/pdf");
+		ModelAndView result;
+		try {
+			Census census = censusService.findOne(censusId);
+
+			Document documento = new Document();
+			PdfWriter.getInstance(documento, response.getOutputStream());
+			documento.open();
+			// Aquí estamos dando el formato que queremos que tenga nuestro
+			// .pdf
+
+			documento.add(new Paragraph("Details of the census" + "\n" + "\n"));
+			documento.add(new Paragraph("Owner: " + census.getUsernameCreator() + "\n"));
+			documento.add(new Paragraph("Name of vote: " + census.getTitle() + "\n"));
+			documento.add(new Paragraph("Vote number: " + census.getId() + "\n"));
+			documento.add(new Paragraph("Start date: " + census.getStartDate() + "\n"));
+			documento.add(new Paragraph("Finish date: " + census.getEndDate() + "\n"));
+			documento.add(new Paragraph("Postal code: " + census.getPostalCode() + "\n"));
+			documento.add(new Paragraph("Autonomous community: " + census.getComunidadAutonoma() + "\n"
+					+ "---------------------" + "\n" + "\n"));
+			documento.add(new Paragraph("Voters: " + "\n"));
+
+			// Todos los usuarios del sistema
+
+			Map<String, String> mapUsers = RESTClient.getMapUSernameAndEmailByJsonAutentication();
+			Collection<String> usernames = mapUsers.keySet();
+
+			// Todos los que han votado en un censo
+
+			Collection<String> userList = census.getVotoPorUsuario().keySet();
+			if (usernames.size() != 0) {
+
+				// Aquí compruebo que de todos los usuarios disponibles en el
+				// sistema, cuál de
+				// ellos ha votado ya en el censo
+
+				for (String aux : usernames) {
+					for (String voter : userList) {
+
+						// Uno de los usuarios del sistema ya ha votado en dicho
+						// censo
+
+						if (aux.equals(voter)) {
+
+							// Obtenemos el mapa del censo, para saber si el
+							// usuario
 							// ha votado o no
 
 							HashMap<String, Boolean> map = census.getVotoPorUsuario();
@@ -530,17 +510,19 @@ public class CensusController extends AbstractController {
 							// Añadimos este usuario que ya ha votado al text
 
 							User user = RESTClient.getCertainUserByJsonAuthentication(voter);
-							
-							documento.add(new Paragraph("\n"+"User_Id: " + user.getId()+"\n"));
-						    documento.add(new Paragraph("Username: " + user.getUserAccount().getUsername()+"\n"));
-						    documento.add(new Paragraph("Name: " + user.getName()+"\n"));
-						    documento.add(new Paragraph("Surname: " + user.getSurname()+"\n"));
-						    documento.add(new Paragraph("Email: " + user.getEmail()+"\n"));
-						    documento.add(new Paragraph("Genre: " + user.getGenre()+"\n"));
-						    documento.add(new Paragraph("Autonomous community: " + user.getAutonomous_community()+"\n"));
-						    documento.add(new Paragraph("Age: " + user.getAge()+"\n"));
-						    documento.add(new Paragraph("Has voted?: " + map.get(voter)+"\n"+"*****************"+"\n"));
-						    System.out.println("fin de escritura del PDF");
+
+							documento.add(new Paragraph("\n" + "User_Id: " + user.getId() + "\n"));
+							documento.add(new Paragraph("Username: " + user.getUserAccount().getUsername() + "\n"));
+							documento.add(new Paragraph("Name: " + user.getName() + "\n"));
+							documento.add(new Paragraph("Surname: " + user.getSurname() + "\n"));
+							documento.add(new Paragraph("Email: " + user.getEmail() + "\n"));
+							documento.add(new Paragraph("Genre: " + user.getGenre() + "\n"));
+							documento.add(
+									new Paragraph("Autonomous community: " + user.getAutonomous_community() + "\n"));
+							documento.add(new Paragraph("Age: " + user.getAge() + "\n"));
+							documento.add(
+									new Paragraph("Has voted?: " + map.get(voter) + "\n" + "*****************" + "\n"));
+							System.out.println("fin de escritura del PDF");
 							break;
 						}
 					}
@@ -550,14 +532,14 @@ public class CensusController extends AbstractController {
 			}
 
 			documento.close();
-			} catch (DocumentException de) {
-	            throw new IOException(de.getMessage());
-	        }
-
-			result = new ModelAndView("redirect:getAllCensusByCreador.do");
-			return result;
+		} catch (DocumentException de) {
+			throw new IOException(de.getMessage());
 		}
-	
+
+		result = new ModelAndView("redirect:getAllCensusByCreador.do");
+		return result;
+	}
+
 	// Save -------------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
