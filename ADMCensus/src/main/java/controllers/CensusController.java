@@ -4,9 +4,12 @@ import java.io.FileOutputStream;
 
 import java.io.BufferedWriter;
 import java.io.File;
-
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,6 +19,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.swing.JOptionPane;
 import javax.validation.Valid;
 
@@ -270,6 +278,27 @@ public class CensusController extends AbstractController {
 		result.addObject("editable", editable);
 		return result;
 	}
+	
+//	// Encontrar censos por comunidades aut�nomas -------------------------------
+//
+//	@RequestMapping(value = "/search", method = RequestMethod.GET)
+//	public ModelAndView search(@RequestParam String autonomousCommunitySearch) {
+//		ModelAndView result;
+//		String requestUri = "census/search.do?autonomousCommunity=" + autonomousCommunitySearch;
+//
+//		
+//		Collection<Census> censusByAutonomousCommunity=censusService.findByAutonomousCommunity(autonomousCommunitySearch);
+//		Set<String> autonomousComunities=new HashSet<String>();
+//		for(Census c: censusByAutonomousCommunity){
+//			autonomousComunities.add(c.getComunidadAutonoma());
+//		}
+//		result=new ModelAndView("census/list");
+//		result.addObject("requestURI", requestUri);
+//		result.addObject("autonomousComunities", autonomousComunities);
+//		result.addObject("censuses",censusByAutonomousCommunity);
+//		
+//		return result;
+//	}
 
 	// Detalles del censo -----------------------------------------------------
 
@@ -314,32 +343,43 @@ public class CensusController extends AbstractController {
 	// Exportar un censo a .txt -----------------------------------------------
 
 	@RequestMapping(value = "/export", method = RequestMethod.GET)
-	public ModelAndView export(@RequestParam int censusId) throws IOException {
+	public ModelAndView export(@RequestParam int censusId, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ModelAndView result;
+		try{
+			OutputStream out = response.getOutputStream();
+			String headerKey = "Content-Disposition";
+			String headerValue = String.format("attachment; filename=\"Report"+".txt\";");
+	        response.setHeader(headerKey, headerValue);
+//	        out.write("Hola Mundo!".getBytes(StandardCharsets.UTF_8));
+	        
+	        // obtains response's output stream
+	        OutputStream outStream = response.getOutputStream();
+	        outStream.close(); 
+	        
 		Census census = censusService.findOne(censusId);
 		String typeOS = System.getProperty("os.name");
 		String userHomeDir = System.getProperty("user.home");
 		File file = null;
 
-		// Hacemos un cambio en el directorio donde se guardará el fichero .txt
-		// dependiendo de si estamos trabajando sobre Windows o sobre Linux
-
-		if (typeOS.contains("Windows")) {
-			file = new File(userHomeDir + "/Desktop/filename" + censusId + ".txt");
-		} else if (typeOS.contains("Linux")) {
-			file = new File(userHomeDir + "/Escritorio/filename" + censusId + ".txt");
-		} else if (typeOS.contains("Mac")) {
-			file = new File(userHomeDir + "/Desktop/filename" + censusId + ".txt");
-		}
-
-		// Comprobamos que el txt que vamos a crear no existe ya en este
-		// directorio,
-		// sino existe, creamos un txt nuevo, en caso de que exista uno, lo
-		// sustituimos
-
-		if (!file.exists()) {
-			file.createNewFile();
-		}
+//		// Hacemos un cambio en el directorio donde se guardará el fichero .txt
+//		// dependiendo de si estamos trabajando sobre Windows o sobre Linux
+//
+//		if (typeOS.contains("Windows")) {
+//			file = new File(userHomeDir + "/Desktop/filename" + censusId + ".txt");
+//		} else if (typeOS.contains("Linux")) {
+//			file = new File(userHomeDir + "/Escritorio/filename" + censusId + ".txt");
+//		} else if (typeOS.contains("Mac")) {
+//			file = new File(userHomeDir + "/Desktop/filename" + censusId + ".txt");
+//		}
+//
+//		// Comprobamos que el txt que vamos a crear no existe ya en este
+//		// directorio,
+//		// sino existe, creamos un txt nuevo, en caso de que exista uno, lo
+//		// sustituimos
+//
+//		if (!file.exists()) {
+//			file.createNewFile();
+//		}
 
 		// Aquí estamos dando el formato que queremos que tenga nuestro .txt
 
@@ -429,6 +469,9 @@ public class CensusController extends AbstractController {
 		}
 
 		bufferedWriter.close();
+		}catch (IOException de) {
+            throw new IOException(de.getMessage());
+        }
 		result = new ModelAndView("redirect:getAllCensusByCreador.do");
 		return result;
 	}
@@ -436,27 +479,14 @@ public class CensusController extends AbstractController {
 	// Exportar un censo a .pdf -----------------------------------------------
 
 		@RequestMapping(value = "/exportPDF", method = RequestMethod.GET)
-		public ModelAndView exportPDF(@RequestParam int censusId) throws IOException, DocumentException {
+		public ModelAndView exportPDF(@RequestParam int censusId, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, DocumentException {
+			response.setContentType("application/pdf");
 			ModelAndView result;
+			try{
 			Census census = censusService.findOne(censusId);
-			String typeOS = System.getProperty("os.name");
-			String userHomeDir = System.getProperty("user.home");
-			FileOutputStream archivo= null;
-
-			// Hacemos un cambio en el directorio donde se guardará el fichero .pdf
-			// dependiendo de si estamos trabajando sobre Windows o sobre Linux
-
-			if (typeOS.contains("Windows")) {
-				archivo = new FileOutputStream(userHomeDir +"/Desktop/filename" + censusId + ".pdf");
-			} else if (typeOS.contains("Linux")) {
-				archivo = new FileOutputStream(userHomeDir + "/Escritorio/filename" + censusId + ".pdf");
-			} else if (typeOS.contains("Mac")) {
-				archivo = new FileOutputStream(userHomeDir + "/Desktop/filename" + censusId + ".pdf");
-			}
-
 			
 			Document documento = new Document();
-		    PdfWriter.getInstance(documento, archivo);
+		    PdfWriter.getInstance(documento, response.getOutputStream());
 		    documento.open();
 			// Aquí estamos dando el formato que queremos que tenga nuestro .pdf
 		    
@@ -520,6 +550,10 @@ public class CensusController extends AbstractController {
 			}
 
 			documento.close();
+			} catch (DocumentException de) {
+	            throw new IOException(de.getMessage());
+	        }
+
 			result = new ModelAndView("redirect:getAllCensusByCreador.do");
 			return result;
 		}
