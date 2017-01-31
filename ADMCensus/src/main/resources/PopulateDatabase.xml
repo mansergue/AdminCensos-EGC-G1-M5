@@ -277,5 +277,56 @@
 			</map>
 		</property>
 	</bean>
-
+	
+	<bean id="census12" class="domain.Census">
+		<property name="idVotacion" value="988" />
+		<property name="title" value="El peor censo" />
+		<property name="startDate" value="2017/02/09 20:38:02" />
+		<property name="endDate" value="2018/06/09 20:38:02" />
+		<property name="tipo" value="cerrado" />
+		<property name="postalCode" value="00000" />
+		<property name="comunidadAutonoma" value="Madrid" />
+		<property name="usernameCreator" value="carcamcue" />
+		<property name="votoPorUsuario">
+			<map>
+				<entry key="carcamcue" value="true" />
+				<entry key="censo94" value="true" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="census13" class="domain.Census">
+		<property name="idVotacion" value="987" />
+		<property name="title" value="El censo normal" />
+		<property name="startDate" value="2017/03/09 20:38:02" />
+		<property name="endDate" value="2018/07/09 20:38:02" />
+		<property name="tipo" value="abierto" />
+		<property name="postalCode" value="00000" />
+		<property name="comunidadAutonoma" value="Madrid" />
+		<property name="usernameCreator" value="censo94" />
+		<property name="votoPorUsuario">
+			<map>
+				<entry key="carcamcue" value="true" />
+				<entry key="censo94" value="true" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="census14" class="domain.Census">
+		<property name="idVotacion" value="986" />
+		<property name="title" value="El censo top" />
+		<property name="startDate" value="2017/03/09 20:38:02" />
+		<property name="endDate" value="2018/07/09 20:38:02" />
+		<property name="tipo" value="cerrado" />
+		<property name="postalCode" value="00000" />
+		<property name="comunidadAutonoma" value="Madrid" />
+		<property name="usernameCreator" value="alex123" />
+		<property name="votoPorUsuario">
+			<map>
+				<entry key="carcamcue" value="true" />
+				<entry key="censo94" value="true" />
+			</map>
+		</property>
+	</bean>
+	
 </beans>

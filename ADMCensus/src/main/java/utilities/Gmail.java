@@ -12,8 +12,8 @@ public class Gmail {
 
 	private static final String SMTP_HOST_NAME = "smtp.gmail.com";
 	private static final int SMTP_HOST_PORT = 465;
-	private static final String SMTP_AUTH_USER = "admcensus2015@gmail.com";
-	private static final String SMTP_AUTH_PWD = "administraciondecensus2015";
+	private static final String SMTP_AUTH_USER = "admcensus2016@gmail.com";
+	private static final String SMTP_AUTH_PWD = "administraciondecensus2016";
 
 	public static void send(String cuerpoEmail, String receptor) throws Exception {
 

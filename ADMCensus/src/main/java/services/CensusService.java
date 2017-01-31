@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import repositories.CensusRepository;
+import utilities.Gmail;
 import utilities.RESTClient;
 import domain.Census;
 
@@ -258,15 +259,13 @@ public class CensusService {
 		Map<String, String> usernamesAndEmails = RESTClient.getMapUSernameAndEmailByJsonAutentication();
 		dirEmail = usernamesAndEmails.get(usernameAdd);
 		cuerpoEmail = currentMoment.toString() + "-> Se ha incorporado al censo de " + census.getTitle();
-		// try {
-		//
-		// // Se procede al envio del correo con el resultado de la
-		// inclusion
-		// // en el censo
-		// Gmail.send(cuerpoEmail, dirEmail);
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
+		 try {
+		
+		 // Se procede al envio del correo con el resultado de la inclusión  en el censo
+		 Gmail.send(cuerpoEmail, dirEmail);
+		 } catch (Exception e) {
+		 e.printStackTrace();
+		 }
 	}
 
 	/**
@@ -300,14 +299,13 @@ public class CensusService {
 		Map<String, String> usernamesAndEmails = RESTClient.getMapUSernameAndEmailByJsonAutentication();
 		dirEmail = usernamesAndEmails.get(usernameAdd);
 		cuerpoEmail = currentMoment.toString() + "-> Se ha incorporado al censo de " + census.getTitle();
-		// try {
-		//
-		// // Se procede al envio del correo con el resultado de la inclusiÃƒÂ³n
-		// // en el censo
-		// Gmail.send(cuerpoEmail, dirEmail);
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
+		 try {
+		
+		 // Se procede al envio del correo con el resultado de la inclusión  en el censo
+		 Gmail.send(cuerpoEmail, dirEmail);
+		 } catch (Exception e) {
+		 e.printStackTrace();
+		 }
 	}
 
 	/**
@@ -346,14 +344,12 @@ public class CensusService {
 		dirEmail = usernamesAndEmails.get(username_remove);
 		cuerpoEmail = currentMoment.toString() + "-> Se ha eliminado del censo de " + census.getTitle();
 
-		// Se procede al envio del correo con el resultado de la exclusiÃƒÂ³n
-		// del
-		// usuario del censo
-		// try {
-		// Gmail.send(cuerpoEmail, dirEmail);
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
+//		 Se procede al envio del correo con el resultado de la exclusión del  usuario del censo
+		 try {
+		 Gmail.send(cuerpoEmail, dirEmail);
+		 } catch (Exception e) {
+		 e.printStackTrace();
+		 }
 	}
 
 	/**
@@ -507,6 +503,20 @@ public class CensusService {
 	}
 	// NUEVAS FUNCIONALIDADES 2016/2017
 
+//	//Filtrar los censos por comunidades autónomas
+//	public Collection<Census> findByAutonomousCommunity(String autonomousCommunity) {
+//		Assert.hasLength(autonomousCommunity);
+//		Collection<Census> censuses = findAll();
+//		Collection<Census> censusByAutonomousCommunity=new ArrayList<Census>();
+//		for(Census c: censuses){
+//			if(c.getComunidadAutonoma().toLowerCase().equals(autonomousCommunity.toLowerCase())){
+//				censusByAutonomousCommunity.add(c);
+//			}
+//		}
+//		
+//		return censusByAutonomousCommunity;
+//	}
+	
 	// Numero de censos abiertos
 	public int openCensuses() {
 		int result = censusRepository.openCensuses();
