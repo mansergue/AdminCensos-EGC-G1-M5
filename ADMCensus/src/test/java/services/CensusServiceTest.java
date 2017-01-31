@@ -28,7 +28,7 @@ public class CensusServiceTest {
 	// Tests ------------------------------------
 
 	@Test
-	public void createCensus() throws ParseException {
+	public void testCreateCensus() throws ParseException {
 		
 		// Inicializamos un censo, inicializando los valores de los atributos -
 		
@@ -52,7 +52,7 @@ public class CensusServiceTest {
 	}
 	
 	@Test
-	public void findOneCensus() throws ParseException{
+	public void testFindOneCensus() throws ParseException {
 		
 		// Inicializamos una variable de tipo Census y buscamos uno con un id en concreto -
 		
@@ -64,7 +64,7 @@ public class CensusServiceTest {
 	}
 	
 	@Test
-	public void findAllCensuses() throws ParseException{
+	public void testFindAllCensuses() throws ParseException{
 		
 		// Inicializamos una variable como colección de Censuses agrupando por los censos
 		// creados por un usuario en concretro y buscamos que nos devuelva una colección de 

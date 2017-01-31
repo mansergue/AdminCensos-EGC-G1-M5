@@ -30,7 +30,7 @@ public class RestClientTest {
 	// Tests ------------------------------------
 
 	@Test
-	public void todo() throws ParseException {
+	public void testTodo() throws ParseException {
 		restClient.getMapUSernameAndEmailByJsonAutentication();
 	}
 

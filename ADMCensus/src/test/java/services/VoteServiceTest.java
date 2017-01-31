@@ -30,7 +30,7 @@ public class VoteServiceTest {
 		// Tests ------------------------------------
 
 		@Test
-		public void todo() throws ParseException {
+		public void testTodo() throws ParseException {
 			
 //			Vote vote=voteService.findOne(1);
 //			Collection<Vote> votes=voteService.findAll();

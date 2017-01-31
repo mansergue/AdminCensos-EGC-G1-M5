@@ -12,6 +12,7 @@ before_install:
     - mysql -u root < mysql.sql
 
 script:
+    - mvn clean test
     - ls -lah
 
 cache:
@@ -25,4 +26,4 @@ sudo:
     - false
 
 notifications:
-    - email: false  # Desactivamos las notificaciones por email para evitar spam
+  email: false
