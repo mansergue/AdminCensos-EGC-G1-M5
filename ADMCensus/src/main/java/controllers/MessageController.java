@@ -52,11 +52,26 @@ public class MessageController extends AbstractController {
 
 		User u = userService.findByPrincipal();
 		Assert.notNull(u);
-		System.out.println("entra");
-		folders = u.getFolders();
-		System.out.println("sale");
+		for (Folder f : u.getFolders()) {
+			if (u.getRole().equals("ADMIN")
+					&& !f.getName().equals("Issues Sent")) {
+				folders.add(f);
+			}
+			else if(u.getRole().equals("USUARIO") 
+					&& !f.getName().equals("Issues Received")){
+				folders.add(f);
+			}
+		}
+		
 		Assert.notNull(folders);
-		Folder f = folderService.getInbox(u.getUserAccount());
+		Folder f;
+		if(u.getRole().equals("ADMIN")){
+			f = folderService.getInbox(u.getUserAccount());
+		}
+		else{
+			f=folderService.getOutbox(u.getUserAccount());
+		}
+		
 		Assert.notNull(f);
 		messages = f.getMessages();
 		Assert.notNull(messages);
@@ -78,9 +93,21 @@ public class MessageController extends AbstractController {
 		Collection<Message> messages = new HashSet<Message>();
 		Collection<Folder> folders = new HashSet<Folder>();
 
-		User u= userService.findByPrincipal();
+		User u = userService.findByPrincipal();
 		Assert.notNull(u);
-		folders = u.getFolders();
+		
+		for (Folder f : u.getFolders()) {
+			if (u.getRole().equals("ADMIN")
+					&& !f.getName().equals("Issues Sent")) {
+				folders.add(f);
+			}
+			else if(u.getRole().equals("USUARIO") 
+					&& !f.getName().equals("Issues Received")){
+				folders.add(f);
+			}
+		}
+		
+		
 		Folder f = folderService.findOne(folderId);
 		Assert.notNull(f);
 		boolean isInboxOrSpam = true;
@@ -93,6 +120,7 @@ public class MessageController extends AbstractController {
 		result = new ModelAndView("message/list");
 		result.addObject("messages", messages);
 		result.addObject("folders", folders);
+		result.addObject("folder", f);
 		result.addObject("requestURI", "message/list.do");
 		result.addObject("isInboxOrSpam", isInboxOrSpam);
 
@@ -130,6 +158,24 @@ public class MessageController extends AbstractController {
 		return result;
 	}
 	
+	// Checked ------------------------------------------------------
+		@RequestMapping(value = "/checked", method = RequestMethod.GET)
+		public ModelAndView checked(int messageId){
+			ModelAndView result;
+			
+			Message message = messageService.findOne(messageId);
+			try{
+				if(messageService.checkPrincipalIsRecipient(message) || messageService.checkPrincipalIsSender(message)){
+					messageService.checkedMessage(message);
+					result = new ModelAndView("redirect:listDefault.do");
+				}
+				result = new ModelAndView("redirect:listDefault.do");
+			} catch (Throwable oops) {
+				System.out.println(oops.getMessage());
+				result = new ModelAndView("redirect:listDefault.do");
+			}
+			return result;
+		}
 	
 	// Deleted ------------------------------------------------------
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
