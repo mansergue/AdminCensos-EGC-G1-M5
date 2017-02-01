@@ -23,6 +23,7 @@ public class Message extends DomainEntity{
 	private Date moment;
 	private String subject;
 	private String body;
+	private boolean checked;
 	
 	// Constructor
 	public Message(){
@@ -55,6 +56,14 @@ public class Message extends DomainEntity{
 	}
 	public void setBody(String body){
 		this.body=body;
+	}
+	
+	@NotNull
+	public boolean getChecked(){
+		return checked;
+	}
+	public void setChecked(boolean checked){
+		this.checked=checked;
 	}
 	
 	

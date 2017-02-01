@@ -86,6 +86,25 @@ public class MessageService {
 	}
 
 	// Other business methods
+	
+	public void checkedMessage(Message message){
+		Assert.notNull(message);
+		Assert.isTrue(checkPrincipalIsRecipient(message));
+		
+		message.setChecked(true);
+		moveToTrash(message);
+		
+		Collection<Message> messages = findAll();
+		for(Message m: messages){
+			if(m.getSubject().equals(message.getSubject())&&m.getBody().equals(message.getBody())
+					&&m.getSender().equals(message.getSender())
+					&&m.getRecipient().equals(message.getRecipient())
+					&&m.getId()!=message.getId()){
+				m.setChecked(true);
+				save(m);
+			}
+		}
+	}
 
 	public void sendMessage(Message message) {
 		Assert.notNull(message);
