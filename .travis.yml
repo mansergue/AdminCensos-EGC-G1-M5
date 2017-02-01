@@ -12,7 +12,6 @@ before_install:
     - mysql -u root < mysql.sql
 
 script:
-    - cd ADMCensus/mvn clean test
     - ls -lah
 
 cache:
