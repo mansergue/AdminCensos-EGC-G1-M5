@@ -52,7 +52,9 @@ public class MessageController extends AbstractController {
 
 		User u = userService.findByPrincipal();
 		Assert.notNull(u);
+		System.out.println("entra");
 		folders = u.getFolders();
+		System.out.println("sale");
 		Assert.notNull(folders);
 		Folder f = folderService.getInbox(u.getUserAccount());
 		Assert.notNull(f);
