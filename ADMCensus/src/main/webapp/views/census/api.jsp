@@ -7,7 +7,29 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<div>
+<div id="openCensuses">
+ <display:table name="openCensuses" id="row">
+   <display:column title="Consultar si un usuario puede votar en una determinada votacion:">
+     <div>
+       <p>
+         <big><big>/census/canVote.do?idVotacion="param1" &username= "param2" </big></big>
+       </p>
+       <p>param1: Id de la votación a consultar.
+       <br>
+       Por ejemplo "23".</p>
+       <p>param2: Nombre del usuario sobre el que se efectua la comprobación.
+       <br>
+       Por ejemplo "user1".</p>
+       <p>Se obtendrá una respuesta en formato JSON de tipo {"result":"no"} o {"result":"si"}</p>
+     </div>
+   </display:column>
+ </display:table>
+ </div>
+ <br>
+
+
+
+<!-- <div>
 	<p>
 		<strong>Consultar si un usuario puede votar en una determinada votaci&oacute;n:</strong>
 	</p>
@@ -22,7 +44,7 @@
 		Por ejemplo &quot;user1&quot;.
 	</p>
 	<p>Se obtendr&aacute; una respuesta en formato JSON de tipo {&quot;result&quot;:&quot;no&quot;} o {&quot;result&quot;:&quot;si&quot;}</p>
-</div>
+</div>  -->
 <br><br>
 
 	<table class="table table-bordered" >
