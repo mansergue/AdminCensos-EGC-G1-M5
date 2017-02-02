@@ -24,10 +24,17 @@
 	<p>Se obtendr&aacute; una respuesta en formato JSON de tipo {&quot;result&quot;:&quot;no&quot;} o {&quot;result&quot;:&quot;si&quot;}</p>
 </div>
 <br><br>
-<div>
+
+	<table class="table table-bordered" >
+    <thead>
+      <tr>
 	<p>
 		<strong>Actualiza el estado de una votaci&oacute;n:</strong>
 	</p>
+	</tr>
+    </thead>
+    <tbody>
+      <tr>
 	<p>
 		<font size="5">
 			/census/updateUser.do?idVotacion=&quot;param1&quot; &amp;tipoVotacion=&quot;param2&quot; &amp;username=&quot;param3&quot;
@@ -46,7 +53,9 @@
 	<p>
 		Se obtendr&aacute; una respuesta en formato JSON de tipo {&quot;result&quot;:&quot;no&quot;} o {&quot;result:&quot;si&quot;}
 	</p>
-</div>
+	</tr>
+    </tbody>
+  </table>
 <br><br>
 <div>
 	<p>
