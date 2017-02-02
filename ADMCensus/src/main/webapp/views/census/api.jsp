@@ -7,78 +7,47 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<div id="openCensuses">
- <display:table name="openCensuses" id="row">
-   <display:column title="Consultar si un usuario puede votar en una determinada votacion:">
-     <div>
-       <p>
-         <big><big>/census/canVote.do?idVotacion="param1" &username= "param2" </big></big>
-       </p>
-       <p>param1: Id de la votación a consultar.
-       <br>
-       Por ejemplo "23".</p>
-       <p>param2: Nombre del usuario sobre el que se efectua la comprobación.
-       <br>
-       Por ejemplo "user1".</p>
-       <p>Se obtendrá una respuesta en formato JSON de tipo {"result":"no"} o {"result":"si"}</p>
-     </div>
-   </display:column>
- </display:table>
+<div>
+ 	<p>
+ 		<strong>Consultar si un usuario puede votar en una determinada votaci&oacute;n:</strong>
+ 	</p>
+ 	<p>
+ 		<font size="5">
+ 			/census/canVote.do?idVotacion=&quot;param1&quot; &amp;username=&quot;param2&quot;
+ 		</font>
+ 	</p>
+ 	<p>param1: Id de la votaci&oacute;n a consultar. Por ejemplo "23".</p>
+ 	<p>
+ 		param2: Nombre del usuario sobre el que se efectua la comprobaci&oacute;n.<br>
+ 		Por ejemplo &quot;user1&quot;.
+	</p>
+ 	<p>Se obtendr&aacute; una respuesta en formato JSON de tipo {&quot;result&quot;:&quot;no&quot;} o {&quot;result&quot;:&quot;si&quot;}</p>
  </div>
- <br>
-
-
-
-<!-- <div>
-	<p>
-		<strong>Consultar si un usuario puede votar en una determinada votaci&oacute;n:</strong>
-	</p>
-	<p>
+ <br><br>
+ <div>
+ 	<p>
+ 		<strong>Actualiza el estado de una votaci&oacute;n:</strong>
+ 	</p>
+ 	<p>
 		<font size="5">
-			/census/canVote.do?idVotacion=&quot;param1&quot; &amp;username=&quot;param2&quot;
-		</font>
-	</p>
-	<p>param1: Id de la votaci&oacute;n a consultar. Por ejemplo "23".</p>
-	<p>
-		param2: Nombre del usuario sobre el que se efectua la comprobaci&oacute;n.<br>
-		Por ejemplo &quot;user1&quot;.
-	</p>
-	<p>Se obtendr&aacute; una respuesta en formato JSON de tipo {&quot;result&quot;:&quot;no&quot;} o {&quot;result&quot;:&quot;si&quot;}</p>
-</div>  -->
-<br><br>
-
-	<table class="table table-bordered" >
-    <thead>
-      <tr>
-	<p>
-		<strong>Actualiza el estado de una votaci&oacute;n:</strong>
-	</p>
-	</tr>
-    </thead>
-    <tbody>
-      <tr>
-	<p>
-		<font size="5">
-			/census/updateUser.do?idVotacion=&quot;param1&quot; &amp;tipoVotacion=&quot;param2&quot; &amp;username=&quot;param3&quot;
-		</font>
-	</p>
-	<p>
-		param1: Id de la votaci&oacute;n a consultar. Por ejemplo &quot;23&quot;.
-	</p>
-	<p>
-		param2: Tipo de votaci&oacute;n. Admite dos valores &quot;abierto&quot; o &quot;cerrado&quot;.
-	</p>
-	<p>
-		param3: Nombre del usuario sobre el que se efectua la comprobaci&oacute;n.<br>
-		Por ejemplo &quot;user1&quot;.
-	</p>
-	<p>
-		Se obtendr&aacute; una respuesta en formato JSON de tipo {&quot;result&quot;:&quot;no&quot;} o {&quot;result:&quot;si&quot;}
-	</p>
-	</tr>
-    </tbody>
-  </table>
-<br><br>
+ 			/census/updateUser.do?idVotacion=&quot;param1&quot; &amp;tipoVotacion=&quot;param2&quot; &amp;username=&quot;param3&quot;
+ 		</font>
+ 	</p>
+ 	<p>
+ 		param1: Id de la votaci&oacute;n a consultar. Por ejemplo &quot;23&quot;.
+ 	</p>
+ 	<p>
+ 		param2: Tipo de votaci&oacute;n. Admite dos valores &quot;abierto&quot; o &quot;cerrado&quot;.
+ 	</p>
+ 	<p>
+ 		param3: Nombre del usuario sobre el que se efectua la comprobaci&oacute;n.<br>
+ 		Por ejemplo &quot;user1&quot;.
+ 	</p>
+ 	<p>
+ 		Se obtendr&aacute; una respuesta en formato JSON de tipo {&quot;result&quot;:&quot;no&quot;} o {&quot;result:&quot;si&quot;}
+ 	</p>
+ </div>
+ <br><br>
 <div>
 	<p>
 		<strong>Dictamina si se puede borrar una votaci&oacute;n:</strong>
