@@ -7,3 +7,4 @@ Miembros:
 
 - Manuel Serrano Guerrero
 - Carlos Lozano Toré
+- Gonzalo López Heredia
