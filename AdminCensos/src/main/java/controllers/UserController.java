@@ -64,7 +64,9 @@ public class UserController extends AbstractController {
 
 		return result;
 	}
-
+	
+	
+/*
 	@RequestMapping("/entry")
 	public ModelAndView entry(@Valid UserAccount userAccount, BindingResult bindingResult, HttpServletRequest request)
 			throws IOException {
@@ -135,5 +137,18 @@ public class UserController extends AbstractController {
 		return result;
 
 	}
+*/
+	
+	// LoginFailure -----------------------------------------------------------
 
+	@RequestMapping("/loginFailure")
+	public ModelAndView failure() {
+		ModelAndView result;
+
+		result = new ModelAndView("redirect:login.do?showError=true");
+
+		return result;
+	}
+	
+	
 }

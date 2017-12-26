@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -76,8 +77,9 @@ public class CensusController extends AbstractController {
 	// Create census ----------------------------------------------------------
 	// Recibe parametros de votacion y crea un censo por votación
 
+	/*
 	@RequestMapping(value = "/create", method = RequestMethod.GET,produces = "application/json")
-	public ModelAndView create() throws ParseException {
+	public ModelAndView create2() throws ParseException {
 		
 		ModelAndView result = new ModelAndView("census/edit");
 		voteService.popularVotaciones();
@@ -89,7 +91,8 @@ public class CensusController extends AbstractController {
 		
 		return result;
 	}
-	
+	*/
+	/*
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save",produces = "application/json")
 	public ModelAndView create(@Valid Census census, BindingResult binding){
 		System.out.println("asasasasas");
@@ -117,11 +120,11 @@ public class CensusController extends AbstractController {
 		}
 		return result;
 	}
-
+*/
 	// Devuelve JSon a a votaciones para saber si pueden borrar una votación
 	// En caso afirmativo, el censo se borrará automáticamente al dar una
 	// respuesta positiva -----------------------------------------------------
-
+/*
 	@RequestMapping(value = "/canDelete", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody String canDelete(@RequestParam int idVotacion, @RequestParam String username) {
 		return censusService.canDelete(idVotacion, username);
@@ -162,10 +165,39 @@ public class CensusController extends AbstractController {
 	}
 
 	/*****
-	 * Métodos internos
+	 * M�todos internos
 	 ******/
 
-	// Método para la vista de votaciones por usuario -------------------------
+
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView create() {
+		ModelAndView view;
+		Census census;
+		
+		census = censusService.create();
+
+		view = createModelAndView(census, null);
+
+		return view;
+	}
+	/*
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam int offerId, RedirectAttributes redirecAttrs) {
+		ModelAndView view;
+		Census census;
+
+	
+		census = censusService.findOne(offerId);
+
+		view = createEditModelAndView(offer);
+
+		return view;
+	}
+	
+	*/
+	/*
+	
+	// M�todo para la vista de votaciones por usuario -------------------------
 
 		@RequestMapping(value = "/votesByUser", method = RequestMethod.GET)
 		public ModelAndView getVotesByUser() {
@@ -256,7 +288,7 @@ public class CensusController extends AbstractController {
 	}
 
 	// Encontrar un usuario mediante un keyword -------------------------------
-
+/*
 	@RequestMapping(value = "/searchByUsername", method = RequestMethod.GET)
 	public ModelAndView findUser(@RequestParam String usernameSearch, @RequestParam int censusId) {
 		ModelAndView result;
@@ -280,6 +312,8 @@ public class CensusController extends AbstractController {
 		return result;
 	}
 	
+	*/
+	
 //	// Encontrar censos por comunidades aut�nomas -------------------------------
 //
 //	@RequestMapping(value = "/search", method = RequestMethod.GET)
@@ -302,7 +336,7 @@ public class CensusController extends AbstractController {
 //	}
 
 	// Detalles del censo -----------------------------------------------------
-
+/*
 	@RequestMapping(value = "/details", method = RequestMethod.GET)
 	public ModelAndView details(@RequestParam int censusId) {
 		ModelAndView result;
@@ -315,9 +349,10 @@ public class CensusController extends AbstractController {
 		result.addObject("editable", editable);
 		return result;
 	}
-
+*/
 	// Editar un censo para añadir o quitar usuarios y buscarlos --------------
 
+	/*
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam int censusId) {
 		ModelAndView result = new ModelAndView("census/manage");
@@ -340,7 +375,9 @@ public class CensusController extends AbstractController {
 
 		return result;
 	}
-
+*/
+	
+	/*
 	// Exportar un censo a .txt -----------------------------------------------
 
 	@RequestMapping(value = "/export", method = RequestMethod.GET)
@@ -451,9 +488,9 @@ public class CensusController extends AbstractController {
 		result = new ModelAndView("redirect:getAllCensusByCreador.do");
 		return result;
 	}
-
+*/
 	// Exportar un censo a .pdf -----------------------------------------------
-
+/*
 	@RequestMapping(value = "/exportPDF", method = RequestMethod.GET)
 	public ModelAndView exportPDF(@RequestParam int censusId, HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, DocumentException {
@@ -539,9 +576,9 @@ public class CensusController extends AbstractController {
 		result = new ModelAndView("redirect:getAllCensusByCreador.do");
 		return result;
 	}
-
+*/
 	// Save -------------------------------------------------------------------
-
+/*
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid Census census, BindingResult binding) {
 		ModelAndView result;
@@ -576,7 +613,7 @@ public class CensusController extends AbstractController {
 	}
 
 	// Ancillary methods ------------------------------------------------------
-
+/*
 	protected ModelAndView createEditModelAndView(Census census) {
 		ModelAndView result;
 
@@ -585,21 +622,23 @@ public class CensusController extends AbstractController {
 		return result;
 	}
 
+
+
 	protected ModelAndView createEditModelAndView(Census census, String message) {
 		ModelAndView result = new ModelAndView("census/create");
 
 		if (census.getId() != 0) {
 			result = new ModelAndView("census/details");
 		}
-		HashMap<String, Boolean> mapa = census.getVotoPorUsuario();
+		//HashMap<String, Boolean> mapa = census.getVotoPorUsuario();
 		result.addObject("census", census);
-		result.addObject("mapa", mapa);
+		//result.addObject("mapa", mapa);
 		result.addObject("message", message);
 
 		return result;
 
 	}
-	
+	*/
 	protected ModelAndView createModelAndView(Census census){
 		ModelAndView result;
 		result = createModelAndView(census, null);
@@ -608,10 +647,10 @@ public class CensusController extends AbstractController {
 	
 	protected ModelAndView createModelAndView(Census census, String message) {
 		ModelAndView result = new ModelAndView("census/edit");
-		Collection <Vote> votes= voteService.findAll();
+		//Collection <Vote> votes= voteService.findAll();
 		result.addObject("census", census);
 		result.addObject("message", message);
-		result.addObject("votes", votes);
+		//result.addObject("votes", votes);
 		return result;
 
 	}

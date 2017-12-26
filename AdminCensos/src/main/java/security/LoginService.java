@@ -1,6 +1,6 @@
 /* LoginService.java
  *
- * Copyright (C) 2014 Universidad de Sevilla
+ * Copyright (C) 2017 Universidad de Sevilla
  * 
  * The use of this project is hereby constrained to the conditions of the 
  * TDG Licence, a copy of which you may download from 
@@ -11,7 +11,6 @@
 package security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,23 +24,23 @@ import org.springframework.util.Assert;
 @Service
 @Transactional
 public class LoginService implements UserDetailsService {
-
+	
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
 	UserAccountRepository userRepository;
-
+	
 	// Business methods -------------------------------------------------------
 
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username)
+			throws UsernameNotFoundException {
 		Assert.notNull(username);
 
 		UserDetails result;
 
 		result = userRepository.findByUsername(username);
-		Assert.notNull(result);
-		// WARNING: The following sentences prevent lazy initialisation
-		// problems!
+		Assert.notNull(result);		
+		// WARNING: The following sentences prevent lazy initialisation problems!
 		Assert.notNull(result.getAuthorities());
 		result.getAuthorities().size();
 
@@ -72,21 +71,6 @@ public class LoginService implements UserDetailsService {
 		Assert.isTrue(result.getId() != 0);
 
 		return result;
-	}
-
-	
-	public String contructToken(UserAccount userAccount) {
-		String password = new Md5PasswordEncoder().encodePassword(
-				userAccount.getPassword(), null);
-		password = userAccount.getUsername()
-				+ new Md5PasswordEncoder()
-						.encodePassword(password, null);
-		password = userAccount.getUsername()
-				+ ":"
-				+ new Md5PasswordEncoder()
-						.encodePassword(password, null);
-
-		return password;
 	}
 
 }

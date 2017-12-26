@@ -11,7 +11,7 @@ import java.util.Set;
 import org.springframework.web.client.RestTemplate;
 import domain.User;
 import security.UserAccount;
-public class RESTClient {
+public class RESTClient2 {
 
 	/***
 	 * MÃ©todo que lee un Json de autenticaciÃ³n y devuelve un map con los

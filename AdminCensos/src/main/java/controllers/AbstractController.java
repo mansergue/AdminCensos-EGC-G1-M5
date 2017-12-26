@@ -19,6 +19,9 @@ public class AbstractController {
 		result.addObject("name", ClassUtils.getShortName(oops.getClass()));
 		result.addObject("exception", oops.getMessage());
 		result.addObject("stackTrace", ExceptionUtils.getStackTrace(oops));
+		
+		
+
 
 		return result;
 	}

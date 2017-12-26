@@ -18,7 +18,7 @@
 
 <%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%--
+
 <p><spring:message code="panic.text" /> <code>${name}</code>.</p>
 
 <h2><spring:message code="panic.message" /></h2>
@@ -34,6 +34,6 @@
 </p>
 
 
- --%>
+ 
  
  <img src="images/error.jpg"/>

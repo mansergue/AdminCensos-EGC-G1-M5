@@ -37,8 +37,9 @@ public class CensusService {
 
 	public Census create() {
 		Census result = new Census();
-		HashMap<String, Boolean> vpo = new HashMap<String, Boolean>();
-		result.setVotoPorUsuario(vpo);
+		//HashMap<String, Boolean> vpo = new HashMap<String, Boolean>();
+		//result.setVotoPorUsuario(vpo);
+		
 
 		return result;
 	}
@@ -50,7 +51,7 @@ public class CensusService {
 	 * 
 	 * @param username
 	 */
-
+/*
 	public Collection<Census> findCensusesToRegisterByUser(String username) {
 		Assert.hasLength(username);
 		Collection<Census> result = new ArrayList<Census>();
@@ -73,6 +74,8 @@ public class CensusService {
 		Assert.notNull(result);
 		return result;
 	}
+	
+	*/
 
 	/**
 	 * Metodo usado por cabina que actualiza a true el estado de voto de un user
@@ -83,7 +86,7 @@ public class CensusService {
 	 *            = Nombre de usuario
 	 * @return boolean
 	 */
-
+/*
 	public boolean updateUser(int idVotacion, String tipoVotacion, String username) {
 		boolean result = false;
 		Assert.isTrue(!username.equals(""));
@@ -103,6 +106,9 @@ public class CensusService {
 
 	}
 
+
+*/
+	
 	/**
 	 * Devuelve un json para saber si se puede borrar o no una votacion
 	 * 
@@ -112,7 +118,7 @@ public class CensusService {
 	 *            = Nombre de usuario
 	 * @return format json
 	 */
-
+/*
 	public String canDelete(int idVotacion, String username) {
 		Assert.hasLength(username);
 		String res = "";
@@ -129,7 +135,7 @@ public class CensusService {
 		}
 		return res;
 	}
-
+*/
 	/**
 	 * Devuelve un json indicando si un usuario puede votar en una determinada
 	 * votacion
@@ -140,7 +146,7 @@ public class CensusService {
 	 *            = Nombre de usuario
 	 * @return string format json
 	 */
-
+/*
 	public String canVote(int idVotacion, String username) {
 		Assert.isTrue(!username.equals(""));
 		String result = "";
@@ -161,7 +167,7 @@ public class CensusService {
 
 		return result;
 	}
-
+*/
 	/**
 	 * Metodo que devuelve todos los censos de las votaciones en las que un
 	 * usuario puede votar.
@@ -170,7 +176,7 @@ public class CensusService {
 	 *            = Nombre de usuario
 	 * @return Collection<census>
 	 */
-
+/*
 	public Collection<Census> findPossibleCensusesByUser(String username) {
 		Assert.isTrue(username != "");
 		System.out.println(username + "\n");
@@ -192,7 +198,7 @@ public class CensusService {
 		System.out.println(result);
 		return result;
 	}
-
+*/
 	/**
 	 * Devuelve todos los censos que de un propietario
 	 * 
@@ -200,13 +206,13 @@ public class CensusService {
 	 *            = Nombre de usuario
 	 * @return Collection<census>
 	 */
-
+/*
 	public Collection<Census> findCensusByCreator(String usernameCreator) {
 		Assert.hasLength(usernameCreator);
 		Collection<Census> result = censusRepository.findCensusByCreator(usernameCreator);
 		return result;
 	}
-
+*/
 	/**
 	 * Devuelve un determinado censo de un propietario
 	 * 
@@ -214,17 +220,17 @@ public class CensusService {
 	 * @param username
 	 * @return Census
 	 */
-
-	public Census findOneByCreator(int censusId, String username) {
-		Assert.isTrue(!username.equals(""));
+/*
+	public Census findOneByCreator(int censusId) {
+		
 		Census result;
 		result = findOne(censusId);
 		Assert.isTrue(result != null);
-		Assert.isTrue(result.getUsernameCreator().equals(username));
+		/Assert.isTrue(result.getUsernameCreator().equals(username));
 
 		return result;
 	}
-
+*/
 	/**
 	 * 
 	 * Aniade un usuario con un username determidado a un censo CERRADO
@@ -236,7 +242,7 @@ public class CensusService {
 	 * @param username_add
 	 *            = Usuario que se va a aÃ±adir al censo
 	 */
-
+/*
 	public void addUserToClosedCensus(int censusId, String username, String usernameAdd) {
 		Census census = findOne(censusId);
 		Assert.isTrue(census.getTipo().equals("cerrado"));
@@ -267,7 +273,7 @@ public class CensusService {
 		 e.printStackTrace();
 		 }
 	}
-
+*/
 	/**
 	 * 
 	 * A�ade un usuario a un censo ABIERTO (registrarse en un censo abierto)
@@ -277,7 +283,7 @@ public class CensusService {
 	 * @param username_add
 	 *            Nombre de usuario que se va a aÃ±adir al censo
 	 */
-
+/*
 	public void addUserToOpenedCensus(int censusId, String usernameAdd) {
 		Census census = findOne(censusId);
 		Assert.isTrue(census.getTipo().equals("abierto"));
@@ -307,7 +313,9 @@ public class CensusService {
 		 e.printStackTrace();
 		 }
 	}
-
+*/
+	
+	
 	/**
 	 * 
 	 * Elimina un usuario con un username determidado de un censo CERRADO,
@@ -320,6 +328,8 @@ public class CensusService {
 	 * @param username_add
 	 *            = Usuario que se va a eliminar del censo
 	 */
+	
+	/*
 	public void removeUserOfClosedCensus(int censusId, String username, String username_remove) {
 		Census census = findOne(censusId);
 		Assert.isTrue(census.getTipo().equals("cerrado"));
@@ -358,7 +368,7 @@ public class CensusService {
 	 * @param census
 	 * @return census
 	 */
-
+/*
 	public Census save(Census census) {
 		Census c = censusRepository.save(census);
 		return c;
@@ -371,7 +381,7 @@ public class CensusService {
 	 *            = Identificador del censo
 	 * @param username
 	 */
-
+/*
 	public void delete(int censusId, String username) {
 		Census c = findOne(censusId);
 
@@ -406,7 +416,7 @@ public class CensusService {
 	 *            = Usuario del cual queremos obtener su estado de voto
 	 * @return String
 	 */
-
+/*
 	public String createResponseJson(int idVotacion, String username) {
 		String response = "";
 		Census c = findCensusByVote(idVotacion);
@@ -425,7 +435,7 @@ public class CensusService {
 	 * 
 	 * @return Collection<Census>
 	 */
-
+/*
 	public Collection<Census> findAll() {
 		Collection<Census> result;
 		result = censusRepository.findAll();
@@ -439,7 +449,7 @@ public class CensusService {
 	 *            = Id de la votacion sobre la que se busca un censo
 	 * @return census
 	 */
-
+/*
 	public Census findCensusByVote(int idVotacion) {
 		Census result = censusRepository.findCensusByVote(idVotacion);
 		Assert.notNull(result);
@@ -458,7 +468,7 @@ public class CensusService {
 	 *            = Fecha fin de la votacion
 	 * @return true si estÃ¡ activa
 	 */
-
+/*
 	private boolean votacionActiva(Date fechaInicio, Date fechaFin) {
 		Boolean res = false;
 		Date fechaActual = new Date();
@@ -481,7 +491,7 @@ public class CensusService {
 	 *            = Id del censo sobre el que vamos a realizar la busqueda
 	 * @return el filtro de busqueda
 	 */
-
+/*
 	public Collection<String> findByUsername(String username, int censusId) {
 		Assert.hasLength(username);
 		Assert.isTrue(censusId > 0);
@@ -573,5 +583,5 @@ public class CensusService {
 		return result.getTitle();
 
 	}
-
+*/
 }
