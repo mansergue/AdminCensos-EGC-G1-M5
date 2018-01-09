@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+
+{% block contenido %}
+	<h2>Lista de Censos</h2>
+	<hr>
+		{% for dato in censos %}
+			<h3>Titulo: {{dato.title}}</h3>
+			
+			<hr>
+		{% empty %}
+			<li>No hay votaciones que mostrar.</li>
+		{% endfor %}
+{% endblock %}
+	

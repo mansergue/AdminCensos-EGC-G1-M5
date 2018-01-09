@@ -1,0 +1,31 @@
+from principal.models import *
+from principal.forms import *
+from django.shortcuts import render_to_response, get_list_or_404
+#Para autenticacion
+from django.contrib.auth import authenticate
+#Para usar Formularios
+#from principal.forms import *
+from django.contrib.auth.models import User
+from django.http import HttpResponse, HttpResponseRedirect
+from django.template import RequestContext
+
+from datetime import datetime
+
+
+def inicio(request):
+    censos = Census.objects.all()
+    return render_to_response("listaCensos.html",{"censos":censos})
+
+def nuevo_censo(request):
+    if request.method=='POST':
+        formulario = CensusForm(request.POST, request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            return HttpResponseRedirect('/')
+    else:
+        formulario = CensusForm()
+    return render_to_response('nuevocenso.html',{'formulario':formulario}, context_instance=RequestContext(request))
+
+def censos(request):
+    censos = Census.objects.all()
+    return render_to_response("listaCensos.html",{"censos":censos})
