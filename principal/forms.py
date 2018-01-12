@@ -13,3 +13,7 @@ class UserAccountPerCensus(modelForm):
     class Meta:
         model = UserAccountPerCensus
         fields = ['census','user_account']
+class Role(modelForm):
+    class Meta:
+        model = Role
+        fields = ['name']
