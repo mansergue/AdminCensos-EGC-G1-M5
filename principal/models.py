@@ -46,5 +46,11 @@ class UserAccountPerCensus(models.Model):
     user_account = models.ForeignKey(UserAccount)
     class Meta:
         db_table = 'user_account_per_census'
+
+class Role(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=10L)
+    class Meta:
+	db_table = 'role'
     
 
