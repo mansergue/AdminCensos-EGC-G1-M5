@@ -18,6 +18,8 @@ DATABASES = {
 'USER': 'votaciones-user', # Not used with sqlite3.
 'PASSWORD': 'votaciones-user-1928', # Not used with sqlite3.
 'HOST': 'g1_mariadb', # Set to empty string for localhost. Not used with
+
+
 }
 }
 
