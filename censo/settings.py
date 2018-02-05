@@ -15,9 +15,9 @@ DATABASES = {
 'default': {
 'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
 'NAME': 'votaciones_splc', # Or path to database file if using sqlite3.
-'USER': 'votaciones-user', # Not used with sqlite3.
-'PASSWORD': 'votaciones-user-1928', # Not used with sqlite3.
-'HOST': 'g1_mariadb', # Set to empty string for localhost. Not used with
+'USER': 'root', # Not used with sqlite3.
+'PASSWORD': 'your_password', # Not used with sqlite3.
+'HOST': '127.0.0.1', # Set to empty string for localhost. Not used with
 
 
 }
