@@ -13,7 +13,7 @@ class Census(models.Model):
     id = models.IntegerField(unique=True, primary_key=True, null=False)
     title = models.CharField(max_length=100, null=False)
     postalCode = models.IntegerField(null=True, blank=True, db_column='postalCode')
-    ca = models.ForeignKey(Ca)
+    ca = models.ForeignKey('Ca')
     class Meta:
         db_table = 'census'
     def __unicode__(self):
@@ -36,14 +36,14 @@ class UserAccount(models.Model):
     username = models.CharField(max_length=50L, unique=True)
     password = models.CharField(max_length=50L)
     email = models.CharField(max_length=100L)
-    role = models.ForeignKey(Role)
+    role = models.ForeignKey('Role')
     class Meta:
         db_table = 'user_account'
 
 class UserAccountPerCensus(models.Model):
     id = models.IntegerField(primary_key=True)
     census = models.ForeignKey(Census)
-    user_account = models.ForeignKey(UserAccount)
+    user_account = models.ForeignKey('UserAccount')
     class Meta:
         db_table = 'user_account_per_census'
 

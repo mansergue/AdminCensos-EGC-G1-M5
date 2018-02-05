@@ -8,5 +8,6 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'principal.views.inicio', name='inicio'),
     url(r'^nuevocenso/','principal.views.nuevo_censo'),
+    url(r'^modificarcenso/','principal.views.modificar_censo'),
     url(r'^censos/','principal.views.censos'),
 )
