@@ -11,10 +11,21 @@ from django.template import RequestContext
 
 from datetime import datetime
 
+URL_COOKIE="https://g1login.egc.duckdns.org/cookies/"
 
 def inicio(request):
-    censos = Census.objects.all()
-    return render_to_response("listaCensos.html",{"censos":censos})
+    session_id=request.COOKIES.get('session_id')
+    if session_id is not None:
+        response = urllib2.urlopen(URL_COOKIE+session_id).read()
+        data = json.loads(response)
+        if data['codigo'] == 1:
+            censos = Census.objects.all()
+    	    return render_to_response("listaCensos.html",{"censos":censos})
+        else:
+            return HttpResponseRedirect('https://g1login.egc.duckdns.org/login')
+    else:
+        return HttpResponseRedirect('https://g1login.egc.duckdns.org/login')
+
 
 def nuevo_censo(request):
     if request.method=='POST':
@@ -25,6 +36,7 @@ def nuevo_censo(request):
     else:
         formulario = CensusForm()
     return render_to_response('nuevocenso.html',{'formulario':formulario}, context_instance=RequestContext(request))
+
 def modificar_censo(request):
     censoModificar = Census.objects.get()
     if request.method=='POST':
@@ -35,6 +47,7 @@ def modificar_censo(request):
     else:
         formulario = CensusForm()
     return render_to_response('modificarcenso.html',{'formulario':formulario}, context_instance=RequestContext(request))
+
 def eliminar_censo(request):
     Census.objects.get().delete()
     return render_to_response('eliminarcenso.html', context_instance=RequestContext(request))
