@@ -36,6 +36,13 @@ def modificar_censo(request):
     else:
         formulario = CensusForm()
     return render_to_response('modificarcenso.html',{'formulario':formulario}, context_instance=RequestContext(request))
+def eliminar_censo(request):
+    Census.objects.get().delete()
+    return render_to_response('eliminarcenso.html', context_instance=RequestContext(request))
+def eliminar_censos(request):
+    censos = Census.objects.all().delete()
+    return render_to_response("eliminartodoscensos.html", context_instance=RequestContext(request))
+  
 def censos(request):
     censos = Census.objects.all()
     return render_to_response("listaCensos.html",{"censos":censos})
