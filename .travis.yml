@@ -5,9 +5,13 @@ sudo: required
 python:
     - "2.7.10"
 
-install: "pip install -r requirements.txt"
+install:
+   - "pip install -r requirements.txt"
+   - "pip install mysql-python"
 
-script: py.test ./principal/tests.py
+script:
+  - bash script_build_push_image.sh
+  - python manage.py test principal
 
 services:
   - mysql
@@ -23,9 +27,3 @@ before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS votaciones_splc;'   
   - mysql -u root --default-character-set=utf8 votaciones_splc < scripts/script_create_votaciones_splc.sql
   - mysql -u root --default-character-set=utf8 votaciones_splc < scripts/splc2017.sql
-
-  
-after_success:
-  - docker build -t censo/server .
-  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-  - docker push censo/server
