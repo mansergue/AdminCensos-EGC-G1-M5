@@ -11,21 +11,10 @@ from django.template import RequestContext
 
 from datetime import datetime
 
-URL_COOKIE="https://g1login.egc.duckdns.org/cookies/"
 
 def inicio(request):
-    session_id=request.COOKIES.get('session_id')
-    if session_id is not None:
-        response = urllib2.urlopen(URL_COOKIE+session_id).read()
-        data = json.loads(response)
-        if data['codigo'] == 1:
-            censos = Census.objects.all()
-    	    return render_to_response("listaCensos.html",{"censos":censos})
-        else:
-            return HttpResponseRedirect('https://g1login.egc.duckdns.org/login')
-    else:
-        return HttpResponseRedirect('https://g1login.egc.duckdns.org/login')
-
+   censos = Census.objects.all()
+   return render_to_response("listaCensos.html",{"censos":censos})
 
 def nuevo_censo(request):
     if request.method=='POST':
