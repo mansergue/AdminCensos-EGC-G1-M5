@@ -41,6 +41,7 @@ def eliminar_censo(request):
 def eliminar_censos(request):
     censos = Census.objects.all().delete()
     return render_to_response("eliminartodoscensos.html", context_instance=RequestContext(request))
+  
 def censos(request):
     censos = Census.objects.all()
     return render_to_response("listaCensos.html",{"censos":censos})
