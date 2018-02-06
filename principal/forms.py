@@ -9,7 +9,7 @@ class UserAccount(ModelForm):
     class Meta:
         model = UserAccount
         fields = ['username','password','email','role']
-class UserAccountPerCensus(ModelForm):
+class UserAccountPerCensusForm(ModelForm):
     class Meta:
         model = UserAccountPerCensus
         fields = ['census','user_account']

@@ -45,3 +45,13 @@ def eliminar_censos(request):
 def censos(request):
     censos = Census.objects.all()
     return render_to_response("listaCensos.html",{"censos":censos})
+
+def censar(request):
+    if request.method=='POST':
+        formulario = UserAccountPerCensusForm(request.POST, request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            return HttpResponseRedirect('/')
+    else:
+        formulario = UserAccountPerCensusForm()
+    return render_to_response('censar.html',{'formulario':formulario}, context_instance=RequestContext(request))
