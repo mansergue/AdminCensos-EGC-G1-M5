@@ -11,7 +11,6 @@ from django.template import RequestContext
 
 from datetime import datetime
 
-listaCenso = []
 
 def inicio(request):
     censos = Census.objects.all()
