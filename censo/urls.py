@@ -12,4 +12,5 @@ urlpatterns = patterns('',
     url(r'^eliminarcenso/','principal.views.eliminar_censo'),
     url(r'^eliminartodoscensos/','principal.views.eliminar_censos'),
     url(r'^censos/','principal.views.censos'),
+    url(r'^censar/','principal.views.censar'),
 )
