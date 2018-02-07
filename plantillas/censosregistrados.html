@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+
+{% block contenido %}
+	<i><h2 align="center">Lista de Censos</h2></i>
+	<hr>
+		{% for dato in censos %}
+			<i><u><h3 align="center">{{dato.title}}</h3></u></i>
+			<p align="center"><a href="/modificarcenso">Modificar Censo</a></p>
+			<p align="center"><a href="/eliminarcenso">Eliminar Censo</a></p>
+			<hr>
+		{% empty %}
+			<p align="center">No hay censos que mostrar.</p>
+		{% endfor %}
+		<p align="right"><a href="/eliminartodoscensos">Eliminar todos los censos</a></p>
+{% endblock %}
+	
